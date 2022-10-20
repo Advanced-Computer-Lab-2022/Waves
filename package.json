@@ -1,0 +1,19 @@
+{
+  "name": "online-learning-system",
+  "version": "1.0.0",
+  "description": "First Init",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Advanced-Computer-Lab-2022/Waves.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Advanced-Computer-Lab-2022/Waves/issues"
+  },
+  "homepage": "https://github.com/Advanced-Computer-Lab-2022/Waves#readme"
+}
