@@ -5,7 +5,8 @@ var routes = require("./Routes/routes");
 var app = express();
 var mongoose = require("mongoose");
 var bodyParser = require('body-parser')
-const IndividualTrainee = require('./models/Users/IndividualTrainee')
+const IndividualTrainee = require('./models/Users/IndividualTrainee');
+const { countReset } = require("console");
 app.use(bodyParser.urlencoded({
   extended: true
 }));
@@ -69,6 +70,11 @@ app.post('/register', async(req, res) => {
           err: "Invalid Username Or Password!"
       })
   }
+})
+
+app.get('/AllCourses', async (req,res)=>{
+  const AllCourses = await Course
+ 
 })
 
 //use('Online-Learning-System')
