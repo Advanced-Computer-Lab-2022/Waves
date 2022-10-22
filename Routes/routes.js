@@ -6,6 +6,14 @@ router.get("/", function(req,res){
     res.render("index");
 });
 
+router.get("/sign-up", function(req,res){
+    res.render("sign_up");
+});
+
+router.get("/terms", function(req,res){
+    res.render("terms");
+});
+
 router.post("/sign-up", function(req,res){
     res.render("sign_up");
 });
