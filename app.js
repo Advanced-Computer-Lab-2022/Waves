@@ -4,6 +4,11 @@ var path = require("path");
 var routes = require("./Routes/routes");
 var app = express();
 var mongoose = require("mongoose");
+var bodyParser = require('body-parser')
+const IndividualTrainee = require('./models/Users/IndividualTrainee')
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 
 mongoose.connect(
   `mongodb+srv://Adam2431:Makrauser1@cluster0.4euql4k.mongodb.net/test
@@ -30,6 +35,41 @@ app.use(routes);
 app.listen(app.get("port"), function(){
     console.log('Server Started On Port ' + app.get('port'))
 });
+
+app.post('/register', async(req, res) => {
+  try {
+      console.log(req.body)
+      // if(req.body.username == '' || req.body.password == '')
+      // res.render('sign_up', {
+      //     err: "Please fill both the username and password blanks!"
+      // })
+        const MongoClient = require('mongodb').MongoClient;
+        const uri =   `mongodb+srv://Adam2431:Waves2431@waves.0kjx7bl.mongodb.net/test`;
+        const client = new MongoClient(uri, { useNewUrlParser: true });
+        await client.connect();
+        const newUser = new IndividualTrainee ({
+            username: req.body.username,
+            password: req.body.password,
+            email: req.body.email,
+            first: req.body.first,
+            last: req.body.last,
+
+        })
+        await client.db('Online-Learning-System').collection('Individual Trainee').insertOne(newUser)
+        client.close()
+        res.redirect('/login')
+  } catch (error) {
+    console.log(error)
+      if(error.code == 11000) {
+          res.render('sign_up', {
+              err: "This Username is already taken!"
+          })
+      } else
+      res.render('sign_up', {
+          err: "Invalid Username Or Password!"
+      })
+  }
+})
 
 //use('Online-Learning-System')
 //db.Users.insertOne([{name: Adam}])

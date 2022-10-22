@@ -5,21 +5,20 @@ const IndividualTraineeSchema = new mongoose.Schema({
     required: true,
   },
   email: {
-    type: email,
-    required: true,
-  },
-  password: {
-    type: password,
-    required: true,
-  },
-  first_name: {
     type: String,
     required: true,
   },
-  last_name: {
+  password: {
+    type: String,
+    required: true,
+  },
+  first: {
+    type: String,
+    required: true,
+  },
+  last: {
     type: String,
     required: true,
   }
 });
-const IndividualTrainee = mongoose.model("IndividualTrainee", UserSchema);
-module.exports = IndividualTrainee;
+module.exports = mongoose.model("IndividualTrainee", IndividualTraineeSchema);

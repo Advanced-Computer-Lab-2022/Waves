@@ -11,27 +11,26 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
     <div class="container">
         <div>
+        <form method="POST" action="/register">
             <Label>Username</Label>
-            <textarea id= "username" name= "username"></textarea>
+            <input id= "username" name= "username"></input>
         </div>
         <div>
             <Label>Email</Label>
-            <textarea id= "email" name= "email"></textarea>
+            <input id= "email" name= "email"></input>
         </div>
         <div>
             <Label>Password</Label>
-            <textarea id= "password" name= "password"></textarea>
+            <input type="password" id= "password" name= "password"></input>
         </div>
         <div>
             <Label>First Name</Label>
-            <textarea id= "first" name= "first"></textarea>
+            <input id= "first" name= "first"></input>
         </div>
         <div>
             <Label>Last Name</Label>
-            <textarea id= "last" name= "last"></textarea>
+            <input id= "last" name= "last"></input>
         </div>
-
-
         <div>
             <select>
                 <option value="Select Country" selected>Select Country</option>
@@ -275,12 +274,9 @@
                 <option value="Zambia">Zambia</option>
                 <option value="Zimbabwe">Zimbabwe</option>
             </select>
-        </div>
-
-        <form method="POST" action="register">
-            <button class="btn btn-success">Sign Up</button>
-        </form>
+        </div>    
+        <button class="btn btn-success">Sign Up</button>
+    </form>
     </div>
-
 </body>
 </html>
