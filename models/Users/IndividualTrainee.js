@@ -4,7 +4,19 @@ const IndividualTraineeSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  email: {
+    type: email,
+    required: true,
+  },
   password: {
+    type: password,
+    required: true,
+  },
+  first_name: {
+    type: String,
+    required: true,
+  },
+  last_name: {
     type: String,
     required: true,
   }
