@@ -1,5 +1,5 @@
-const mongoose = require("mongoose");
-const AdministratorSchema = new mongoose.Schema({
+var mongoose = require("mongoose");
+var AdministratorSchema = new mongoose.Schema({
   username: {
     type: String,
     required: true,
@@ -9,4 +9,11 @@ const AdministratorSchema = new mongoose.Schema({
     required: true,
   }
 });
-module.exports = mongoose.model("Administrator", AdministratorSchema);
+
+function loadModel(modelName, modelSchema) {
+    return mongoose.models[modelName]
+      ? mongoose.model(modelName)
+      : mongoose.model(modelName, modelSchema)
+  }
+
+module.exports = () => loadModel('Administrator', AdministratorSchema)
