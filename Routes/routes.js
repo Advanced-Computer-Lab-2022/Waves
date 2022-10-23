@@ -51,6 +51,10 @@ router.get("/getCourses", async(req,res) => {
     console.log(get)
     res.json(get);
 });
+
+router.get("/filterCourses", function(req,res){
+    res.render("filterCourses");
+  });
     // await client.db('Online-Learning-System').collection('Courses').insertOne(newCourse)
     // client.close()}
     //res.render("guest");
