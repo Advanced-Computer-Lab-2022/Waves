@@ -16,48 +16,48 @@
                 <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
                 Add Corporate Trainee
                 </button>
-                <form class="dropdown-menu p-4">
-                <div class="mb-3">
-                    <label for="exampleDropdownFormEmail2" class="form-label">Username</label>
-                    <input class="form-control" id="exampleDropdownFormEmail2" placeholder="Corporate2431">
-                </div>
-                <div class="mb-3">
-                    <label for="exampleDropdownFormPassword2" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="exampleDropdownFormPassword2" placeholder="Password">
-                </div>
-                <button type="submit" class="btn btn-primary">Create Account</button>
+                    <form class="dropdown-menu p-4" method="POST" action="add-trainee">
+                    <div class="mb-3">
+                        <label for="exampleDropdownFormEmail2" class="form-label">Username</label>
+                        <input class="form-control" id="exampleDropdownFormEmail2" placeholder="Corporate2431" name="username">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleDropdownFormPassword2" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="exampleDropdownFormPassword2" placeholder="Password" name="password">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Create Account</button>
                 </form>
             </div>
             <div class="dropdown">
                 <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
                 Add Instructor
                 </button>
-                <form class="dropdown-menu p-4">
-                <div class="mb-3">
-                    <label for="exampleDropdownFormEmail2" class="form-label">Username</label>
-                    <input class="form-control" id="exampleDropdownFormEmail2" placeholder="Instructor2431">
-                </div>
-                <div class="mb-3">
-                    <label for="exampleDropdownFormPassword2" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="exampleDropdownFormPassword2" placeholder="Password">
-                </div>
-                <button type="submit" class="btn btn-primary">Create Account</button>
+                <form class="dropdown-menu p-4" method="POST" action="add-instructor">
+                    <div class="mb-3">
+                        <label for="exampleDropdownFormEmail2" class="form-label">Username</label>
+                        <input class="form-control" id="exampleDropdownFormEmail2" placeholder="Instructor2431" name="username">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleDropdownFormPassword2" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="exampleDropdownFormPassword2" placeholder="Password" name="password">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Create Account</button>
                 </form>
             </div>
             <div class="dropdown">
                 <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
                 Add Admin
                 </button>
-                <form class="dropdown-menu p-4">
-                <div class="mb-3">
-                    <label for="exampleDropdownFormEmail2" class="form-label">Username</label>
-                    <input class="form-control" id="exampleDropdownFormEmail2" placeholder="Admin2431">
-                </div>
-                <div class="mb-3">
-                    <label for="exampleDropdownFormPassword2" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="exampleDropdownFormPassword2" placeholder="Password">
-                </div>
-                <button type="submit" class="btn btn-primary">Create Account</button>
+                <form class="dropdown-menu p-4" method="POST" action="add-admin">
+                    <div class="mb-3">
+                        <label for="exampleDropdownFormEmail2" class="form-label">Username</label>
+                        <input class="form-control" id="exampleDropdownFormEmail2" placeholder="Admin2431" name="username">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleDropdownFormPassword2" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="exampleDropdownFormPassword2" placeholder="Password" name="password">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Create Account</button>
                 </form>
             </div>
         </div>
@@ -65,5 +65,6 @@
             <button id="logout_button" type="submit" class="btn btn-primary">Logout</button>
         </form>
     </div>
+    <div style= "color:green"> <%= data %></div>
 </body>
 </html>

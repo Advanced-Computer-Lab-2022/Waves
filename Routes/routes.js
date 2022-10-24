@@ -39,11 +39,11 @@ router.get("/admin", function(req,res){
     if(!req.session.isLoggedIn)
         res.redirect('./login')
     else
-        res.render("admin");
+        res.render("admin", {data: ''});
 });
 
 router.post("/admin", function(req,res){
-    res.render("admin");
+    res.render("admin", {data: ''});
 });
 
 router.post("/sign-up", function(req,res){
@@ -72,12 +72,22 @@ router.post("/logout", function(req,res){
     res.redirect("/")
 });
 
-router.post("/add-administrator", function(req,res){
-    res.render("add-admin");
+router.post("/add-admin", function(req,res){
+    adminController.addAdmin(req.body);
+    res.render("admin", {data: "Success!"});
+    res.redirect("/admin")
 });
 
 router.post("/add-instructor", function(req,res){
-    res.render("add-instructor");
+    adminController.addInstructor(req.body);
+    res.render("admin", {data: "Success!"});
+    res.redirect("/admin")
+});
+
+router.post("/add-trainee", function(req,res){
+    adminController.addCorporate(req.body);
+    res.render("admin", {data: "Success!"});
+    res.redirect("/admin");
 });
 
 router.get("/addCourse", function(req,res){
