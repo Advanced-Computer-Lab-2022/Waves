@@ -65,7 +65,11 @@ router.post("/login", function(req,res){
 });
 
 router.post("/logout", function(req,res){
-    res.render("home")
+    req.session.username = null
+    req.session.password = null
+    req.session.isLoggedIn = null
+    req.session.user = null
+    res.redirect("/")
 });
 
 router.post("/add-administrator", function(req,res){

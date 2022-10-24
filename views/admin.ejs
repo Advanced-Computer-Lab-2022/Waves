@@ -61,18 +61,9 @@
                 </form>
             </div>
         </div>
-        <button id="logout_button" onlick=""  type="submit" class="btn btn-primary">Logout</button>
-
-        <script type="text/javascript">
-            document.getElementById("logout_button").onclick = function () {
-                location.href = "/";
-                alert("db;")
-                req.session.username = null;
-                req.session.password = null;
-                req.session.isLoggedIn = null;
-                req.session.user = null;
-            };
-        </script>
+        <form method="POST" action="/logout">
+            <button id="logout_button" type="submit" class="btn btn-primary">Logout</button>
+        </form>
     </div>
 </body>
 </html>
