@@ -9,5 +9,5 @@ const InstructorSchema = new mongoose.Schema({
     required: true,
   }
 });
-const Instructor = mongoose.model("Instructor", UserSchema);
+const Instructor = mongoose.model("Instructor", InstructorSchema);
 module.exports = Instructor;

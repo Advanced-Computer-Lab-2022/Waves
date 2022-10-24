@@ -1,8 +1,9 @@
 const mongoose = require("mongoose");
-const CourseSchema = new mongoose.Schema({
+const CoursesSchema = new mongoose.Schema({
   title: {
     type: String,
     required: true,
+    //unique: true
   },
   subtitle: {
     type: String,
@@ -17,5 +18,5 @@ const CourseSchema = new mongoose.Schema({
     required: true,
   }
 });
-const Course = mongoose.model("Course", UserSchema);
-module.exports = Course;
+var Courses = mongoose.model("Courses", CoursesSchema);
+module.exports = Courses;
