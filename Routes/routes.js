@@ -52,6 +52,12 @@ router.get("/getCourses", async(req,res) => {
     res.json(get);
 });
 
+router.get("/getCoursesByPrice", async(req,res) => {
+    const get=await instructorController.getCoursesByPrice()
+    console.log(get)
+    res.json(get);
+});
+
 router.get("/filterCourses", function(req,res){
     res.render("filterCourses");
   });
