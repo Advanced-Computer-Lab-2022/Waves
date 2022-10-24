@@ -16,7 +16,15 @@ const CoursesSchema = new mongoose.Schema({
   shortSummary: {
     type: String,
     required: true,
-  }
+  },
+  totalHours: {
+    type: Number,
+    required: true,
+  },
+  courseRating: {
+    type: Number,
+    required: true,
+  },
 });
 var Courses = mongoose.model("Courses", CoursesSchema);
 module.exports = Courses;

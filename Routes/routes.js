@@ -4,7 +4,15 @@ const instructorController = require("../controller/InstructorController");
 var router = express.Router();
 
 router.get("/", function(req,res){
-    res.render("index");
+    res.render("home");
+});
+
+router.get("/sign-up", function(req,res){
+    res.render("sign_up");
+});
+
+router.get("/terms", function(req,res){
+    res.render("terms");
 });
 
 router.post("/sign-up", function(req,res){
@@ -12,7 +20,21 @@ router.post("/sign-up", function(req,res){
 });
 
 router.post("/login", function(req,res){
-    res.render("login");
+    res.render("login", {
+        err: ''
+    })
+});
+
+router.post("/administrator", function(req,res){
+    res.render("admin");
+});
+
+router.post("/add-administrator", function(req,res){
+    res.render("add-admin");
+});
+
+router.post("/add-instructor", function(req,res){
+    res.render("add-instructor");
 });
 
 router.get("/instructor", function(req,res){
