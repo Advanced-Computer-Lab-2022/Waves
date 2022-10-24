@@ -8,7 +8,21 @@ var Administrator = require("../models/Users/Administrator");
 var router = express.Router();
 
 router.get("/", function(req,res){
-    res.render("home");
+    if(req.session.user == "admin"){
+        res.redirect("/admin")
+    }
+    else if(req.session.user == "individual"){
+        res.redirect("/individual")
+    }
+    else if(req.session.user == "corporate"){
+        res.redirect("/corporate")
+    }
+    else if(req.session.user == "instructor"){
+        res.redirect("/instructor")
+    }
+    else{
+        res.render("home");
+    }
 });
 
 router.get("/sign-up", function(req,res){
@@ -22,6 +36,13 @@ router.get("/terms", function(req,res){
 });
 
 router.get("/admin", function(req,res){
+    if(!req.session.isLoggedIn)
+        res.redirect('./login')
+    else
+        res.render("admin");
+});
+
+router.post("/admin", function(req,res){
     res.render("admin");
 });
 
@@ -31,14 +52,20 @@ router.post("/sign-up", function(req,res){
     });
 });
 
+router.get("/login", function(req,res){
+    res.render("login", {
+        err: ''
+    })
+});
+
 router.post("/login", function(req,res){
     res.render("login", {
         err: ''
     })
 });
 
-router.post("/administrator", function(req,res){
-    res.render("admin");
+router.post("/logout", function(req,res){
+    res.render("home")
 });
 
 router.post("/add-administrator", function(req,res){
@@ -82,16 +109,33 @@ router.get("/getCourses", async(req,res) => {
 router.post('/authenticate', async(req, res) =>{
     
     const user = await guestController.authenticateUser(req.body);
-    if(user == "admin")
-        res.redirect("/admin")
-    else if(user == "individual")
-        res.redirect("individual")
-    else if(user == "corporate")
-        res.redirect("corporate")
-    else if(user == "instructor")
-        res.redirect("instructor")
+    
+    if(user == "admin"){
+        req.session.isLoggedIn = true;
+        req.session.username = req.body.username;
+        req.session.user = user;
+        res.redirect("/admin");
+    }
+    else if(user == "individual"){
+        req.session.isLoggedIn = true
+        req.session.username = req.body.username
+        req.session.user = user;
+        res.redirect("/individual");
+    }
+    else if(user == "corporate"){
+        req.session.isLoggedIn = true
+        req.session.username = req.body.username
+        req.session.user = user;
+        res.redirect("/corporate");
+    }
+    else if(user == "instructor"){
+        req.session.isLoggedIn = true
+        req.session.username = req.body.username
+        req.session.user = user;
+        res.redirect("/instructor");
+    }
     else if(user == "no one")
-        res.render("login", {
+        res.render("/login", {
             err: "Username And Password are not matched, please try again!"
         })
 });
@@ -120,7 +164,7 @@ router.get("/getCoursesByPrice", async(req,res) => {
     // } catch (error) {
     //     console.log(error)
     // }
-    
+
 router.get("/filterCourses", function(req,res){
     res.render("filterCourses");
   });

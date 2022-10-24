@@ -5,6 +5,7 @@ var routes = require("./Routes/routes");
 var app = express();
 var mongoose = require("mongoose");
 var bodyParser = require('body-parser')
+var session = require('express-session')
 //const { Mongoose } = require("mongoose/lib");
 
 console.log(process.env.ATLAS_URI);
@@ -13,7 +14,13 @@ mongoose.connect(process.env.ATLAS_URI);
 app.use(bodyParser.urlencoded({
   extended: true
 }));
-//app.use(bodyParser.json());
+
+app.use(session({
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: false }
+}))
 
 var port=3000
 app.set("views", path.join(__dirname, "views"))
