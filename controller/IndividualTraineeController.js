@@ -1,9 +1,4 @@
-var Administrator = require("../models/Users/Administrator");
-
-async function authenticateUser (body){
-    const docs=await Administrator.find({}).exec();
-    print(docs)
-}
+var Courses=require("../models/Courses"); 
 
 async function getCourses (){
     const docs=await Courses.find({},'title totalHours courseRating').exec();
@@ -16,4 +11,5 @@ async function getCoursesByPrice (){
     //docs.wait()
     return docs
 }
-module.exports= {authenticateUser,getCourses,getCoursesByPrice};
+module.exports= {getCourses,getCoursesByPrice};
+    //res.render("guest");
