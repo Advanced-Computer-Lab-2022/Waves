@@ -43,11 +43,15 @@ router.post("/add-instructor", function(req,res){
     res.render("add-instructor");
 });
 
-router.get("/instructor", function(req,res){
+router.get("/addCourse", function(req,res){
+    res.render("addCourse");
+  });
+
+  router.get("/instructor", function(req,res){
     res.render("instructor");
   });
 
-router.post("/instructor", function(req,res){
+router.post("/addCourse", function(req,res){
     //console.log(req.body)
     instructorController.addCourse(req.body);
 });
