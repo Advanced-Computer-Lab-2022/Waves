@@ -21,5 +21,5 @@ var IndividualTraineeSchema = new mongoose.Schema({
     required: true,
   }
 });
-const IndividualTrainee = mongoose.model("IndividualTrainee", IndividualTraineeSchema);
+var IndividualTrainee = mongoose.model("Individual Trainees", IndividualTraineeSchema);
 module.exports = IndividualTrainee;

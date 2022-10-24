@@ -25,7 +25,7 @@ const GuestSchema = new mongoose.Schema({
     required: true,
   },
 });
-const Guest = mongoose.model("Guest", UserSchema);
+const Guest = mongoose.model("Guest", GuestSchema);
 module.exports = Guest;
 
 

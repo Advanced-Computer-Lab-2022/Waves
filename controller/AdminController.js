@@ -28,4 +28,4 @@ function addInstructor (body){
 
 
 
-module.exports= {addAdmin, addCorporate, addInstructor};
+module.exports = {addAdmin, addCorporate, addInstructor};
