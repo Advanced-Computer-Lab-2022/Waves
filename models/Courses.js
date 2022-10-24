@@ -23,7 +23,7 @@ var CoursesSchema = new mongoose.Schema({
   },
   courseRating: {
     type: Number,
-    required: true,
+    required: false,
   },
 });
 var Courses = mongoose.model("Courses", CoursesSchema);

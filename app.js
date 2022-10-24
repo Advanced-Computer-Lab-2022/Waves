@@ -27,11 +27,39 @@ app.listen(port, () => {
 
 
 //var helper=require("./controller/helper");
+// app.post('/try-login', async(req, res) => {
+//   try {
+//       let boolean = true
+//       const MongoClient = require('mongodb').MongoClient;
+//       const uri =   `mongodb+srv://Adam2431:Waves2431@waves.0kjx7bl.mongodb.net/test`;
+//       const client = new MongoClient(uri, { useNewUrlParser: true });
+//       await client.connect();
+//       const results = await client.db('Online-Learning-System').collection('admin').find().toArray();
+//       client.close()
+//       if (results.length > 0) {
+//         results.forEach((result) => {
+//             if(result.username == req.body.username && result.password == req.body.password){
+//                 req.session.isLoggedIn = true
+//                 req.session.username = req.body.username
+//                 res.redirect('./admin')
+//                 boolean = false
+//             }
+//         });
+//       }
+//       if(boolean){
+//       res.render('login' , {
+//           err: 'Invalid Username and Password'
+//       })
+//       }
+//   } catch (error) {
+//       console.log(error)
+//   }
+// })
 
-app.get('/AllCourses', async (req,res)=>{
-  const AllCourses = await Course
-
-})
+// app.get('/AllCourses', async (req,res)=>{
+//   const AllCourses = await Course
+ 
+// })
 
 //use('Online-Learning-System')
 //db.Users.insertOne([{name: Adam}])

@@ -53,4 +53,15 @@ async function authenticateUser (body){
     }
 }
 
-module.exports= {authenticateUser};
+async function getCourses (){
+    const docs=await Courses.find({},'title totalHours courseRating').exec();
+    //docs.wait()
+    return docs
+}
+
+async function getCoursesByPrice (){
+    const docs=await Courses.find({},'price').exec();
+    //docs.wait()
+    return docs
+}
+module.exports= {authenticateUser,getCourses,getCoursesByPrice};

@@ -94,6 +94,13 @@ router.post('/authenticate', async(req, res) =>{
         res.render("login", {
             err: "Username And Password are not matched, please try again!"
         })
+});
+
+router.get("/getCoursesByPrice", async(req,res) => {
+    const get=await instructorController.getCoursesByPrice()
+    console.log(get)
+    res.json(get);
+});
     // try {
     //     if (results.length > 0) {
     //       results.forEach((result) => {
@@ -113,7 +120,7 @@ router.post('/authenticate', async(req, res) =>{
     // } catch (error) {
     //     console.log(error)
     // }
-  })
+    
 router.get("/filterCourses", function(req,res){
     res.render("filterCourses");
   });

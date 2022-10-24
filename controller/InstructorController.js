@@ -7,17 +7,25 @@ function addCourse (body){
         title: body.title,
         subtitle: body.subtitle,
         price: body.price,
-        shortSummary: body.shortSummary
+        shortSummary: body.shortSummary,
+        totalHours: body.totalHours,
+        courseRating: 5
  });
     newCourse.save();
 }
 
 async function getCourses (){
-    const docs=await Courses.find({}).exec();
+    const docs=await Courses.find({},'title totalHours courseRating').exec();
     //docs.wait()
     return docs
 }
-module.exports= {addCourse,getCourses};
+
+async function getCoursesByPrice (){
+    const docs=await Courses.find({},'price').exec();
+    //docs.wait()
+    return docs
+}
+module.exports= {addCourse,getCourses,getCoursesByPrice};
     //res.render("guest");
 
 
