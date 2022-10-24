@@ -11,9 +11,9 @@ var AdministratorSchema = new mongoose.Schema({
 });
 
 function loadModel(modelName, modelSchema) {
-    return mongoose.models[modelName]
-      ? mongoose.model(modelName)
-      : mongoose.model(modelName, modelSchema)
-  }
-
-module.exports = () => loadModel('Administrator', AdministratorSchema)
+    return mongoose.models[modelName] // Check if the model exists
+      ? mongoose.model(modelName) // If true, only retrieve it
+      : mongoose.model(modelName, modelSchema) // If false, define it
+}
+var Administrator = loadModel("Administrators", AdministratorSchema);
+module.exports = Administrator

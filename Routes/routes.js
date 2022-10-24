@@ -2,6 +2,8 @@ var express = require("express");
 var instructorController = require("../controller/InstructorController");
 var adminController = require("../controller/AdminController");
 var guestController = require("../controller/GuestController");
+var IndividualTrainee = require("../models/IndividualTrainee"); 
+var Administrator = require("../models/Users/Administrator"); 
 
 var router = express.Router();
 
@@ -10,7 +12,9 @@ router.get("/", function(req,res){
 });
 
 router.get("/sign-up", function(req,res){
-    res.render("sign_up");
+    res.render("sign_up", {
+        err:''
+    });
 });
 
 router.get("/terms", function(req,res){
@@ -22,7 +26,9 @@ router.get("/admin", function(req,res){
 });
 
 router.post("/sign-up", function(req,res){
-    res.render("sign_up");
+    res.render("sign_up", {
+        err:''
+    });
 });
 
 router.post("/login", function(req,res){
@@ -73,8 +79,21 @@ router.get("/getCourses", async(req,res) => {
     res.json(get);
 });
 
-router.post('/authenticate', async(req, res) => {
-    guestController.authenticateUser(req);
+router.post('/authenticate', async(req, res) =>{
+    
+    const user = await guestController.authenticateUser(req.body);
+    if(user == "admin")
+        res.redirect("/admin")
+    else if(user == "individual")
+        res.redirect("individual")
+    else if(user == "corporate")
+        res.redirect("corporate")
+    else if(user == "instructor")
+        res.redirect("instructor")
+    else if(user == "no one")
+        res.render("login", {
+            err: "Username And Password are not matched, please try again!"
+        })
     // try {
     //     if (results.length > 0) {
     //       results.forEach((result) => {
@@ -105,6 +124,30 @@ router.get("/filterCourses", function(req,res){
 
 // var MongoClient = require('mongodb').MongoClient;
 // var url = "mongodb://localhost:27017/";
+
+router.post('/register', async(req, res) => {
+  try {
+        const newUser = new IndividualTrainee ({
+            username: req.body.username,
+            password: req.body.password,
+            email: req.body.email,
+            first: req.body.first,
+            last: req.body.last,
+
+        })
+        newUser.save();
+  } catch (error) {
+    console.log(error)
+      if(error.code == 11000) {
+          res.render('sign_up', {
+              err: "This Username is already taken!"
+          })
+      } else
+      res.render('sign_up', {
+          err: "Invalid Username Or Password!"
+      })
+  }
+})
 
 module.exports = router
 
