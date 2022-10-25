@@ -56,7 +56,6 @@ async function authenticateUser (body){
 
 async function getCourses (){
     var courses = await Courses.find({}).exec();
-    
     return courses;
 }
 

@@ -1,6 +1,7 @@
 //const mongoose = require("mongoose");
 //var router = express.Router();
-var Courses=require("../models/Courses"); 
+
+const Courses = require("../models/Courses");
 
 function addCourse (body){
     const newCourse =new Courses({

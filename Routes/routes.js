@@ -146,10 +146,7 @@ router.post('/authenticate', async(req, res) =>{
         res.redirect("/instructor");
     }
     else {
-        res.render("login", {
-            err: "Username And Password are not matched, please try again!"
-        })
-        res.redirect("login");
+        res.render("login", {err: "Username And Password are not matched, please try again!"})
     }
 });
 
