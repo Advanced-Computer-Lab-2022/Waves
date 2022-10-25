@@ -1,3 +1,4 @@
+const Courses = require("../models/Courses");
 const IndividualTrainee = require("../models/IndividualTrainee");
 const Instructor = require("../models/Instructor");
 var Administrator = require("../models/Users/Administrator");
@@ -54,9 +55,9 @@ async function authenticateUser (body){
 }
 
 async function getCourses (){
-    const docs=await Courses.find({},'title totalHours courseRating').exec();
-    //docs.wait()
-    return docs
+    var courses = await Courses.find({}).exec();
+    
+    return courses;
 }
 
 async function getCoursesByPrice (){

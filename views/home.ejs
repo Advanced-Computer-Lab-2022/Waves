@@ -1,10 +1,27 @@
 <%- include ("_header.ejs") %>
     <h1>Welcome to this Online Learning System</h1>
+    <div class="table-responsive">
+        <% if(courses!=null) { %>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Course Title</th>
+                        <th>Subtitle</th>
+                        <th>Price</th>
+                        <th>Short Summary</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% courses.forEach(function(item){ %>
+                    <tr>
+                        <td><%= item.title%></td>
+                        <td><%= item.subtitle %></td>
+                        <td><%= item.price%></td>
+                        <td><%= item.shortSummary %></td>
+                    </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+            <% } %>
+      </div>
 <%- include ("_footer.ejs") %>
-
-<form method="POST" action="sign-up">
-    <button>Sign Up</button>
-</form>
-<form method="POST" action="login">
-    <button>Login</button>
-</form>  

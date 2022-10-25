@@ -21,7 +21,7 @@ router.get("/", function(req,res){
         res.redirect("/instructor")
     }
     else{
-        res.render("home");
+        guestController.getCourses().then(result => res.render("home", {data: '', courses: result}));
     }
 });
 
@@ -38,27 +38,20 @@ router.get("/terms", function(req,res){
 router.get("/admin", function(req,res){
     if(!req.session.isLoggedIn)
         res.redirect('./login')
-    else
-        res.render("admin", {data: ''});
+    else {
+        guestController.getCourses().then(result => res.render("admin", {data: '', courses: result}));
+    }
 });
 
-router.post("/admin", function(req,res){
-    res.render("admin", {data: ''});
-});
-
-router.post("/sign-up", function(req,res){
-    res.render("sign_up", {
-        err:''
-    });
+router.post("/admin", async(req,res) => {
+    if(!req.session.isLoggedIn)
+        res.redirect('./login')
+    else {
+        res.render("admin", {data: '', courses: guestController.getCourses.toArray});
+    }
 });
 
 router.get("/login", function(req,res){
-    res.render("login", {
-        err: ''
-    })
-});
-
-router.post("/login", function(req,res){
     res.render("login", {
         err: ''
     })
@@ -152,10 +145,12 @@ router.post('/authenticate', async(req, res) =>{
         req.session.user = user;
         res.redirect("/instructor");
     }
-    else if(user == "no one")
-        res.render("/login", {
+    else {
+        res.render("login", {
             err: "Username And Password are not matched, please try again!"
         })
+        res.redirect("login");
+    }
 });
 
 router.get("/getCoursesByPrice", async(req,res) => {

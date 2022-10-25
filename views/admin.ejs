@@ -65,6 +65,30 @@
             <button id="logout_button" type="submit" class="btn btn-primary">Logout</button>
         </form>
     </div>
+    <div class="table-responsive">
+        <% if(courses!=null) { %>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Course Title</th>
+                        <th>Subtitle</th>
+                        <th>Price</th>
+                        <th>Short Summary</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% courses.forEach(function(item){ %>
+                    <tr>
+                        <td><%= item.title%></td>
+                        <td><%= item.subtitle %></td>
+                        <td><%= item.price%></td>
+                        <td><%= item.shortSummary %></td>
+                    </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+            <% } %>
+      </div>
     <div style= "color:green"> <%= data %></div>
 </body>
 </html>
