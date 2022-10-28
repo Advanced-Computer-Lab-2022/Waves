@@ -15,18 +15,7 @@ function addCourse (body){
     newCourse.save();
 }
 
-async function getCourses (){
-    const docs=await Courses.find({},'title totalHours courseRating').exec();
-    //docs.wait()
-    return docs
-}
-
-async function getCoursesByPrice (){
-    const docs=await Courses.find({},'price').exec();
-    //docs.wait()
-    return docs
-}
-module.exports= {addCourse,getCourses,getCoursesByPrice};
+module.exports= {addCourse};
     //res.render("guest");
 
 

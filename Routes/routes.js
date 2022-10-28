@@ -7,7 +7,7 @@ var Administrator = require("../models/Users/Administrator");
 
 var router = express.Router();
 
-router.get("/", function(req,res){
+router.get("/", async (req,res) => {
     if(req.session.user == "admin"){
         res.redirect("/admin")
     }
@@ -43,14 +43,6 @@ router.get("/admin", function(req,res){
     }
 });
 
-router.post("/admin", async(req,res) => {
-    if(!req.session.isLoggedIn)
-        res.redirect('./login')
-    else {
-        res.render("admin", {data: '', courses: guestController.getCourses.toArray});
-    }
-});
-
 router.get("/login", function(req,res){
     res.render("login", {
         err: ''
@@ -62,6 +54,34 @@ router.post("/logout", function(req,res){
     req.session.password = null
     req.session.isLoggedIn = null
     req.session.user = null
+    res.redirect("/")
+});
+
+router.post("/search", function(req,res){
+
+    if(req.session.user == "admin"){
+        guestController.getCourses().then(result => res.render("admin", {data: '', courses: result.filter(item => item.title.toLocaleLowerCase().includes(req.body.searchTerm.toLocaleLowerCase()))}));
+    }
+    else if(req.session.user == "individual"){
+        req.session.isLoggedIn = true
+        req.session.username = req.body.username
+        req.session.user = user;
+        res.redirect("/individual");
+    }
+    else if(req.session.user == "corporate"){
+        req.session.isLoggedIn = true
+        req.session.username = req.body.username
+        req.session.user = user;
+        res.redirect("/corporate");
+    }
+    else if(req.session.user == "instructor"){
+        req.session.isLoggedIn = true
+        req.session.username = req.body.username
+        req.session.user = user;
+        res.redirect("/instructor");
+    }
+
+    guestController.getCourses().then(result => res.render("admin", {data: '', courses: result}));
     res.redirect("/")
 });
 
@@ -111,12 +131,6 @@ router.post("/add-instructor", function(req,res){
     adminController.addInstructor(req.body);
 });
 
-router.get("/getCourses", async(req,res) => {
-    const get=await instructorController.getCourses()
-    console.log(get)
-    res.json(get);
-});
-
 router.post('/authenticate', async(req, res) =>{
     
     const user = await guestController.authenticateUser(req.body);
@@ -150,11 +164,6 @@ router.post('/authenticate', async(req, res) =>{
     }
 });
 
-router.get("/getCoursesByPrice", async(req,res) => {
-    const get=await instructorController.getCoursesByPrice()
-    console.log(get)
-    res.json(get);
-});
     // try {
     //     if (results.length > 0) {
     //       results.forEach((result) => {
