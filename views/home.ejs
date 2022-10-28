@@ -16,12 +16,27 @@
                 <tbody>
                     <% courses.forEach(function(item){ %>
                     <tr>
-                        <td><%= item.title%></td>
-                        <td><%= item.subtitle %></td>
-                        <td><%= item.price%></td>
-                        <td><%= item.shortSummary %></td>
-                        <td><%= item.totalHours %></td>
-                        <td><%= item.courseRating %></td>
+                        <td>
+                            <div class="col dropdown">
+                                <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
+                                <%= item.title%>
+                                </button>
+                                <form class="dropdown-menu p-4" method="POST" action="add-instructor">
+                                    <div class="mb-3">
+                                        <label for="exampleDropdownFormEmail2" class="form-label">Subtitle: <%= item.subtitle %></label>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="exampleDropdownFormEmail2" class="form-label">Price: <%= item.price %></label>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="exampleDropdownFormEmail2" class="form-label">Total Hours: <%= item.totalHours %></label>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="exampleDropdownFormEmail2" class="form-label">Course Rating: <%= item.courseRating %></label>
+                                    </div>
+                                </form>
+                            </div>
+                        </td>
                     </tr>
                     <% }) %>
                 </tbody>
