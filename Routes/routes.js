@@ -21,7 +21,8 @@ router.get("/", async (req,res) => {
         res.redirect("/instructor")
     }
     else{
-        guestController.getCourses().then(result => res.render("home", {data: '', courses: result}));
+        const allCourses = await guestController.getCourses();
+        res.render("home", {data: '', courses: allCourses})
     }
 });
 
@@ -35,11 +36,12 @@ router.get("/terms", function(req,res){
     res.render("terms");
 });
 
-router.get("/admin", function(req,res){
+router.get("/admin", async(req,res) => {
     if(!req.session.isLoggedIn)
         res.redirect('./login')
     else {
-        guestController.getCourses().then(result => res.render("admin", {data: '', courses: result}));
+        const allCourses = await guestController.getCourses();
+        res.render("admin", {data: '', courses: allCourses})
     }
 });
 
@@ -57,10 +59,11 @@ router.post("/logout", function(req,res){
     res.redirect("/")
 });
 
-router.post("/search", function(req,res){
+router.post("/search", async(req,res) => {
 
     if(req.session.user == "admin"){
-        guestController.getCourses().then(result => res.render("admin", {data: '', courses: result.filter(item => item.title.toLocaleLowerCase().includes(req.body.searchTerm.toLocaleLowerCase()))}));
+        const searchedCourses = await guestController.getSearchedCourses(req.body.searchTerm);
+        res.render("admin", {data: '', courses: searchedCourses})
     }
     else if(req.session.user == "individual"){
         req.session.isLoggedIn = true
@@ -80,9 +83,6 @@ router.post("/search", function(req,res){
         req.session.user = user;
         res.redirect("/instructor");
     }
-
-    guestController.getCourses().then(result => res.render("admin", {data: '', courses: result}));
-    res.redirect("/")
 });
 
 router.post("/add-admin", function(req,res){

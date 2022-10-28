@@ -59,9 +59,16 @@ async function getCourses (){
     return courses;
 }
 
+async function getSearchedCourses (searchTerm){
+    var courses = await Courses.find({}).exec();
+    var searchedCourses = courses.filter(item => item.title.toLocaleLowerCase().includes(searchTerm.toLocaleLowerCase()));
+    return searchedCourses;
+}
+
+
 async function getCoursesByPrice (){
     const docs=await Courses.find({},'price').exec();
     //docs.wait()
     return docs
 }
-module.exports= {authenticateUser,getCourses,getCoursesByPrice};
+module.exports= {authenticateUser, getCourses, getCoursesByPrice, getSearchedCourses};
