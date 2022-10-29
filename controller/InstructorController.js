@@ -10,7 +10,8 @@ function addCourse (body){
         price: body.price,
         shortSummary: body.shortSummary,
         totalHours: body.totalHours,
-        courseRating: 5
+        courseRating: 5,
+        subject: body.subject
  });
     newCourse.save();
 }

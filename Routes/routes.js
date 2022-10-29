@@ -62,8 +62,8 @@ router.post("/logout", function(req,res){
 router.post("/search", async(req,res) => {
 
     if(req.session.user == "admin"){
-        const searchedCourses = await guestController.getSearchedCourses(req.body.searchTerm);
-        res.render("admin", {data: '', courses: searchedCourses})
+        const filteredCourses = await guestController.searchFilterCourses(req.body.searchTerm, req.body.rating, req.body.subject, req.body.price);
+        res.render("admin", {data: '', courses: filteredCourses})  
     }
     else if(req.session.user == "individual"){
         req.session.isLoggedIn = true
@@ -164,36 +164,9 @@ router.post('/authenticate', async(req, res) =>{
     }
 });
 
-    // try {
-    //     if (results.length > 0) {
-    //       results.forEach((result) => {
-    //           if(result.username == req.body.username && result.password == req.body.password){
-    //               req.session.isLoggedIn = true
-    //               req.session.username = req.body.username
-    //               res.redirect('./admin')
-    //               boolean = false
-    //           }
-    //       });
-    //     }
-    //     if(boolean){
-    //     res.render('login' , {
-    //         err: 'Invalid Username and Password'
-    //     })
-    //     }
-    // } catch (error) {
-    //     console.log(error)
-    // }
-
 router.get("/filterCourses", function(req,res){
     res.render("filterCourses");
   });
-    // await client.db('Online-Learning-System').collection('Courses').insertOne(newCourse)
-    // client.close()}
-    //res.render("guest");
-
-
-// var MongoClient = require('mongodb').MongoClient;
-// var url = "mongodb://localhost:27017/";
 
 router.post('/register', async(req, res) => {
   try {

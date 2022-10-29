@@ -59,16 +59,15 @@ async function getCourses (){
     return courses;
 }
 
-async function getSearchedCourses (searchTerm){
+async function searchFilterCourses (searchTerm, rating, subject, price){
     var courses = await Courses.find({}).exec();
-    var searchedCourses = courses.filter(item => item.title.toLocaleLowerCase().includes(searchTerm.toLocaleLowerCase()));
-    return searchedCourses;
+    var filteredCourses = courses.filter(item => (item.title.toLocaleLowerCase().includes(searchTerm.toLocaleLowerCase()) || searchTerm=="") && (item.courseRating==rating || rating==null) && (item.subject==subject || subject==null) && (item.price==price || price==null));
+    return filteredCourses;
 }
-
 
 async function getCoursesByPrice (){
     const docs=await Courses.find({},'price').exec();
     //docs.wait()
     return docs
 }
-module.exports= {authenticateUser, getCourses, getCoursesByPrice, getSearchedCourses};
+module.exports= {authenticateUser, getCourses, getCoursesByPrice, searchFilterCourses};

@@ -25,6 +25,10 @@ var CoursesSchema = new mongoose.Schema({
     type: Number,
     required: false,
   },
+  subject: {
+    type: String,
+    required: true,
+  }
 });
 var Courses = mongoose.model("Courses", CoursesSchema);
 module.exports = Courses;
