@@ -118,7 +118,7 @@ router.get("/corporateTrainee", async(req,res) => {
 });
 
 router.post("/add-course", async(req,res) => {
-    instructorController.addCourse(req.body);
+    instructorController.addCourse(req.body, req.session.username);
     const allCourses = await guestController.getCourses();
     res.render("instructor", {data: 'Success', courses: allCourses})
 });

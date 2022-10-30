@@ -3,7 +3,7 @@
 
 const Courses = require("../models/Courses");
 
-function addCourse (body){
+function addCourse (body, username){
     const newCourse =new Courses({
         title: body.title,
         subtitle: body.subtitle,
@@ -11,7 +11,8 @@ function addCourse (body){
         shortSummary: body.shortSummary,
         totalHours: body.totalHours,
         courseRating: body.rating,
-        subject: body.subject
+        subject: body.subject,
+        givenBy: username     
  });
     newCourse.save();
 }
