@@ -15,7 +15,7 @@ router.get("/", async (req,res) => {
         res.redirect("/individual")
     }
     else if(req.session.user == "corporate"){
-        res.redirect("/corporate")
+        res.redirect("/corporateTrainee")
     }
     else if(req.session.user == "instructor"){
         res.redirect("/instructor")
@@ -85,50 +85,50 @@ router.post("/search", async(req,res) => {
     }
 });
 
-router.post("/add-admin", function(req,res){
+router.post("/add-admin", async(req,res) => {
     adminController.addAdmin(req.body);
-    res.render("admin", {data: "Success!"});
-    res.redirect("/admin")
+    const allCourses = await guestController.getCourses();
+    res.render("admin", {data: 'Success!', courses: allCourses})
 });
 
-router.post("/add-instructor", function(req,res){
+router.post("/add-instructor", async(req,res) => {
     adminController.addInstructor(req.body);
-    res.render("admin", {data: "Success!"});
-    res.redirect("/admin")
+    const allCourses = await guestController.getCourses();
+    res.render("admin", {data: 'Success!', courses: allCourses})
 });
 
-router.post("/add-trainee", function(req,res){
+router.post("/add-trainee", async(req,res) => {
     adminController.addCorporate(req.body);
-    res.render("admin", {data: "Success!"});
-    res.redirect("/admin");
+    const allCourses = await guestController.getCourses();
+    res.render("admin", {data: 'Success!', courses: allCourses})
 });
 
 router.get("/addCourse", function(req,res){
     res.render("addCourse");
   });
 
-  router.get("/instructor", function(req,res){
-    res.render("instructor");
-  });
+router.get("/instructor", async(req,res) => {
+    if(!req.session.isLoggedIn)
+        res.redirect('./login')
+    else {
+        const allCourses = await guestController.getCourses();
+        res.render("instructor", {data: '', courses: allCourses})
+    }
+});
 
-router.post("/addCourse", function(req,res){
-    //console.log(req.body)
+router.get("/corporateTrainee", async(req,res) => {
+    if(!req.session.isLoggedIn)
+        res.redirect('./login')
+    else {
+        const allCourses = await guestController.getCourses();
+        res.render("corporateTrainee", {data: '', courses: allCourses})
+    }
+});
+
+router.post("/add-course", async(req,res) => {
     instructorController.addCourse(req.body);
-});
-
-router.post("/add-admin", function(req,res){
-    //console.log(req.body)
-    adminController.addAdmin(req.body);
-});
-
-router.post("/add-corporate", function(req,res){
-    //console.log(req.body)
-    adminController.addCorporate(req.body);
-});
-
-router.post("/add-instructor", function(req,res){
-    //console.log(req.body)
-    adminController.addInstructor(req.body);
+    const allCourses = await guestController.getCourses();
+    res.render("instructor", {data: 'Success', courses: allCourses})
 });
 
 router.post('/authenticate', async(req, res) =>{
