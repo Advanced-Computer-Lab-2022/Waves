@@ -60,28 +60,19 @@ router.post("/logout", function(req,res){
 });
 
 router.post("/search", async(req,res) => {
-
-    if(req.session.user == "admin"){
-        const filteredCourses = await guestController.searchFilterCourses(req.body.searchTerm, req.body.rating, req.body.subject, req.body.price);
-        res.render("admin", {data: '', courses: filteredCourses})  
+    const user = req.session.user
+    const filteredCourses = await guestController.searchFilterCourses(req.body.searchTerm, req.body.rating, req.body.subject, req.body.price);
+    if(user == "admin"){
+        res.render(user, {data: '', courses: filteredCourses})  
     }
-    else if(req.session.user == "individual"){
-        req.session.isLoggedIn = true
-        req.session.username = req.body.username
-        req.session.user = user;
-        res.redirect("/individual");
+    else if(user == "individual"){
+        res.render(user, {data: '', courses: filteredCourses})  
     }
-    else if(req.session.user == "corporate"){
-        req.session.isLoggedIn = true
-        req.session.username = req.body.username
-        req.session.user = user;
-        res.redirect("/corporate");
+    else if(user == "corporate"){
+        res.render("corporateTrainee", {data: '', courses: filteredCourses})  
     }
-    else if(req.session.user == "instructor"){
-        req.session.isLoggedIn = true
-        req.session.username = req.body.username
-        req.session.user = user;
-        res.redirect("/instructor");
+    else if(user == "instructor"){
+        res.render(user, {data: '', courses: filteredCourses})  
     }
 });
 
