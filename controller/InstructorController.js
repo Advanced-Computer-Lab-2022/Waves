@@ -16,13 +16,11 @@ function addCourse (body){
     newCourse.save();
 }
 
-async function myCourses (username, searchTerm, rating, subject, price){
-    var courses = await Courses.find({}).exec();
-    var filteredCourses = courses.filter(item => item.givenBy==username && ((item.title.toLocaleLowerCase().includes(searchTerm.toLocaleLowerCase()) || searchTerm=="") && (item.courseRating==rating || rating==null) && (item.subject==subject || subject==null) && (item.price==price || price==null)));
-    return filteredCourses;
+async function getMyCourses (courses, username){
+    return courses.filter(item => item.givenBy==username);
 }
 
-module.exports= {addCourse};
+module.exports= {addCourse, getMyCourses};
     //res.render("guest");
 
 

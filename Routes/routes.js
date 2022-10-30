@@ -72,7 +72,12 @@ router.post("/search", async(req,res) => {
         res.render("corporateTrainee", {data: '', courses: filteredCourses})  
     }
     else if(user == "instructor"){
-        res.render(user, {data: '', courses: filteredCourses})  
+        const myFilteredCourses = await instructorController.getMyCourses(filteredCourses, req.session.username);
+        console.log(req.body.showMyCourses)
+        if(req.body.showYourCourses)
+            res.render("instructor", {data: '', courses: myFilteredCourses})
+        else
+            res.render("instructor", {data: '', courses: filteredCourses})
     }
 });
 
@@ -93,10 +98,6 @@ router.post("/add-trainee", async(req,res) => {
     const allCourses = await guestController.getCourses();
     res.render("admin", {data: 'Success!', courses: allCourses})
 });
-
-router.get("/addCourse", function(req,res){
-    res.render("addCourse");
-  });
 
 router.get("/instructor", async(req,res) => {
     if(!req.session.isLoggedIn)
@@ -154,10 +155,6 @@ router.post('/authenticate', async(req, res) =>{
         res.render("login", {err: "Username And Password are not matched, please try again!"})
     }
 });
-
-router.get("/filterCourses", function(req,res){
-    res.render("filterCourses");
-  });
 
 router.post('/register', async(req, res) => {
   try {
