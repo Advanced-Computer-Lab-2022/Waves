@@ -28,6 +28,10 @@ var CoursesSchema = new mongoose.Schema({
   subject: {
     type: String,
     required: true,
+  },
+  givenBy: {
+    type: String,
+    required: true
   }
 });
 var Courses = mongoose.model("Courses", CoursesSchema);

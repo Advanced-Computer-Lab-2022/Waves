@@ -85,6 +85,13 @@ router.post("/search", async(req,res) => {
     }
 });
 
+router.post("/myCourses", async(req,res) => {
+    if(req.session.user == "instructor"){
+        const filteredCourses = await instructorController.myCourses(req.body.searchTerm, req.body.rating, req.body.subject, req.body.price);
+        res.render("admin", {data: '', courses: filteredCourses}) 
+    } 
+});
+
 router.post("/add-admin", async(req,res) => {
     adminController.addAdmin(req.body);
     const allCourses = await guestController.getCourses();
