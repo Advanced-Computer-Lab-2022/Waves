@@ -22,7 +22,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active text-white" aria-current="page" href="#">Home</a>
+                    <a class="nav-link active text-white" aria-current="page" href="/">Home</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-white" href="#">Link</a>
@@ -85,78 +85,44 @@
             </div>
         </div>
     </nav>
-    <div class="table-responsive">
-        <% if(courses!=null) { %>
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Course Title</th>
-                        <th>Subtitle</th>
-                        <th>Price</th>
-                        <th>Short Summary</th>
-                        <th>Total Hours</th>
-                        <th>Course Rating</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <% courses.forEach(function(item){ %>
-                    <tr>
-                        <td><%= item.title%></td>
-                        <td><%= item.subtitle %></td>
-                        <td><%= item.price%></td>
-                        <td><%= item.shortSummary %></td>
-                        <td><%= item.totalHours %></td>
-                        <td><%= item.courseRating %></td>
-                    </tr>
-                    <% }) %>
-                </tbody>
-            </table>
+    <div class="container text-center">
+        <h2>Course Titles</h2>
+        <div class="row justify-content-md-center dropdown">
+            <% if(courses!=null) { %>
+                <% courses.forEach(function(item){ %>
+                    <div class="col p-3">
+                        <button type="button" class="btn btn-lg btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
+                        <%= item.title%>
+                        </button>
+                        <form class="dropdown-menu p-4" method="POST" action="add-instructor">
+                            <div class="mb-3">
+                                <label for="exampleDropdownFormEmail2" class="form-label">Subtitle: <%= item.subtitle %></label>
+                            </div>
+                            <div class="mb-3">
+                                <label for="exampleDropdownFormEmail2" class="form-label">Price: <%= item.price %></label>
+                            </div>
+                            <div class="mb-3">
+                                <label for="exampleDropdownFormEmail2" class="form-label">Total Hours: <%= item.totalHours %></label>
+                            </div>
+                            <div class="mb-3">
+                                <label for="exampleDropdownFormEmail2" class="form-label">Course Rating: <%= item.courseRating %></label>
+                            </div>
+                            <div class="mb-3">
+                                <label for="exampleDropdownFormEmail2" class="form-label">Subject: <%= item.subject %></label>
+                            </div>
+                            <div class="mb-3">
+                                <label for="exampleDropdownFormEmail2" class="form-label">Given By: <%= item.givenBy %></label>
+                            </div>
+                        </form>
+                    </div>
+                <% }) %>
             <% } %>
-      </div>
-    <div class="container">
-        <div class="row g-2 mb-2">
-            <div class="col dropdown">
-                <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
-                Add Course
-                </button>
-                    <form class="dropdown-menu p-4" method="POST" action="add-course">
-                    <div class="mb-3">
-                        <label for="courseTitleID" class="form-label">Course Title</label>
-                        <input class="form-control" id="courseTitleID" placeholder="Software Engineering" name="courseTitle">
-                    </div>
-                    <div class="mb-3">
-                        <label for="courseSubtitleID" class="form-label">Subtitle</label>
-                        <input class="form-control" id="courseSubtitleID" placeholder="English" name="courseSubtitle">
-                    </div>
-                    <div class="mb-3">
-                        <label for="coursePriceID" class="form-label">Price</label>
-                        <input class="form-control" id="coursePriceID" placeholder="30$" name="coursePrice">
-                    </div>
-                    <div class="mb-3">
-                        <label for="courseShortSummaryID" class="form-label">Short Summary</label>
-                        <input class="form-control" id="courseShortSummaryID" placeholder="Good Course" name="courseShortSummary">
-                    </div>
-                    <div class="mb-3">
-                        <label for="courseTotalHoursID" class="form-label">Total Hours</label>
-                        <input class="form-control" id="courseTotalHoursID" placeholder="10 Hours" name="courseTotalHours">
-                    </div>
-                    <div class="mb-3">
-                        <label for="courseRatingID" class="form-label">Course Rating</label>
-                        <input class="form-control" id="courseRatingID" placeholder="5" name="courseRating">
-                    </div>
-                    <div class="mb-3">
-                        <label for="courseSubjectID" class="form-label">Computer Science</label>
-                        <input class="form-control" id="courseSubjectID" placeholder="5" name="courseSubject">
-                    </div>
-                    <button type="submit" class="btn btn-primary">Add Course</button>
-                </form>
-            </div>
-            <div class="col">
-                <form method="POST" action="/logout">
-                    <button id="logout_button" type="submit" class="btn btn-primary">Logout</button>
-                </form>
-            </div>
         </div>
+    </div>
+    <div class="col">
+        <form method="POST" action="/logout">
+            <button id="logout_button" type="submit" class="btn btn-primary">Logout</button>
+        </form>
     </div>
     <div style= "color:green"> <%= data %></div>
 </body>
