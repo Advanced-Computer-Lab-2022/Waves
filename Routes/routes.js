@@ -123,6 +123,17 @@ router.post("/add-course", async(req,res) => {
     res.render("instructor", {data: 'Success', courses: allCourses})
 });
 
+router.post("/add-exercise", async(req,res) => {
+    instructorController.addExercise(req.body);
+    res.render("instructor", {data: 'Exercise added successfully'})
+});
+
+router.post("/add-question", async(req,res) => {
+    instructorController.addQuestion(req.body);
+    res.render("instructor", {data: 'question added successfully'})
+});
+
+
 router.post('/authenticate', async(req, res) =>{
     
     const user = await guestController.authenticateUser(req.body);
