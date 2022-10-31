@@ -22,7 +22,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active text-white" aria-current="page" href="#">Home</a>
+                    <a class="nav-link active text-white" aria-current="page" href="/">Home</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-white" href="#">Link</a>
@@ -47,10 +47,7 @@
                         <div class="col-8">
                             <input class="form-control" placeholder="search" name="searchTerm"  id="search"></input>
                         </div>
-                        <div class="col">
-                            <button id="searchButton" class="btn btn-outline-dark" type="submit">Search</button>
-                        </div>
-                        <div>
+                        <div class="p-1">
                             <select name = "rating" id="ratingfilter"> 
                                 <option selected disabled>Rating</option>
                                 <option value = "1">1</option>
@@ -77,11 +74,12 @@
                                 <option value = "350">350</option>
                                 <option value = "500">500</option>
                              </select>
+                            <div class="col p-1">
+                                <button id="searchButton" class="btn btn-outline-dark" type="submit">Search</button>
+                            </div>
                         </div>
                     </form>
                 </div>
-           
-                
             </div>
         </div>
     </nav>

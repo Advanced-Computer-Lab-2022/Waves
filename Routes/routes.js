@@ -27,9 +27,7 @@ router.get("/", async (req,res) => {
 });
 
 router.get("/sign-up", function(req,res){
-    res.render("sign_up", {
-        err:''
-    });
+    res.render("sign_up", {err:"", succ:""});
 });
 
 router.get("/terms", function(req,res){
@@ -74,7 +72,7 @@ router.post("/search", async(req,res) => {
     else if(user == "instructor"){
         const myFilteredCourses = await instructorController.getMyCourses(filteredCourses, req.session.username);
         console.log(req.body.showMyCourses)
-        if(req.body.showYourCourses)
+        if(req.body.showMyCourses)
             res.render("instructor", {data: '', courses: myFilteredCourses})
         else
             res.render("instructor", {data: '', courses: filteredCourses})
@@ -105,6 +103,15 @@ router.get("/instructor", async(req,res) => {
     else {
         const allCourses = await guestController.getCourses();
         res.render("instructor", {data: '', courses: allCourses})
+    }
+});
+
+router.get("/individual", async(req,res) => {
+    if(!req.session.isLoggedIn)
+        res.redirect('./login')
+    else {
+        const allCourses = await guestController.getCourses();
+        res.render("individualTrainee", {data: '', courses: allCourses})
     }
 });
 
@@ -143,7 +150,7 @@ router.post('/authenticate', async(req, res) =>{
         req.session.isLoggedIn = true
         req.session.username = req.body.username
         req.session.user = user;
-        res.redirect("/corporate");
+        res.redirect("/corporateTrainee");
     }
     else if(user == "instructor"){
         req.session.isLoggedIn = true
@@ -157,27 +164,26 @@ router.post('/authenticate', async(req, res) =>{
 });
 
 router.post('/register', async(req, res) => {
-  try {
-        const newUser = new IndividualTrainee ({
-            username: req.body.username,
-            password: req.body.password,
-            email: req.body.email,
-            first: req.body.first,
-            last: req.body.last,
-
-        })
-        newUser.save();
-  } catch (error) {
-    console.log(error)
-      if(error.code == 11000) {
-          res.render('sign_up', {
-              err: "This Username is already taken!"
-          })
-      } else
-      res.render('sign_up', {
-          err: "Invalid Username Or Password!"
-      })
-  }
+    const newUser = new IndividualTrainee ({
+        username: req.body.username,
+        password: req.body.password,
+        email: req.body.email,
+        first: req.body.first,
+        last: req.body.last
+    })
+    newUser.save(function(err) {
+        if (err) {
+            if(err.code == 11000) {
+                res.render('sign_up', {err: "This Username is already taken!", succ: ""})
+            }
+            else{
+                res.render('sign_up', {err: "Invalid Username Or Password!", succ: ""})
+            }
+        }
+        else{
+            res.render('sign_up', {err: "", succ: "Your Account Has Been Successfully Registered!"})
+        }
+    })
 })
 
 module.exports = router
