@@ -1,13 +1,10 @@
-import React from 'react';
 import {
     BrowserRouter as Router,
     Route,
     useNavigate,
     Link
   } from "react-router-dom";
-import ReactDOM from 'react-dom/client';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
 
 const Navbar = (props:any) => {
     const navigate = useNavigate();
