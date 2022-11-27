@@ -1,14 +1,36 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
+import axios from './api/axios';
 import Navbar from './navbar';
+
+const handleSubmit = (e: any) => {
+    e.preventDefault();
+    const userInfo = new FormData(e.target)
+    console.log(Object.fromEntries(userInfo.entries()))
+    const username = Object.fromEntries(userInfo.entries()).username
+    const password = Object.fromEntries(userInfo.entries()).password
+    axios.post('/authenticate', {
+        username: username,
+        password: password
+      })
+      .then(function (response) {
+        console.log('success');
+      })
+      .catch(function (error) {
+        console.log('error');
+      });
+}
+
+
 
 const Login = (props:any) => {
     return (
         <>
+
             <Navbar>
             </Navbar>
             <div className="container">
                 <div className="row g-2 m-3">
-                    <form method="POST" action="/authenticate">
+                    <form onSubmit={handleSubmit}>
                         <div>
                             <div className="p-2">
                                 <label>Username:</label>

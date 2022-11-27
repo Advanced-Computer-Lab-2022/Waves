@@ -1,5 +1,5 @@
 //const mongoose = require("mongoose");
-//var router = express.Router();
+//let router = express.Router();
 
 const Courses = require("../models/Courses");
 

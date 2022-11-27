@@ -1,5 +1,5 @@
-var mongoose = require("mongoose");
-var QuestionSchema = new mongoose.Schema({
+let mongoose = require("mongoose");
+let QuestionSchema = new mongoose.Schema({
   belongsToExercise: {
     type: String,
     required: true,
@@ -25,5 +25,5 @@ var QuestionSchema = new mongoose.Schema({
     required: true,
   }
 });
-var Question = mongoose.model("Question", QuestionSchema);
+let Question = mongoose.model("Question", QuestionSchema);
 module.exports = Exercise;
