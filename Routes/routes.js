@@ -169,10 +169,10 @@ router.post('/authenticate', async(req, res) =>{
         req.session.isLoggedIn = true
         req.session.username = req.body.username
         req.session.user = user;
-        res.redirect("/instructor");
+        res.send("instructor");
     }
     else {
-        res.render("login", {err: "Username And Password are not matched, please try again!"})
+        res.send("No One")
     }
 });
 

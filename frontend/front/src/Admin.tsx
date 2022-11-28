@@ -21,12 +21,8 @@ const Admin = (props:any) => {
 
     return (
         <>  
+            <LoggedInNavbar/>
             
-            <p>
-            {courses && courses.map((course) => (
-                <p key={course._id}>{course.title} {course.subtitle}</p>
-            ))}
-            </p>  
         </>
     )
 }
