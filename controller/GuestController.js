@@ -1,7 +1,7 @@
 const Courses = require("../models/Courses");
 const IndividualTrainee = require("../models/IndividualTrainee");
 const Instructor = require("../models/Instructor");
-let Administrator = require("../models/Users/Administrator");
+var Administrator = require("../models/Users/Administrator");
 const CorporateTrainee = require("../models/users/CorporateTrainee");
 
 async function getInbox(username) {
@@ -35,32 +35,32 @@ async function getInbox(username) {
 }
 
 async function authenticateUser (body){
-    let admins = await Administrator.find({}).exec();
-    let isAdmin = false;
+    var admins = await Administrator.find({}).exec();
+    var isAdmin = false;
     admins.forEach(element => {
         if(element.username == body.username && element.password == body.password){
             isAdmin = true;
         }
     });
 
-    let individualTrainees = await IndividualTrainee.find({}).exec();
-    let isIndividualTrainee = false;
+    var individualTrainees = await IndividualTrainee.find({}).exec();
+    var isIndividualTrainee = false;
     individualTrainees.forEach(element => {
         if(element.username == body.username && element.password == body.password){
             isIndividualTrainee = true;
         }
     });
 
-    let corporateTrainees = await CorporateTrainee.find({}).exec();
-    let isCorporateTrainees = false;
+    var corporateTrainees = await CorporateTrainee.find({}).exec();
+    var isCorporateTrainees = false;
     corporateTrainees.forEach(element => {
         if(element.username == body.username && element.password == body.password){
             isCorporateTrainees = true;
         }
     });
 
-    let instructors = await Instructor.find({}).exec();
-    let isInstructor = false;
+    var instructors = await Instructor.find({}).exec();
+    var isInstructor = false;
     instructors.forEach(element => {
         if(element.username == body.username && element.password == body.password){
             isInstructor = true;
@@ -70,13 +70,13 @@ async function authenticateUser (body){
 }
 
 async function getCourses (){
-    let courses = await Courses.find({}).exec();
+    var courses = await Courses.find({}).exec();
     return courses;
 }
 
 async function searchFilterCourses (searchTerm, rating, subject, price){
-    let courses = await Courses.find({}).exec();
-    let filteredCourses = courses.filter(item => (item.title.toLocaleLowerCase().includes(searchTerm.toLocaleLowerCase()) || searchTerm=="") && (item.courseRating==rating || rating==null) && (item.subject==subject || subject==null) && (item.price==price || price==null));
+    var courses = await Courses.find({}).exec();
+    var filteredCourses = courses.filter(item => (item.title.toLocaleLowerCase().includes(searchTerm.toLocaleLowerCase()) || searchTerm=="") && (item.courseRating==rating || rating==null) && (item.subject==subject || subject==null) && (item.price==price || price==null));
     return filteredCourses;
 }
 

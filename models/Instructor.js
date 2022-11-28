@@ -1,5 +1,5 @@
-let mongoose = require("mongoose");
-let InstructorSchema = new mongoose.Schema({
+var mongoose = require("mongoose");
+var InstructorSchema = new mongoose.Schema({
   username: {
     type: String,
     required: true,

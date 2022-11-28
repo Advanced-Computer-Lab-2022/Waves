@@ -54,7 +54,7 @@ function App() {
         }/>
 
         <Route path="/login" element = {<Login/>}/>
-        <Route path="/inbox" element = {<Inbox/>}/>
+        {/* <Route path="/inbox" element = {<Inbox/>}/> */}
         <Route path="/signup" element = {<Signup/>}/>
 
         <Route path="/admin" element = {<Admin/>}/>
