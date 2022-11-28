@@ -16,8 +16,8 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
-app.use(cors())
 
+let port=3001
 app.use(session({
   secret: 'keyboard cat',
   resave: false,
@@ -25,7 +25,9 @@ app.use(session({
   cookie: { secure: false }
 }))
 
-let port=3001
+app.use(cors())
+
+
 app.set("views", path.join(__dirname, "views"))
 app.set("view engine", "ejs")
 app.use(routes);

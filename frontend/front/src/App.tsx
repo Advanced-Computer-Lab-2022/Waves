@@ -54,13 +54,8 @@ function App() {
 
           <Route path="/login" element = {<Login/>}/>
 
-          <Route path="/signup" element = {<Signup/>}/>
-
-          <Route path="/admin" element = {<Admin/>}/>
-          <Route path="/instructor" element = {<Instructor/>}/>
-          <Route path="/coporateTrainee" element = {<CorporateTrainee/>}/>
-          <Route path="/individualTrainee" element = {<IndividualTrainee/>}/>
-          <Route path="/inbox" element = {<Inbox/>}/>
+        <Route path="/signup" element = {<Signup/>}/>
+        <Route path="/admin" element = {<Admin/>}/>
         </Routes>
       </Router>
   );
