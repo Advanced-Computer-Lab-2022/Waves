@@ -14,7 +14,6 @@ const Alien: React.FC<props> = ({ adamsProp, customChild, children}) => {
         <>
         <div style = {{color: "red"}}> From Alien Component {adamsProp} {isFirst && customChild} {true && "adam"}
             <div>
-
             </div>
         </div>
         {children}
