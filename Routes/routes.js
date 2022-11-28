@@ -10,7 +10,7 @@ var router = express.Router();
 
 router.get("/", async (req,res) => {
     if(req.session.user == "admin"){
-        res.redirect("/admin")
+        res.send("/admin")
     }
     else if(req.session.user == "individual"){
         res.redirect("/individual")
