@@ -136,7 +136,7 @@ router.post("/add-exercise", async(req,res) => {
 });
 
 router.post("/add-question", async(req,res) => {
-    instructorController.addQuestion(req.body);
+    instructorController.addQuestionToExercise(req.body);
     res.render("instructor", {data: 'question added successfully'})
 });
 

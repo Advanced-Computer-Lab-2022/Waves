@@ -1,4 +1,5 @@
 require('dotenv').config();
+var cors=require("cors");
 var express = require("express");
 var path = require("path");
 var routes = require("./Routes/routes");
@@ -22,7 +23,9 @@ app.use(session({
   cookie: { secure: false }
 }))
 
-var port=3000
+app.use(cors());
+
+var port=3001
 app.set("views", path.join(__dirname, "views"))
 app.set("view engine", "ejs")
 app.use(routes);
