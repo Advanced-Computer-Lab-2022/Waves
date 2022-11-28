@@ -23,37 +23,35 @@ function App() {
   return (
       <Router>
         <Routes>
-        <Route path="/" element = {<>
-                  <Navbar/>
-
-                  <div className="App">
-                  <header className="App-header">
-                    <p>
-                      Edit <code>src/App.tsx</code> and save to reload.
-                    </p>
-                    <a
-                      className="App-link"
-                      href="https://reactjs.org"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {x.slice(3)}
-                    </a>
-                    <button onClick={() => { console.log("Button Clicked"); setX("Hi Aliens"); }}>Button</button>
-                    <Alien adamsProp='Was My Password'>
-                      <div>This Is A Child Of Alien</div>
-                    </Alien>
-      
-                    
-                    <Link to="/">Home</Link>
-                    {arr.map(str => <Alien adamsProp={str} customChild={<div>This is custom child div</div>} key={str}/>)}
-                  </header>
-                </div>
-                </>
-        }/>
-
+          <Route path="/" element = {<>
+                    <Navbar/>
+                    <div className="App">
+                    <header className="App-header">
+                      <p>
+                        Edit <code>src/App.tsx</code> and save to reload.
+                      </p>
+                      <a
+                        className="App-link"
+                        href="https://reactjs.org"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {x.slice(3)}
+                      </a>
+                      <button onClick={() => { console.log("Button Clicked"); setX("Hi Aliens"); }}>Button</button>
+                      <Alien adamsProp='Was My Password'>
+                        <div>This Is A Child Of Alien</div>
+                      </Alien>
+        
+                      
+                      <Link to="/">Home</Link>
+                      {arr.map(str => <Alien adamsProp={str} customChild={<div>This is custom child div</div>} key={str}/>)}
+                    </header>
+                  </div>
+                  </>
+          }/>
         <Route path="/login" element = {<Login/>}/>
-
+        {/* <Route path="/inbox" element = {<Inbox/>}/> */}
         <Route path="/signup" element = {<Signup/>}/>
 
         <Route path="/admin" element = {<Admin/>}/>

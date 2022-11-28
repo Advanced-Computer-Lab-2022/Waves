@@ -1,12 +1,12 @@
-let express = require("express");
-let instructorController = require("../controller/InstructorController");
-let adminController = require("../controller/AdminController");
-let guestController = require("../controller/GuestController");
-let IndividualTrainee = require("../models/IndividualTrainee"); 
-let Administrator = require("../models/Users/Administrator"); 
-let CircularJSON = require('circular-json')
+var express = require("express");
+var instructorController = require("../controller/InstructorController");
+var adminController = require("../controller/AdminController");
+var guestController = require("../controller/GuestController");
+var IndividualTrainee = require("../models/IndividualTrainee"); 
+var Administrator = require("../models/Users/Administrator"); 
+var CircularJSON = require('circular-json')
 
-let router = express.Router();
+var router = express.Router();
 
 router.get("/", async (req,res) => {
     if(req.session.user == "admin"){
@@ -152,19 +152,19 @@ router.post('/authenticate', async(req, res) =>{
         req.session.isLoggedIn = true;
         req.session.username = req.body.username;
         req.session.user = user;
-        res.send("admin")
+        res.redirect("/admin");
     }
     else if(user == "individual"){
         req.session.isLoggedIn = true
         req.session.username = req.body.username
         req.session.user = user;
-        res.send("individual")
+        res.redirect("/individual");
     }
     else if(user == "corporate"){
         req.session.isLoggedIn = true
         req.session.username = req.body.username
         req.session.user = user;
-        res.send("corporate")
+        res.redirect("/corporateTrainee");
     }
     else if(user == "instructor"){
         req.session.isLoggedIn = true

@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import axios from './api/axios';
 import Navbar from './navbar';
+import axios from 'axios';
 import {
     BrowserRouter as Router,
     Route,
@@ -40,7 +40,7 @@ const Login = (props:any) => {
             </Navbar>
             <div className="container">
                 <div className="row g-2 m-3">
-                    <form onSubmit={handleSubmit}>
+                    <form method="POST" action="/authenticate">
                         <div>
                             <div className="p-2">
                                 <label>Username:</label>
