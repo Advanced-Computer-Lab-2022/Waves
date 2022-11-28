@@ -6,7 +6,6 @@ const CorporateTrainee = require("../models/users/CorporateTrainee");
 
 async function getInbox(username) {
     let admins = await Administrator.find({}).exec();
-    return "Zeyad";
     admins.forEach(element => {
         if(element.username == username){
             return element.inbox;
@@ -67,22 +66,6 @@ async function authenticateUser (body){
             isInstructor = true;
         }
     });
-
-    if(isAdmin){
-        return "admin"
-    }
-    else if(isCorporateTrainees){
-        return "corporate"
-    }
-    else if(isInstructor){
-        return "instructor"
-    }
-    else if(isIndividualTrainee){
-        return "individual"
-    }
-    else{
-        return "no one"
-    }
 }
 
 async function getCourses (){

@@ -146,7 +146,7 @@ router.post("/add-question", async(req,res) => {
 router.post('/authenticate', async(req, res) =>{
     const str = CircularJSON.stringify(req);
     const user = await guestController.authenticateUser(JSON.parse(str).body);
-    
+    console.log(user);
     if(user == "admin"){
         req.session.isLoggedIn = true;
         req.session.username = req.body.username;
@@ -177,9 +177,7 @@ router.post('/authenticate', async(req, res) =>{
 });
 
 router.get('/inbox', async(req, res) => {
-    const x = await guestController.getInbox('admin');
-    console.log(x);
-    res.send(await guestController.getInbox('admin'))
+    await guestController.getInbox('admin').then(x => console.log(x))
 })
 
 router.post('/register', async(req, res) => {
