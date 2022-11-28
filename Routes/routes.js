@@ -177,6 +177,12 @@ router.post('/authenticate', async(req, res) =>{
     }
 });
 
+router.get('/inbox', async(req, res) => {
+    const x = await guestController.getInbox('admin');
+    console.log(x);
+    res.send(await guestController.getInbox('admin'))
+})
+
 router.post('/register', async(req, res) => {
     const newUser = new IndividualTrainee ({
         username: req.body.username,

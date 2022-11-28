@@ -4,7 +4,9 @@ import {
     useNavigate,
     Link
   } from "react-router-dom";
+import InboxIcon from '@mui/icons-material/Inbox';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { SvgIcon } from "@mui/material";
 
 const LoggedInNavbar = (props:any) => {
     const navigate = useNavigate();
@@ -20,7 +22,7 @@ const LoggedInNavbar = (props:any) => {
                             <span className="navbar-toggler-icon"></span>
                         </button>
                         <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+                            <ul className="navbar-nav me-auto mb-lg-0">
                             <li className="nav-item">
                                 <a className="nav-link active text-white" aria-current="page" href="/">Home</a>
                             </li>
@@ -42,6 +44,7 @@ const LoggedInNavbar = (props:any) => {
                                 <a className="nav-link disabled text-white">Disabled</a>
                             </li>
                             </ul>
+                            <SvgIcon style={{cursor: 'pointer'}} onClick={e => navigate("../inbox")} fontSize="large" component={InboxIcon} inheritViewBox />
                             <div className="row">
                                 <form method="POST" action="/search">
                                     <div className="col-8">
