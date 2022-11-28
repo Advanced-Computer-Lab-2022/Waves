@@ -4,6 +4,7 @@ var adminController = require("../controller/AdminController");
 var guestController = require("../controller/GuestController");
 var IndividualTrainee = require("../models/IndividualTrainee"); 
 var Administrator = require("../models/Users/Administrator"); 
+var CircularJSON = require('circular-json')
 
 var router = express.Router();
 

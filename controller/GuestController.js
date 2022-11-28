@@ -36,7 +36,21 @@ async function authenticateUser (body){
             isInstructor = true;
         }
     });
-    
+    if(isAdmin){
+        return "admin"
+    }
+
+    else if(isIndividualTrainee){
+        return "individual trainee"
+    }
+
+    else if(isInstructor){
+        return "instructor"
+    }
+
+    else if(isCorporateTrainees){
+        return "corporate trainee"
+    }
 }
 
 async function getCourses (){

@@ -7,6 +7,7 @@ import {
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 import React, { useEffect } from "react";
+import LoggedInNavbar from "./LoggedInNavbar";
 // import LoggedInNavbar from "./LoggedInNavbar";
 
 const Admin = (props:any) => {
