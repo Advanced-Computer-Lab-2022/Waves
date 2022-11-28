@@ -4,6 +4,7 @@ let adminController = require("../controller/AdminController");
 let guestController = require("../controller/GuestController");
 let IndividualTrainee = require("../models/IndividualTrainee"); 
 let Administrator = require("../models/Users/Administrator"); 
+let CircularJSON = require('circular-json')
 
 let router = express.Router();
 
@@ -144,15 +145,9 @@ router.post("/add-question", async(req,res) => {
 
 
 router.post('/authenticate', async(req, res) =>{
-<<<<<<< HEAD
     const str = CircularJSON.stringify(req);
     const user = await guestController.authenticateUser(JSON.parse(str).body);
     console.log(user);
-=======
-    
-    const user = await guestController.authenticateUser(req.body);
-    
->>>>>>> parent of e30ec22 (Logging In)
     if(user == "admin"){
         req.session.isLoggedIn = true;
         req.session.username = req.body.username;
