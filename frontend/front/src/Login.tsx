@@ -1,14 +1,46 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
+import axios from './api/axios';
 import Navbar from './navbar';
+import {
+    BrowserRouter as Router,
+    Route,
+    useNavigate,
+    Link
+  } from "react-router-dom";
+
+
+
 
 const Login = (props:any) => {
+    const navigate = useNavigate();
+
+    const handleSubmit = (e: any) => {
+        e.preventDefault();
+        const userInfo = new FormData(e.target)
+        console.log(Object.fromEntries(userInfo.entries()))
+        const username = Object.fromEntries(userInfo.entries()).username
+        const password = Object.fromEntries(userInfo.entries()).password
+    
+        axios.post('http://localhost:3001/authenticate', {
+            username: username,
+            password: password
+          }, {
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded'
+            }
+          })
+            .then(response => {
+                navigate("../" + response.data);
+            });
+    }
+
     return (
         <>
             <Navbar>
             </Navbar>
             <div className="container">
                 <div className="row g-2 m-3">
-                    <form method="POST" action="/authenticate">
+                    <form onSubmit={handleSubmit}>
                         <div>
                             <div className="p-2">
                                 <label>Username:</label>

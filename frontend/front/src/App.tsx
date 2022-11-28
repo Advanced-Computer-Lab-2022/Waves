@@ -10,6 +10,10 @@ import './App.css';
 import Navbar from './navbar';
 import Login from './Login';
 import Signup from './Signup';
+import Admin from './Admin';
+import CorporateTrainee from './CorporateTrainee';
+import IndividualTrainee from './IndividualTrainee';
+import Instructor from './Instructor';
 
 const arr = ["String1", "String2", "String3", "String4", "String5"]
 
@@ -51,6 +55,11 @@ function App() {
         <Route path="/login" element = {<Login/>}/>
 
         <Route path="/signup" element = {<Signup/>}/>
+
+        <Route path="/admin" element = {<Admin/>}/>
+        <Route path="/instructor" element = {<Instructor/>}/>
+        <Route path="/coporateTrainee" element = {<CorporateTrainee/>}/>
+        <Route path="/individualTrainee" element = {<IndividualTrainee/>}/>
         </Routes>
       </Router>
   );

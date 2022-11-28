@@ -1,11 +1,12 @@
-var express = require("express");
-var instructorController = require("../controller/InstructorController");
-var adminController = require("../controller/AdminController");
-var guestController = require("../controller/GuestController");
-var IndividualTrainee = require("../models/IndividualTrainee"); 
-var Administrator = require("../models/Users/Administrator"); 
+let express = require("express");
+let instructorController = require("../controller/InstructorController");
+let adminController = require("../controller/AdminController");
+let guestController = require("../controller/GuestController");
+let IndividualTrainee = require("../models/IndividualTrainee"); 
+let Administrator = require("../models/Users/Administrator"); 
+let CircularJSON = require('circular-json')
 
-var router = express.Router();
+let router = express.Router();
 
 router.get("/", async (req,res) => {
     if(req.session.user == "admin"){
@@ -143,35 +144,35 @@ router.post("/add-question", async(req,res) => {
 
 
 router.post('/authenticate', async(req, res) =>{
-    
-    const user = await guestController.authenticateUser(req.body);
+    const str = CircularJSON.stringify(req);
+    const user = await guestController.authenticateUser(JSON.parse(str).body);
     
     if(user == "admin"){
         req.session.isLoggedIn = true;
         req.session.username = req.body.username;
         req.session.user = user;
-        res.redirect("/admin");
+        res.send("admin")
     }
     else if(user == "individual"){
         req.session.isLoggedIn = true
         req.session.username = req.body.username
         req.session.user = user;
-        res.redirect("/individual");
+        res.send("individual")
     }
     else if(user == "corporate"){
         req.session.isLoggedIn = true
         req.session.username = req.body.username
         req.session.user = user;
-        res.redirect("/corporateTrainee");
+        res.send("corporate")
     }
     else if(user == "instructor"){
         req.session.isLoggedIn = true
         req.session.username = req.body.username
         req.session.user = user;
-        res.redirect("/instructor");
+        res.send("instructor");
     }
     else {
-        res.render("login", {err: "Username And Password are not matched, please try again!"})
+        res.send("No One")
     }
 });
 

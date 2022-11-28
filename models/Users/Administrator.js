@@ -1,5 +1,5 @@
-var mongoose = require("mongoose");
-var AdministratorSchema = new mongoose.Schema({
+let mongoose = require("mongoose");
+let AdministratorSchema = new mongoose.Schema({
   username: {
     type: String,
     required: true,
@@ -15,5 +15,5 @@ function loadModel(modelName, modelSchema) {
       ? mongoose.model(modelName) // If true, only retrieve it
       : mongoose.model(modelName, modelSchema) // If false, define it
 }
-var Administrator = loadModel("Administrators", AdministratorSchema);
+let Administrator = loadModel("Administrators", AdministratorSchema);
 module.exports = Administrator

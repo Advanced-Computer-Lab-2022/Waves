@@ -1,6 +1,6 @@
-var Administrator=require("../models/users/Administrator"); 
-var CorporateTrainee=require("../models/users/CorporateTrainee");
-var Instructor=require("../models/Instructor"); 
+let Administrator=require("../models/users/Administrator"); 
+let CorporateTrainee=require("../models/users/CorporateTrainee");
+let Instructor=require("../models/Instructor"); 
 
 function addAdmin (body){
     const newAdmin =new Administrator({

@@ -7,6 +7,7 @@ var app = express();
 var mongoose = require("mongoose");
 var bodyParser = require('body-parser')
 var session = require('express-session')
+
 //const { Mongoose } = require("mongoose/lib");
 
 console.log(process.env.ATLAS_URI);
@@ -15,6 +16,8 @@ mongoose.connect(process.env.ATLAS_URI);
 app.use(bodyParser.urlencoded({
   extended: true
 }));
+
+app.use(cors())
 
 app.use(session({
   secret: 'keyboard cat',
@@ -26,6 +29,7 @@ app.use(session({
 app.use(cors());
 
 var port=3001
+let port=3001
 app.set("views", path.join(__dirname, "views"))
 app.set("view engine", "ejs")
 app.use(routes);
@@ -36,7 +40,7 @@ app.listen(port, () => {
 
 
 
-//var helper=require("./controller/helper");
+//let helper=require("./controller/helper");
 // app.post('/try-login', async(req, res) => {
 //   try {
 //       let boolean = true
@@ -79,10 +83,10 @@ app.listen(port, () => {
 // Make sure you are connected to enable completions and to be able to run a playground.
 // Use Ctrl+Space inside a snippet or a string literal to trigger completions.
 
-// var IndividualTrainee = mongoose.model('IndividualTrainee')
-// var Course = mongoose.model('Course')
+// let IndividualTrainee = mongoose.model('IndividualTrainee')
+// let Course = mongoose.model('Course')
 //const IndividualTrainee = require('./models/IndividualTrainee');
-// var b=false
+// let b=false
 
 //   try {
 //     mongoose.model('Course')  // it throws an error if the model is still not defined
@@ -91,7 +95,7 @@ app.listen(port, () => {
 //      b=false
 //   }
 // if (!b) {
-//   var Course = mongoose.model('Course', CourseSchema)
+//   let Course = mongoose.model('Course', CourseSchema)
 // }
 
 
