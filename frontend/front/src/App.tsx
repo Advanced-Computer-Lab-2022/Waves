@@ -10,14 +10,11 @@ import './App.css';
 import Navbar from './navbar';
 import Login from './Login';
 import Signup from './Signup';
-<<<<<<< HEAD
 import Admin from './Admin';
 import CorporateTrainee from './CorporateTrainee';
 import IndividualTrainee from './IndividualTrainee';
 import Instructor from './Instructor';
 import Inbox from './Inbox';
-=======
->>>>>>> parent of e30ec22 (Logging In)
 
 const arr = ["String1", "String2", "String3", "String4", "String5"]
 
@@ -57,7 +54,6 @@ function App() {
 
           <Route path="/login" element = {<Login/>}/>
 
-<<<<<<< HEAD
           <Route path="/signup" element = {<Signup/>}/>
 
           <Route path="/admin" element = {<Admin/>}/>
@@ -65,9 +61,6 @@ function App() {
           <Route path="/coporateTrainee" element = {<CorporateTrainee/>}/>
           <Route path="/individualTrainee" element = {<IndividualTrainee/>}/>
           <Route path="/inbox" element = {<Inbox/>}/>
-=======
-        <Route path="/signup" element = {<Signup/>}/>
->>>>>>> parent of e30ec22 (Logging In)
         </Routes>
       </Router>
   );
