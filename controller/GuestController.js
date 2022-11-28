@@ -66,6 +66,7 @@ async function authenticateUser (body){
             isInstructor = true;
         }
     });
+    
 }
 
 async function getCourses (){
