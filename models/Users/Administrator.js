@@ -7,10 +7,6 @@ var AdministratorSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true,
-  },
-  inbox: {
-    type: Array,
-    required: true,
   }
 });
 
