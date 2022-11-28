@@ -36,12 +36,12 @@ router.get("/terms", function(req,res){
 });
 
 router.get("/admin", async(req,res) => {
-    if(!req.session.isLoggedIn)
-        res.redirect('./login')
-    else {
+    // if(!req.session.isLoggedIn)
+    //     res.redirect('./login')
+    // else {
         const allCourses = await guestController.getCourses();
-        res.render("admin", {data: '', courses: allCourses})
-    }
+        res.send("hellooooo")
+   // }
 });
 
 router.get("/login", function(req,res){
@@ -74,7 +74,8 @@ router.post("/search", async(req,res) => {
         const myFilteredCourses = await instructorController.getMyCourses(filteredCourses, req.session.username);
         console.log(req.body.showMyCourses)
         if(req.body.showMyCourses)
-            res.render("instructor", {data: '', courses: myFilteredCourses})
+            //res.render("instructor", {data: '', courses: myFilteredCourses})
+            res.send(filteredCourses)
         else
             res.render("instructor", {data: '', courses: filteredCourses})
     }
@@ -137,7 +138,7 @@ router.post("/add-exercise", async(req,res) => {
 });
 
 router.post("/add-question", async(req,res) => {
-    instructorController.addQuestion(req.body);
+    instructorController.addQuestionToExercise(req.body);
     res.render("instructor", {data: 'question added successfully'})
 });
 
