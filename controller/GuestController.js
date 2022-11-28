@@ -85,4 +85,4 @@ async function getCoursesByPrice (){
     //docs.wait()
     return docs
 }
-module.exports= {authenticateUser, getCourses, getCoursesByPrice, searchFilterCourses};
+module.exports= {authenticateUser, getCourses, getCoursesByPrice, searchFilterCourses, getInbox};
