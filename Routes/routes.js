@@ -40,7 +40,8 @@ router.get("/admin", async(req,res) => {
     //     res.redirect('./login')
     // else {
         const allCourses = await guestController.getCourses();
-        res.send("hellooooo")
+        console.log(JSON.stringify(allCourses))
+        res.send(JSON.stringify(allCourses))
    // }
 });
 
