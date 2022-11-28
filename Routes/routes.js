@@ -175,7 +175,7 @@ router.post('/authenticate', async(req, res) =>{
         req.session.isLoggedIn = true
         req.session.username = req.body.username
         req.session.user = user;
-        res.send("instructor");
+        res.send("/instructor");
     }
     else {
         res.send("No One")
