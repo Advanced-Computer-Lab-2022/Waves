@@ -106,12 +106,12 @@ router.post("/add-trainee", async(req,res) => {
 });
 
 router.get("/instructor", async(req,res) => {
-    if(!req.session.isLoggedIn)
-        res.redirect('./login')
-    else {
+    // if(!req.session.isLoggedIn)
+    //     res.redirect('./login')
+    // else {
         const allCourses = await guestController.getCourses();
         res.render("instructor", {data: '', courses: allCourses})
-    }
+    //}
 });
 
 router.get("/individual", async(req,res) => {
@@ -138,13 +138,13 @@ router.post("/add-course", async(req,res) => {
     res.render("instructor", {data: 'Success', courses: allCourses})
 });
 
-router.post("/add-exercise", async(req,res) => {
-    instructorController.addExercise(req.body);
-    res.render("instructor", {data: 'Exercise added successfully'})
+router.post("/add-exam", async(req,res) => {
+    instructorController.addExam(req.body);
+    res.render("instructor", {data: 'Exam added successfully'})
 });
 
 router.post("/add-question", async(req,res) => {
-    instructorController.addQuestionToExercise(req.body);
+    instructorController.addQuestionToExam(req.body);
     res.render("instructor", {data: 'question added successfully'})
 });
 

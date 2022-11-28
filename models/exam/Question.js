@@ -1,22 +1,22 @@
 var mongoose = require("mongoose");
 var QuestionSchema = new mongoose.Schema({
-  belongsToExercise: {
+  belongsToExam: {
     type: String,
     required: true,
   },
-  q1: {
+  c1: {
     type: String,
     required: true,
   },
-  q2: {
+  c2: {
     type: String,
     required: true,
   },
-  q3: {
+  c3: {
     type: String,
     required: true,
   },
-  q4: {
+  c4: {
     type: String,
     required: true,
   },
@@ -26,4 +26,4 @@ var QuestionSchema = new mongoose.Schema({
   }
 });
 var Question = mongoose.model("Question", QuestionSchema);
-module.exports = Exercise;
+module.exports = Question;
