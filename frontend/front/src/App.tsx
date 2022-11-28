@@ -21,6 +21,7 @@ function App() {
         <Routes>
         <Route path="/" element = {<>
                   <Navbar/>
+
                   <div className="App">
                   <header className="App-header">
                     <p>
