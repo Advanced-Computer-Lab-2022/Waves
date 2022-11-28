@@ -1,13 +1,12 @@
 require('dotenv').config();
-var cors=require("cors");
-var express = require("express");
-var path = require("path");
-var routes = require("./Routes/routes");
-var app = express();
-var mongoose = require("mongoose");
-var bodyParser = require('body-parser')
-var session = require('express-session')
-
+let express = require("express");
+let path = require("path");
+let routes = require("./Routes/routes");
+let app = express();
+let mongoose = require("mongoose");
+let bodyParser = require('body-parser')
+let session = require('express-session')
+let cors = require('cors')
 //const { Mongoose } = require("mongoose/lib");
 
 console.log(process.env.ATLAS_URI);
@@ -26,9 +25,6 @@ app.use(session({
   cookie: { secure: false }
 }))
 
-app.use(cors());
-
-var port=3001
 let port=3001
 app.set("views", path.join(__dirname, "views"))
 app.set("view engine", "ejs")
