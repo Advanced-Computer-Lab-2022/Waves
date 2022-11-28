@@ -10,8 +10,9 @@ interface props {
     CourseName: string;
     CourseDescription: string;
     CourseRating: string;
-    CoursePreview: string;
+    CourseImgPreview: string;
     CourseInstructor: string;
+    CourseTotalHours: string;
     children?: React.ReactNode;
     customChild?: React.ReactNode;
 }

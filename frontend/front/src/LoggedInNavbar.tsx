@@ -5,8 +5,8 @@ import {
     Link
   } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { SvgIcon } from "@mui/material";
-import InboxIcon from '@mui/icons-material/Inbox';
+import { Badge, SvgIcon } from "@mui/material";
+import MailIcon from '@mui/icons-material/Mail';
 
 const LoggedInNavbar = (props:any) => {
     const navigate = useNavigate();
@@ -44,7 +44,9 @@ const LoggedInNavbar = (props:any) => {
                                 <a className="nav-link disabled text-white">Disabled</a>
                             </li>
                             </ul>
-                            <SvgIcon style={{cursor: 'pointer'}} onClick={e => navigate("../inbox")} fontSize="large" component={InboxIcon} inheritViewBox />
+                            <Badge badgeContent={4} color="primary">
+                                <SvgIcon style={{cursor: 'pointer'}} onClick={e => navigate("../inbox")} fontSize="large" component={MailIcon} inheritViewBox />
+                            </Badge>
                             <div className="row">
                                 <form method="POST" action="/search">
                                     <div className="col-8">
