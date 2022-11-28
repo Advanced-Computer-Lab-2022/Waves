@@ -21,6 +21,10 @@ var IndividualTraineeSchema = new mongoose.Schema({
   last: {
     type: String,
     required: true,
+  },
+  inbox: {
+    type: Array,
+    require: false
   }
 });
 var IndividualTrainee = mongoose.model("Individual Trainees", IndividualTraineeSchema);

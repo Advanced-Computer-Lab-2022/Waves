@@ -2,11 +2,15 @@ var mongoose = require("mongoose");
 var AdministratorSchema = new mongoose.Schema({
   username: {
     type: String,
-    required: true,
+    required: true
   },
   password: {
     type: String,
-    required: true,
+    required: true
+  },
+  inbox: {
+    type: Array,
+    require: false
   }
 });
 

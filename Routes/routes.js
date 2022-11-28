@@ -27,6 +27,11 @@ router.get("/", async (req,res) => {
     }
 });
 
+router.get('/inbox', async(req, res) => {
+    console.log(await guestController.getInbox('admin'))
+    res.send(await guestController.getInbox('admin'))
+})
+
 router.get("/sign-up", function(req,res){
     res.render("sign_up", {err:"", succ:""});
 });
@@ -152,19 +157,19 @@ router.post('/authenticate', async(req, res) =>{
         req.session.isLoggedIn = true;
         req.session.username = req.body.username;
         req.session.user = user;
-        res.redirect("/admin");
+        res.send("/admin");
     }
     else if(user == "individual"){
         req.session.isLoggedIn = true
         req.session.username = req.body.username
         req.session.user = user;
-        res.redirect("/individual");
+        res.send("/individual");
     }
     else if(user == "corporate"){
         req.session.isLoggedIn = true
         req.session.username = req.body.username
         req.session.user = user;
-        res.redirect("/corporateTrainee");
+        res.send("/corporateTrainee");
     }
     else if(user == "instructor"){
         req.session.isLoggedIn = true

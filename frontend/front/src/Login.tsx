@@ -17,7 +17,6 @@ const Login = (props:any) => {
     const handleSubmit = (e: any) => {
         e.preventDefault();
         const userInfo = new FormData(e.target)
-        console.log(Object.fromEntries(userInfo.entries()))
         const username = Object.fromEntries(userInfo.entries()).username
         const password = Object.fromEntries(userInfo.entries()).password
     
@@ -40,7 +39,7 @@ const Login = (props:any) => {
             </Navbar>
             <div className="container">
                 <div className="row g-2 m-3">
-                    <form method="POST" action="/authenticate">
+                    <form onSubmit={handleSubmit}>
                         <div>
                             <div className="p-2">
                                 <label>Username:</label>

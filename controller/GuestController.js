@@ -4,12 +4,25 @@ const Instructor = require("../models/Instructor");
 var Administrator = require("../models/Users/Administrator");
 const CorporateTrainee = require("../models/users/CorporateTrainee");
 
+async function getInbox(username) {
+    let admins = await Administrator.find({}).exec();
+    let inbox;
+    admins.forEach(element => {
+        if(element.username == username){
+            inbox = element.inbox;
+        }
+    });
+
+    return inbox;
+}
+
 async function authenticateUser (body){
     var admins = await Administrator.find({}).exec();
     var isAdmin = false;
     admins.forEach(element => {
         if(element.username == body.username && element.password == body.password){
             isAdmin = true;
+            //ask a genius
         }
     });
 
@@ -36,12 +49,13 @@ async function authenticateUser (body){
             isInstructor = true;
         }
     });
+
     if(isAdmin){
         return "admin"
     }
 
     else if(isIndividualTrainee){
-        return "individual trainee"
+        return "individual"
     }
 
     else if(isInstructor){
@@ -49,7 +63,7 @@ async function authenticateUser (body){
     }
 
     else if(isCorporateTrainees){
-        return "corporate trainee"
+        return "corporate"
     }
 }
 
@@ -69,4 +83,4 @@ async function getCoursesByPrice (){
     //docs.wait()
     return docs
 }
-module.exports= {authenticateUser, getCourses, getCoursesByPrice, searchFilterCourses};
+module.exports= {authenticateUser, getCourses, getCoursesByPrice, searchFilterCourses, getInbox};

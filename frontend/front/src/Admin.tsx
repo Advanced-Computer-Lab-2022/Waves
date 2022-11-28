@@ -23,7 +23,6 @@ const Admin = (props:any) => {
     return (
         <>  
             <LoggedInNavbar/>
-            
         </>
     )
 }

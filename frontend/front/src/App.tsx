@@ -14,6 +14,7 @@ import Admin from './Admin';
 import CorporateTrainee from './CorporateTrainee';
 import IndividualTrainee from './IndividualTrainee';
 import Instructor from './Instructor';
+import Inbox from './Inbox';
 
 const arr = ["String1", "String2", "String3", "String4", "String5"]
 
@@ -51,9 +52,8 @@ function App() {
                   </>
           }/>
         <Route path="/login" element = {<Login/>}/>
-        {/* <Route path="/inbox" element = {<Inbox/>}/> */}
+        <Route path="/inbox" element = {<Inbox/>}/>
         <Route path="/signup" element = {<Signup/>}/>
-
         <Route path="/admin" element = {<Admin/>}/>
         <Route path="/instructor" element = {<Instructor/>}/>
         <Route path="/coporateTrainee" element = {<CorporateTrainee/>}/>

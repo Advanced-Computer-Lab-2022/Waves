@@ -7,6 +7,10 @@ var InstructorSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true,
+  },
+  inbox: {
+    type: Array,
+    require: false
   }
 });
 const Instructor = mongoose.model("Instructor", InstructorSchema);
