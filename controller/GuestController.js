@@ -4,6 +4,37 @@ const Instructor = require("../models/Instructor");
 let Administrator = require("../models/Users/Administrator");
 const CorporateTrainee = require("../models/users/CorporateTrainee");
 
+async function getInbox(username) {
+    let admins = await Administrator.find({}).exec();
+    return "Zeyad";
+    admins.forEach(element => {
+        if(element.username == username){
+            return element.inbox;
+        }
+    });
+
+    let individualTrainees = await IndividualTrainee.find({}).exec();
+    individualTrainees.forEach(element => {
+        if(element.username == username){
+            return element.inbox;
+        }
+    });
+
+    let corporateTrainees = await CorporateTrainee.find({}).exec();
+    corporateTrainees.forEach(element => {
+        if(element.username == username){
+            return element.inbox;
+        }
+    });
+
+    let instructors = await Instructor.find({}).exec();
+    instructors.forEach(element => {
+        if(element.username == username){
+            return element.inbox;
+        }
+    });
+}
+
 async function authenticateUser (body){
     let admins = await Administrator.find({}).exec();
     let isAdmin = false;
@@ -70,4 +101,4 @@ async function getCoursesByPrice (){
     //docs.wait()
     return docs
 }
-module.exports= {authenticateUser, getCourses, getCoursesByPrice, searchFilterCourses};
+module.exports= {authenticateUser, getCourses, getCoursesByPrice, searchFilterCourses, getInbox};
