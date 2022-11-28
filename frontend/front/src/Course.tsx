@@ -8,11 +8,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 interface props {
     CourseName: string;
-    Course: string;
-    CourseName: string;
-    CourseName: string;
-    CourseName: string;
-    CourseName: string;
+    CourseDescription: string;
+    CourseRating: string;
+    CoursePreview: string;
+    CourseInstructor: string;
     children?: React.ReactNode;
     customChild?: React.ReactNode;
 }
@@ -25,4 +24,4 @@ const Course = () => {
     )
 }
 
-export default Dummy
+export default Course
