@@ -17,6 +17,7 @@ import Instructor from './Instructor';
 import Inbox from './Inbox';
 import Exam from './Exam';
 import ViewCourse from './ViewCourse';
+import ExamsPage from './ExamsPage';
 
 const arr = ["String1", "String2", "String3", "String4", "String5"]
 
@@ -55,6 +56,7 @@ function App() {
           }/>
         <Route path="/login" element = {<Login/>}/>
         <Route path="/add-exam" element = {<Exam/>}/>
+        <Route path="/exams" element = {<ExamsPage/>}/>
         <Route path="/inbox" element = {<Inbox/>}/>
         <Route path="/signup" element = {<Signup/>}/>
         <Route path="/admin" element = {<Admin/>}/>

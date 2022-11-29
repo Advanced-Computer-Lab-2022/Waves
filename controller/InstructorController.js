@@ -3,6 +3,7 @@
 
 const Courses = require("../models/Courses");
 const Question = require("../models/Question");
+const Exam=require("../models/Exam");
 
 function addCourse (body, username){
     const newCourse = new Courses({
@@ -24,7 +25,8 @@ async function getMyCourses (courses, username){
 
 function addExam (body){
     const newExam = new Exam({
-        belongsToCourse: body.belongsToCourse
+        belongsToCourse: body.belongsToCourse,
+        name: body.belongsToExam
     });
     newExam.save();
 }

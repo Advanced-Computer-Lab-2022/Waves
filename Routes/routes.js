@@ -2,6 +2,7 @@ var express = require("express");
 var instructorController = require("../controller/InstructorController");
 var adminController = require("../controller/AdminController");
 var guestController = require("../controller/GuestController");
+var individualTrainee = require("../controller/IndividualTraineeController");
 var IndividualTrainee = require("../models/IndividualTrainee"); 
 var Administrator = require("../models/Users/Administrator"); 
 var CircularJSON = require('circular-json')
@@ -140,14 +141,58 @@ router.post("/add-course", async(req,res) => {
 
 router.post("/add-exam", async(req,res) => {
     const str = CircularJSON.stringify(req);
+    console.log(JSON.parse(str))
     instructorController.addExam(JSON.parse(str).body);
+    instructorController.addQuestionToExam(JSON.parse(str).body);
     res.send("/instructor")
 });
 
-router.post("/add-question", async(req,res) => {
-    instructorController.addQuestionToExam(req.body);
-    res.render("instructor", {data: 'question added successfully'})
+router.get("/exams", async(req,res) => {
+    // const allCourses = await guestController.getCourses();
+    // res.send(JSON.stringify(allCourses))
+    const allExams = await individualTrainee.getExams()
+    console.log(JSON.stringify(allExams))
+    res.send(JSON.stringify(allExams))
 });
+
+
+// router.post("/add-question", async(req,res) => {
+//     instructorController.addQuestionToExam(req.body);
+//     res.render("instructor", {data: 'question added successfully'})
+// });
+
+
+router.put('/changePassword/:username', async (req,res)=>{
+    if(req.body.oldPassword=="" || req.body.newPassword1=="" || req.body.newPassword2=="")
+        res.send({errors:"All fields must be filled"})
+    else{
+      await Users.findOne({username:req.params.username}).then(async (user)=>{
+        var errors="";
+        var match=false;
+        match=await bcrypt.compare(req.body.oldPassword,user.password);
+        if(match){
+            if(req.body.newPassword1!=req.body.newPassword2)
+                errors="New passwords don't match";
+            else if(req.body.newPassword1==req.body.oldPassword)
+                errors="New password cannot be the same as old password"
+            else{
+                try{
+                    const hashedPassword = await bcrypt.hash(req.body.newPassword1, 10);
+                    user.password=hashedPassword;
+                    user.save();
+                    errors="Password changed successfully!";
+                }
+                catch{
+                    res.send("oops")
+                }
+            }
+        }
+        else
+            errors="Incorrect old password";
+        res.send({errors:errors});
+      })
+    }
+})
 
 
 router.post('/authenticate', async(req, res) =>{
@@ -182,6 +227,8 @@ router.post('/authenticate', async(req, res) =>{
         res.send("No One")
     }
 });
+
+
 
 router.post('/register', async(req, res) => {
     const newUser = new IndividualTrainee ({

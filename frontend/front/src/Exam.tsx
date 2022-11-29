@@ -5,6 +5,7 @@ import {
     Link
   } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
+
 import axios from 'axios';
 import React, { useEffect } from "react";
 import Question from "./Question";
@@ -25,7 +26,7 @@ const Exam = (props:any) => {
         const c3= Object.fromEntries(userInfo.entries()).choice3
         const c4= Object.fromEntries(userInfo.entries()).choice4
         const solution= Object.fromEntries(userInfo.entries()).solution
-        console.log(belongsToCourse)
+        console.log(solution)
         axios.post('http://localhost:3001/add-exam', {
             belongsToCourse: belongsToCourse,
             belongsToExam: belongsToExam,
@@ -33,8 +34,7 @@ const Exam = (props:any) => {
             c2: c2,
             c3: c3,
             c4: c4,
-            solution: solution
-           
+            solution: solution    
           }, {
             headers: {
               'Content-Type': 'application/x-www-form-urlencoded'
@@ -66,7 +66,7 @@ const Exam = (props:any) => {
                 multiline
             />
             <Question/>
-            <Button variant="contained">Add Exam</Button>
+            <button>Add Exam</button>
             </form>
 
         </>
