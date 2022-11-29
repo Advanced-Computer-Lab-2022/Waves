@@ -7,6 +7,7 @@ import {
 import 'bootstrap/dist/css/bootstrap.min.css';
 import LoggedInNavbar from "./LoggedInNavbar";
 import axios from "axios";
+import LeftNav from "./LeftNav";
 
 const Inbox = (props:any) => {
     const navigate = useNavigate();
@@ -18,6 +19,7 @@ const Inbox = (props:any) => {
     return (
         <>
             <LoggedInNavbar/>
+            <LeftNav/>
         </>
     )
 }

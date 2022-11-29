@@ -1,28 +1,59 @@
-import {
-    BrowserRouter as Router,
-    Route,
-    useNavigate,
-    Link
-  } from "react-router-dom";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import React from 'react';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Typography from '@mui/material/Typography';
+import { Box, Button, CardActionArea, CardActions, Grid, Stack } from '@mui/material';
+import RatingRead from './RatingRead';
+
 
 interface props {
-    CourseName: string;
-    CourseDescription: string;
-    CourseRating: string;
-    CourseImgPreview: string;
-    CourseInstructor: string;
-    CourseTotalHours: string;
-    children?: React.ReactNode;
-    customChild?: React.ReactNode;
+  courseName: string;
+  courseDescription: string;
+  courseRating: Array<number>;
+  courseInstructor: string;
+  courseTotalHours: string;
+  courseImg: string;
+  courseSubtitles: Array<String>;
+  children?: React.ReactNode;
+  customChild?: React.ReactNode;
 }
 
-const Course = () => {
-    return (
-        <>
-            
-        </>
-    )
+const Course: React.FC<props> = ({courseName, courseDescription, courseRating, courseInstructor, courseTotalHours, courseImg, courseSubtitles}) => {
+  return (
+    <Card sx={{ maxWidth: 345 }}>
+      <CardActionArea/>
+        <CardMedia
+          component="img"
+          height="170"
+          image= {courseImg}
+          alt={courseName}
+        />
+        <CardContent>
+          <Typography gutterBottom variant="h5" component="div">
+            {courseName}
+          </Typography>
+          <Typography variant="body2">
+            {courseDescription}
+          </Typography>
+          <p/>
+          <Typography variant="body2" color="grey">
+            {"Given by " + courseInstructor + " • " + courseTotalHours + " Total Hours • " + courseSubtitles![0] + " Subtitle"}
+          </Typography>
+          <p/>
+          <Typography variant="body2" color="grey">
+          </Typography>
+          <Stack direction="row">
+          <RatingRead rating={courseRating}/>
+          <Grid container justifyContent="flex-end" marginTop={2}>
+            <Button style={{maxWidth: '75px', maxHeight: '75px'}} size="small" color="primary">
+                    View Course
+            </Button>
+          </Grid>
+          </Stack>
+        </CardContent>
+    </Card>
+  );
 }
 
-export default Course
+export default Course;

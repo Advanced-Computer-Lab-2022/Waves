@@ -10,9 +10,10 @@ import React, { useEffect } from "react";
 import LoggedInNavbar from "./LoggedInNavbar";
 import Container from '@mui/material/Container';
 import { Divider, Stack } from "@mui/material";
-import ResponsiveAppBar from "./ResponsiveNavBar";
+import ResponsiveNavBar from "./ResponsiveNavBar";
 import Footer from "./Footer";
-import Card from "./Card";
+import Card from "./Course";
+import FilterBar from "./FilterBar";
 
 const Admin = (props:any) => {
     const [courses, setCourses] = React.useState<any[]>([]);
@@ -26,15 +27,17 @@ const Admin = (props:any) => {
 
     return (
         <>  
-            <ResponsiveAppBar/>
+            <ResponsiveNavBar/>
+            <FilterBar/>
             
             <Container>
                 <Stack spacing ={5} divider={<Divider orientation="vertical" flexItem />}>
                     {courses && courses.map((course) => (
-                        <p key={course._id}>{course.title} {course.subtitle}</p>
+                        <div key={course._id}>
+                            <Card courseName={course.title} courseDescription={course.description} courseRating={course.rating} courseImg={course.img} courseInstructor={course.givenBy} courseTotalHours={course.totalHours} courseSubtitles={course.subtitles}/>
+                        </div>
                     ))}
                 </Stack>
-                <Card/>
                 
             </Container>
             <p/>

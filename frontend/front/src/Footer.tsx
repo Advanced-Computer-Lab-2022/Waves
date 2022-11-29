@@ -37,7 +37,7 @@ export default function App() {
             <MDBCol md="3" lg="4" xl="3" className='mx-auto mb-4'>
               <h6 className='text-uppercase fw-bold mb-4'>
                 <MDBIcon icon="gem" className="me-3" />
-                Alien Education
+                Alien Learning
               </h6>
               <p>
                 A non-profitable online learning system that teaches people various technologies. We are proud to increase people knowledge of high-end, growing technologies. Instructors here offer courses that they are enthusiastic about and love teaching them.
@@ -115,8 +115,8 @@ export default function App() {
 
       <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.05)' }}>
         © 2022 Copyright:
-        <a className='text-reset fw-bold' href='https://AlienEducation.com/'>
-          AlienEducation.com
+        <a className='text-reset fw-bold' href='https://AlienLearning.com/'>
+          AlienLearning.com
         </a>
       </div>
     </MDBFooter>

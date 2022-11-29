@@ -19,6 +19,7 @@ const Exam = (props:any) => {
         const userInfo = new FormData(e.target)
         const belongsToCourse = Object.fromEntries(userInfo.entries()).belongsToCourse
         const belongsToExam = Object.fromEntries(userInfo.entries()).belongsToExam
+        console.log(Object.fromEntries(userInfo.entries()))
         const c1= Object.fromEntries(userInfo.entries()).choice1
         const c2= Object.fromEntries(userInfo.entries()).choice2
         const c3= Object.fromEntries(userInfo.entries()).choice3

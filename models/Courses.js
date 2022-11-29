@@ -5,15 +5,15 @@ var CoursesSchema = new mongoose.Schema({
     required: true,
     //unique: true
   },
-  subtitle: {
-    type: String,
+  subtitles: {
+    type: Array,
     required: true,
   },
   price: {
     type: Number,
     required: true,
   },
-  shortSummary: {
+  description: {
     type: String,
     required: true,
   },
@@ -21,11 +21,15 @@ var CoursesSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  courseRating: {
-    type: Number,
+  rating: {
+    type: Array,
     required: false,
   },
   subject: {
+    type: String,
+    required: true,
+  },
+  img:{
     type: String,
     required: true,
   },

@@ -5,7 +5,6 @@ interface props {
     children?: React.ReactNode;
     customChild?: React.ReactNode;
 }
-let a = 42104n;
 
 const Alien: React.FC<props> = ({ adamsProp, customChild, children}) => {
     const isFirst = adamsProp.includes("1");
