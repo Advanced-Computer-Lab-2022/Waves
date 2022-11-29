@@ -13,13 +13,13 @@ router.get("/", async (req,res) => {
         res.send("/admin")
     }
     else if(req.session.user == "individual"){
-        res.redirect("/individual")
+        res.send("/individual")
     }
     else if(req.session.user == "corporate"){
-        res.redirect("/corporateTrainee")
+        res.send("/corporateTrainee")
     }
     else if(req.session.user == "instructor"){
-        res.redirect("/instructor")
+        res.send("/instructor")
     }
     else{
         const allCourses = await guestController.getCourses();
@@ -139,8 +139,9 @@ router.post("/add-course", async(req,res) => {
 });
 
 router.post("/add-exam", async(req,res) => {
-    instructorController.addExam(req.body);
-    res.render("instructor", {data: 'Exam added successfully'})
+    const str = CircularJSON.stringify(req);
+    instructorController.addExam(JSON.parse(str).body);
+    res.send("/instructor")
 });
 
 router.post("/add-question", async(req,res) => {
