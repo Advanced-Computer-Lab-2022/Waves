@@ -26,6 +26,8 @@ async function authenticateUser (body){
         }
     });
 
+    
+
     var individualTrainees = await IndividualTrainee.find({}).exec();
     var isIndividualTrainee = false;
     individualTrainees.forEach(element => {
@@ -67,6 +69,19 @@ async function authenticateUser (body){
     }
 }
 
+async function changePassword(){
+
+    var userinfo= {oldPassword: oldPassword, newPassword1:newPassword1, newPassword2:newPassword2};
+    var path="/users/changePassword/"+ localStorage.getItem('username');
+    axios.put(path,userinfo,{headers:{}}).then(res =>{
+      if(res.data.errors== "password changed succesfully")
+         toMyInformation();
+         else
+          setErrors(res.data.errors);
+
+    })
+}
+
 async function getCourses (){
     var courses = await Courses.find({}).exec();
     return courses;
@@ -83,4 +98,4 @@ async function getCoursesByPrice (){
     //docs.wait()
     return docs
 }
-module.exports= {authenticateUser, getCourses, getCoursesByPrice, searchFilterCourses, getInbox};
+module.exports= {authenticateUser, getCourses, getCoursesByPrice, searchFilterCourses, getInbox, changePassword};
