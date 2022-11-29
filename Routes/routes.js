@@ -219,14 +219,6 @@ router.post('/authenticate', async(req, res) =>{
 });
 
 
-router.post('/change-password', async(req,res) =>{
-
-
-
-
-})
-
-
 
 router.post('/register', async(req, res) => {
     const newUser = new IndividualTrainee ({
