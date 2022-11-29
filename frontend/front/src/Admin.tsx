@@ -8,7 +8,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 import React, { useEffect } from "react";
 import LoggedInNavbar from "./LoggedInNavbar";
-// import LoggedInNavbar from "./LoggedInNavbar";
+import Container from '@mui/material/Container';
+import { Divider, Stack } from "@mui/material";
+import ResponsiveAppBar from "./ResponsiveNavBar";
+import Footer from "./Footer";
+import Card from "./Card";
 
 const Admin = (props:any) => {
     const [courses, setCourses] = React.useState<any[]>([]);
@@ -22,12 +26,19 @@ const Admin = (props:any) => {
 
     return (
         <>  
-            <LoggedInNavbar/>
-            <p>
-            {courses && courses.map((course) => (
-                <p key={course._id}>{course.title} {course.subtitle}</p>
-            ))}
-            </p>  
+            <ResponsiveAppBar/>
+            
+            <Container>
+                <Stack spacing ={5} divider={<Divider orientation="vertical" flexItem />}>
+                    {courses && courses.map((course) => (
+                        <p key={course._id}>{course.title} {course.subtitle}</p>
+                    ))}
+                </Stack>
+                <Card/>
+                
+            </Container>
+            <p/>
+            <Footer></Footer>
         </>
     )
 }

@@ -7,6 +7,7 @@ import {
     useNavigate,
     Link
   } from "react-router-dom";
+import { TextField } from '@mui/material';
 
 
 
@@ -42,18 +43,18 @@ const Login = (props:any) => {
                     <form onSubmit={handleSubmit}>
                         <div>
                             <div className="p-2">
-                                <label>Username:</label>
                             </div>
                             <div className="p-2">
-                                <input className="form-control" placeholder="Username" name="username"  id="username"></input>
+                                <TextField id="outlined-basic" label="Username" variant="outlined" name="username" />
                             </div>
                         </div>
                         <div>
                             <div className="p-2">
-                                <label>Password:</label>
+                            
                             </div>
                             <div className="p-2">
-                                <input className="form-control" placeholder="Password" type="password" name="password"  id="password"></input>
+                                {/* <input className="form-control" placeholder="Password" type="password" name="password"  id="password"></input> */}
+                                <TextField id="outlined-basic" label="Password" variant="outlined" name="password" />
                             </div>
                         </div>
                         <div>
