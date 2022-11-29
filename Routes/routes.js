@@ -140,14 +140,16 @@ router.post("/add-course", async(req,res) => {
 
 router.post("/add-exam", async(req,res) => {
     const str = CircularJSON.stringify(req);
+    console.log(JSON.parse(str))
     instructorController.addExam(JSON.parse(str).body);
+    instructorController.addQuestionToExam(JSON.parse(str).body);
     res.send("/instructor")
 });
 
-router.post("/add-question", async(req,res) => {
-    instructorController.addQuestionToExam(req.body);
-    res.render("instructor", {data: 'question added successfully'})
-});
+// router.post("/add-question", async(req,res) => {
+//     instructorController.addQuestionToExam(req.body);
+//     res.render("instructor", {data: 'question added successfully'})
+// });
 
 
 router.post('/authenticate', async(req, res) =>{
