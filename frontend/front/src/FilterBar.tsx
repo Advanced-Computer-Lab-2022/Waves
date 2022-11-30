@@ -11,7 +11,7 @@ import SendIcon from '@mui/icons-material/Send';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import StarBorder from '@mui/icons-material/StarBorder';
-import { Stack } from '@mui/material';
+import { Divider, Stack } from '@mui/material';
 
 export default function FilterBar() {
   const [open, setOpen] = React.useState(true);
@@ -21,16 +21,11 @@ export default function FilterBar() {
   };
 
   return (
-    <Stack marginLeft={10} spacing={4}>
+    <div style={{marginRight:30, width: 300, backgroundColor: 'rgb(230, 230, 230)'}}>
         <List
-        sx={{ width: '100%', maxWidth: 360, bgcolor: 'rgb(200, 200, 200)' }}
+        sx={{ width: '100%', maxWidth: 360, bgcolor: 'rgb(230, 230, 230)', color: 'black'}}
         component="nav"
         aria-labelledby="nested-list-subheader"
-        subheader={
-            <ListSubheader component="div" id="nested-list-subheader">
-            Nested List Items
-            </ListSubheader>
-        }
         >
         <ListItemButton>
             <ListItemIcon>
@@ -38,12 +33,14 @@ export default function FilterBar() {
             </ListItemIcon>
             <ListItemText primary="Sent mail" />
         </ListItemButton>
+        <Divider color='rgb(200, 200, 200)' orientation="horizontal" flexItem></Divider>
         <ListItemButton>
             <ListItemIcon>
             <DraftsIcon />
             </ListItemIcon>
             <ListItemText primary="Drafts" />
         </ListItemButton>
+        <Divider color='rgb(200, 200, 200)' orientation="horizontal" flexItem></Divider>
         <ListItemButton onClick={handleClick}>
             <ListItemIcon>
             <InboxIcon />
@@ -61,7 +58,13 @@ export default function FilterBar() {
             </ListItemButton>
             </List>
         </Collapse>
+        <ListItemButton>
+                <ListItemIcon>
+                <DraftsIcon />
+                </ListItemIcon>
+                <ListItemText primary="" />
+        </ListItemButton>
         </List>
-    </Stack>
+    </div>
   );
 }

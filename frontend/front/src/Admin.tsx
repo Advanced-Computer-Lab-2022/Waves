@@ -9,7 +9,7 @@ import axios from 'axios';
 import React, { useEffect } from "react";
 import LoggedInNavbar from "./LoggedInNavbar";
 import Container from '@mui/material/Container';
-import { Divider, Stack } from "@mui/material";
+import { Box, Divider, Grid, Stack } from "@mui/material";
 import ResponsiveNavBar from "./ResponsiveNavBar";
 import Footer from "./Footer";
 import Card from "./Course";
@@ -28,20 +28,18 @@ const Admin = (props:any) => {
     return (
         <>  
             <ResponsiveNavBar/>
-            <FilterBar/>
-            
-            <Container>
-                <Stack spacing ={5} divider={<Divider orientation="vertical" flexItem />}>
+            <Stack marginTop={0.6} direction={"row"}>
+                <FilterBar/>
+                <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 15 }}>
                     {courses && courses.map((course) => (
-                        <div key={course._id}>
+                        <Grid marginTop={2} item xs={2} sm={4} md={4} key={course._id}>
                             <Card courseName={course.title} courseDescription={course.description} courseRating={course.rating} courseImg={course.img} courseInstructor={course.givenBy} courseTotalHours={course.totalHours} courseSubtitles={course.subtitles}/>
-                        </div>
+                        </Grid>
                     ))}
-                </Stack>
-                
-            </Container>
+                </Grid>
+            </Stack>
             <p/>
-            <Footer></Footer>
+            <Footer/>
         </>
     )
 }
