@@ -162,7 +162,10 @@ router.get("/exams", async(req,res) => {
 
 router.post("/exam-session", async(req,res) =>{
     const str = CircularJSON.stringify(req);
-    console.log(JSON.stringify(JSON.parse(str))+ " commosssn")
+    const instructor = JSON.parse(JSON.stringify(JSON.parse(str).body)).belongsToCourse;
+    const name = JSON.parse(JSON.stringify(JSON.parse(str).body)).name;
+    console.log(instructor)
+    console.log(name)
     //const ExamQuestions = await individualTrainee.getSpecificExam(JSON.parse(str).belongsToCourse,JSON.parse(str).name)
     //console.log((ExamQuestions))
     //console.log("work****************")
