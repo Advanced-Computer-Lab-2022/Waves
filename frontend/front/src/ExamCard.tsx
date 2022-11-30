@@ -22,7 +22,6 @@ const bull = (
 );
 
 const ExamCard: React.FC<props> = ({belongsToCourse, name}) => {
-    console.log(name)
   return (
     <Card sx={{ minWidth: 275 }}>
       <CardContent>

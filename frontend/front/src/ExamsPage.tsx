@@ -16,7 +16,6 @@ const ExamsPage = (props:any) => {
     useEffect(() => {
     axios.get('http://localhost:3001/exams').then (response => {
         setExams(response.data);
-        console.log(response.data);
         })
     }, []);
     return (
