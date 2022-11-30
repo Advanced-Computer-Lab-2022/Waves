@@ -4,7 +4,7 @@ import Container from '@mui/material/Container';
 import { Divider, Stack } from "@mui/material";
 import ResponsiveAppBar from "./ResponsiveNavBar";
 import Footer from "./Footer";
-import Card from "./Card";
+import Course from "./Course";
 import axios from "axios";
 
 const ExamsPage = (props:any) => {
@@ -27,7 +27,6 @@ const ExamsPage = (props:any) => {
                         <p key={exam._id}>{exam.belongsToCourse} {exam.name}</p>
                     ))}
                 </Stack>
-                <Card/>
                 
             </Container>
             <p/>
