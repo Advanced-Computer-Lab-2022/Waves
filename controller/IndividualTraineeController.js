@@ -31,6 +31,15 @@ function takeExam (body){
     newExamSolution.save();
 }
 
+function CalculateExamResult (body){
+    var score=0;
+    const newExam = new Exam({
+        belongsToCourse: body.belongsToCourse,
+        name: body.belongsToExam
+    });
+    newExam.save();
+}
+
 async function getMyCourses (courses, username){
     return courses.filter(item => item.givenBy==username);
 }
@@ -44,5 +53,5 @@ async function getSpecificExam (belongsToCourse, name){
     return subQuestions
 }
 
-module.exports= {getCourses,getCoursesByPrice,takeExam,getMyCourses, getExams, getSpecificExam};
+module.exports= {getCourses,getCoursesByPrice,takeExam,getMyCourses, getExams, getSpecificExam, CalculateExamResult};
     //res.render("guest");

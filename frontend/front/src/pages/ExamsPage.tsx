@@ -1,13 +1,13 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 import React, { useEffect } from "react";
-import LoggedInNavbar from "./LoggedInNavbar";
+import LoggedInNavbar from "../components/LoggedInNavbar";
 import Container from '@mui/material/Container';
 import { Divider, Stack } from "@mui/material";
-import ResponsiveNavBar from "./ResponsiveNavBar";
-import Footer from "./Footer";
-import Card from "./ExamCard";
-import FilterBar from "./FilterBar";
+import ResponsiveNavBar from "../components/ResponsiveNavBar";
+import Footer from "../components/Footer";
+import Card from "../components/ExamCard";
+import FilterBar from "../components/FilterBar";
 
 
 const ExamsPage = (props:any) => {

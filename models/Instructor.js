@@ -11,6 +11,9 @@ var InstructorSchema = new mongoose.Schema({
   inbox: {
     type: Array,
     require: false
+  },
+  rating:{
+    type: String
   }
 });
 const Instructor = mongoose.model("Instructor", InstructorSchema);

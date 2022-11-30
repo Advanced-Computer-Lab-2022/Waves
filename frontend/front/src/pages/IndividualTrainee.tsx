@@ -5,12 +5,12 @@ import {
     Link
   } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import LoggedInNavbar from "./LoggedInNavbar";
+import LoggedInNavbar from "../components/LoggedInNavbar";
 import { Button, Card, Container, Divider, Stack } from "@mui/material";
 import axios from "axios";
 import React, { useEffect } from "react";
-import ResponsiveAppBar from "./ResponsiveNavBar";
-import Footer from "./Footer";
+import ResponsiveAppBar from "../components/ResponsiveNavBar";
+import Footer from "../components/Footer";
 
 const IndividualTrainee = (props:any) => {
     const navigate = useNavigate();

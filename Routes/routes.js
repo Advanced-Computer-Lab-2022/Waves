@@ -167,6 +167,16 @@ router.post("/exam-session", async(req,res) =>{
 });
 
 
+router.get("/view-rating", async(req,res) => {
+    // if(!req.session.isLoggedIn)
+    //     res.redirect('./login')
+    // else {
+        const instructorRating = await instructorController.getMyRating("Instructor"); //should be updated with different instructors
+        //console.log(instructorRating)
+        res.send(JSON.stringify(instructorRating))
+    //}
+});
+
 // router.post("/add-question", async(req,res) => {
 //     instructorController.addQuestionToExam(req.body);
 //     res.render("instructor", {data: 'question added successfully'})

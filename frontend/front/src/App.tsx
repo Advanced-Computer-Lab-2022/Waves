@@ -7,18 +7,19 @@ import {
 } from "react-router-dom";
 import Alien from './Alien';
 import './App.css';
-import Navbar from './navbar';
-import Login from './Login';
-import Signup from './Signup';
-import Admin from './Admin';
-import CorporateTrainee from './CorporateTrainee';
-import IndividualTrainee from './IndividualTrainee';
-import Instructor from './Instructor';
-import Inbox from './Inbox';
-import Exam from './Exam';
-import ViewCourse from './ViewCourse';
-import ExamsPage from './ExamsPage';
-import ExamSession from './ExamSession';
+import Navbar from './components/navbar';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
+import Admin from './pages/Admin';
+import CorporateTrainee from './pages/CorporateTrainee';
+import IndividualTrainee from './pages/IndividualTrainee';
+import Instructor from './pages/Instructor';
+import Inbox from './pages/Inbox';
+import Exam from './pages/Exam';
+import ViewCourse from './pages/ViewCourse';
+import ExamsPage from './pages/ExamsPage';
+import ExamSession from './pages/ExamSession';
+import ViewRating from './pages/ViewRating';
 
 const arr = ["String1", "String2", "String3", "String4", "String5"]
 
@@ -66,6 +67,7 @@ function App() {
         <Route path="/coporateTrainee" element = {<CorporateTrainee/>}/>
         <Route path="/individualTrainee" element = {<IndividualTrainee/>}/>
         <Route path="/viewcourse" element = {<ViewCourse/>}/>
+        <Route path="/view-rating" element = {<ViewRating/>}/>
         </Routes>
       </Router>
   );

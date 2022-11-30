@@ -1,13 +1,13 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 import React, { useEffect } from "react";
-import LoggedInNavbar from "./LoggedInNavbar";
+import LoggedInNavbar from "../components/LoggedInNavbar";
 import Container from '@mui/material/Container';
 import { Button, Divider, FormControl, FormControlLabel, FormLabel, Grid, Radio, RadioGroup, Stack } from "@mui/material";
-import ResponsiveNavBar from "./ResponsiveNavBar";
-import Footer from "./Footer";
-import Card from "./ExamCard";
-import FilterBar from "./FilterBar";
+import ResponsiveNavBar from "../components/ResponsiveNavBar";
+import Footer from "../components/Footer";
+import Card from "../components/ExamCard";
+import FilterBar from "../components/FilterBar";
 import {useLocation, useNavigate} from "react-router-dom";
 import { response } from 'express';
 
@@ -16,26 +16,22 @@ const ExamSession = (props:any) => {
     const [examsQuestions, setExamQuestions] = React.useState<any[]>([]);
     const location = useLocation();
     const data = location.state?.data;
-    var s1;
-    var s2;
-    var s3;
-    var s4;
+    // var s1;
+    // var s2;
+    // var s3;
+    // var s4;
     const handleSubmit = (e: any) => {
         e.preventDefault();
         const userInfo = new FormData(e.target)
-         s1 = Object.fromEntries(userInfo.entries()).A
-         s2 = Object.fromEntries(userInfo.entries()).B
-         s3 = Object.fromEntries(userInfo.entries()).C
-         s4 = Object.fromEntries(userInfo.entries()).D
+         const s1 = Object.fromEntries(userInfo.entries()).A
+         const s2 = Object.fromEntries(userInfo.entries()).B
+         const s3 = Object.fromEntries(userInfo.entries()).C
+         const s4 = Object.fromEntries(userInfo.entries()).D
+         axios.post('http://localhost:3001/exam-session', {});
     }
     axios.post('http://localhost:3001/exam-session', {
             belongsToCourse: data[0] ,
-            name: data[1] ,
-            s1: s1,
-            s2: s2,
-            s3: s3,
-            s4: s4
-
+            name: data[1] 
           }, {
             headers: {
               'Content-Type': 'application/x-www-form-urlencoded'
