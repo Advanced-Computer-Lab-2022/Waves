@@ -21,6 +21,7 @@ const Exam = (props:any) => {
         const belongsToCourse = Object.fromEntries(userInfo.entries()).belongsToCourse
         const belongsToExam = Object.fromEntries(userInfo.entries()).belongsToExam
         console.log(Object.fromEntries(userInfo.entries()))
+        const question= Object.fromEntries(userInfo.entries()).question
         const c1= Object.fromEntries(userInfo.entries()).choice1
         const c2= Object.fromEntries(userInfo.entries()).choice2
         const c3= Object.fromEntries(userInfo.entries()).choice3
@@ -30,6 +31,7 @@ const Exam = (props:any) => {
         axios.post('http://localhost:3001/add-exam', {
             belongsToCourse: belongsToCourse,
             belongsToExam: belongsToExam,
+            question: question,
             c1: c1,
             c2: c2,
             c3: c3,

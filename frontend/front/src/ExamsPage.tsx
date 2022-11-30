@@ -1,11 +1,14 @@
+import 'bootstrap/dist/css/bootstrap.min.css';
+import axios from 'axios';
 import React, { useEffect } from "react";
 import LoggedInNavbar from "./LoggedInNavbar";
 import Container from '@mui/material/Container';
 import { Divider, Stack } from "@mui/material";
-import ResponsiveAppBar from "./ResponsiveNavBar";
+import ResponsiveNavBar from "./ResponsiveNavBar";
 import Footer from "./Footer";
-import Card from "./Card";
-import axios from "axios";
+import Card from "./ExamCard";
+import FilterBar from "./FilterBar";
+
 
 const ExamsPage = (props:any) => {
     const [exams, setExams] = React.useState<any[]>([]);
@@ -16,18 +19,18 @@ const ExamsPage = (props:any) => {
         console.log(response.data);
         })
     }, []);
-
     return (
         <>  
-            <ResponsiveAppBar/>
+            <ResponsiveNavBar/>
             
             <Container>
                 <Stack spacing ={5} divider={<Divider orientation="vertical" flexItem />}>
                     {exams && exams.map((exam) => (
-                        <p key={exam._id}>{exam.belongsToCourse} {exam.name}</p>
+                        <div key={exam._id}>
+                            <Card belongsToCourse={exam.belongsToCourse} name={exam.name} />
+                        </div>
                     ))}
                 </Stack>
-                <Card/>
                 
             </Container>
             <p/>

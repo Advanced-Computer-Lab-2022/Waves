@@ -34,6 +34,7 @@ function addExam (body){
 function addQuestionToExam (body){
     const newQuestion = new Question({
         belongsToExam: body.belongsToExam,
+        question: body.question,
         c1: body.c1,
         c2: body.c2,
         c3: body.c3,

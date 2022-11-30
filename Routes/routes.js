@@ -8,6 +8,11 @@ var Administrator = require("../models/Users/Administrator");
 var CircularJSON = require('circular-json')
 
 var router = express.Router();
+const bp = require('body-parser')
+router.use(bp.json())
+router.use(bp.urlencoded({ extended: true }))
+router.use(express.json());
+router.use(express.urlencoded());
 
 router.get("/", async (req,res) => {
     if(req.session.user == "admin"){
@@ -153,6 +158,15 @@ router.get("/exams", async(req,res) => {
     const allExams = await individualTrainee.getExams()
     console.log(JSON.stringify(allExams))
     res.send(JSON.stringify(allExams))
+});
+
+router.post("/exam-session", async(req,res) =>{
+    const str = CircularJSON.stringify(req);
+    console.log(JSON.stringify(JSON.parse(str))+ " commosssn")
+    //const ExamQuestions = await individualTrainee.getSpecificExam(JSON.parse(str).belongsToCourse,JSON.parse(str).name)
+    //console.log((ExamQuestions))
+    //console.log("work****************")
+    //res.send(JSON.stringify(ExamQuestions))
 });
 
 

@@ -1,4 +1,5 @@
 var Courses=require("../models/Courses"); 
+var Questions=require("../models/Question"); 
 var Exams=require("../models/Exam"); 
 var ExamSolution=require("../models/ExamSolution");
 
@@ -34,5 +35,13 @@ async function getMyCourses (courses, username){
     return courses.filter(item => item.givenBy==username);
 }
 
-module.exports= {getCourses,getCoursesByPrice,takeExam,getMyCourses, getExams};
+async function getSpecificExam (belongsToCourse, name){
+    var exams = await Exams.find({}).exec();
+    var questions = await Questions.find({}).exec();
+    var subExams= exams.filter(item => (item.belongsToCourse==belongsToCourse && item.name==name));
+    //console.log(subExams + " ************************")
+    return questions.filter(item => (item.belongsToExam==name && subExams.name==name));
+}
+
+module.exports= {getCourses,getCoursesByPrice,takeExam,getMyCourses, getExams, getSpecificExam};
     //res.render("guest");
