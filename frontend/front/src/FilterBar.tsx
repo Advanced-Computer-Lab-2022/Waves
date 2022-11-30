@@ -11,7 +11,7 @@ import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import MoneyIcon from '@mui/icons-material/AttachMoney';
 import StarIcon from '@mui/icons-material/Grade';
-import { Checkbox, Divider, FormControlLabel, FormGroup, Rating, Stack, Typography } from '@mui/material';
+import { Box, Checkbox, Divider, FormControl, FormControlLabel, FormGroup, Input, InputAdornment, InputLabel, ListItem, Rating, Slider, Stack, Typography } from '@mui/material';
 import Search from './Search';
 import './styles.css'
 
@@ -49,6 +49,54 @@ export default function FilterBar() {
 
   const handlePriceClick = () => {
     setPriceOpen(!priceOpen);
+  };
+
+  const minDistance = 10;
+
+  const [value, setValue] = React.useState<number[]>([20, 37]);
+
+  const handlePriceChange = (
+    event: Event,
+    newValue: number | number[],
+    activeThumb: number,
+  ) => {
+    if (!Array.isArray(newValue)) {
+      return;
+    }
+
+    if (newValue[1] - newValue[0] < minDistance) {
+      if (activeThumb === 0) {
+        const clamped = Math.min(newValue[0], 100 - minDistance);
+        setValue([clamped, clamped + minDistance]);
+      } else {
+        const clamped = Math.max(newValue[1], minDistance);
+        setValue([clamped - minDistance, clamped]);
+      }
+    } else {
+      setValue(newValue as number[]);
+    }
+  };
+
+  const handleChange = (
+    event: Event,
+    newValue: number | number[],
+    activeThumb: number,
+  ) => {
+    if (!Array.isArray(newValue)) {
+      return;
+    }
+
+    if (newValue[1] - newValue[0] < minDistance) {
+      if (activeThumb === 0) {
+        const clamped = Math.min(newValue[0], 100 - minDistance);
+        setValue([clamped, clamped + minDistance]);
+      } else {
+        const clamped = Math.max(newValue[1], minDistance);
+        setValue([clamped - minDistance, clamped]);
+      }
+    } else {
+      setValue(newValue as number[]);
+    }
   };
 
   return (
@@ -113,7 +161,7 @@ export default function FilterBar() {
 
         <Collapse style={{marginBottom: 10}} in={ratingOpen && filterOpen} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
-                <Stack onMouseEnter={() => setFourRatingHover(true)} onMouseLeave={() => setFourRatingHover(false)} spacing={1} direction="row" onClick={() => {if(!fourRating){ setOneRating(false); setTwoRating(false); setThreeRating(false);} setFourRating(!fourRating); }}>
+                <Stack className="pointer-link" onMouseEnter={() => setFourRatingHover(true)} onMouseLeave={() => setFourRatingHover(false)} spacing={1} direction="row" onClick={() => {if(!fourRating){ setOneRating(false); setTwoRating(false); setThreeRating(false);} setFourRating(!fourRating); }}>
                     <Rating className="grow" sx={{"& .MuiRating-iconFilled": {color: fourRating||fourRatingHover? "#F59200" : "#F5B100"}, pl: 8}} size={(fourRating||fourRatingHover)? 'large' : 'medium'} name="read-only" value={4} readOnly />
                     <Typography color={fourRating||fourRatingHover? '#F59C00' : "black"} fontSize={fourRating||fourRatingHover? 20:16}> & Up </Typography>
                 </Stack>
@@ -122,7 +170,7 @@ export default function FilterBar() {
 
         <Collapse style={{marginBottom: 10}} in={ratingOpen && filterOpen} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
-                <Stack onMouseEnter={() => setThreeRatingHover(true)} onMouseLeave={() => setThreeRatingHover(false)} spacing={1} direction="row" onClick={() => {if(!threeRating){ setOneRating(false); setTwoRating(false); setFourRating(false);} setThreeRating(!threeRating); }}>
+                <Stack className="pointer-link" onMouseEnter={() => setThreeRatingHover(true)} onMouseLeave={() => setThreeRatingHover(false)} spacing={1} direction="row" onClick={() => {if(!threeRating){ setOneRating(false); setTwoRating(false); setFourRating(false);} setThreeRating(!threeRating); }}>
                     <Rating className="grow" sx={{"& .MuiRating-iconFilled": {color: threeRating||threeRatingHover? "#F59200" : "#F5B100"}, pl: 8}} size={(threeRating||threeRatingHover)? 'large' : 'medium'} name="read-only" value={3} readOnly />
                     <Typography color={threeRating||threeRatingHover? '#F59C00' : "black"} fontSize={threeRating||threeRatingHover? 20:16}> & Up </Typography>
                 </Stack>
@@ -131,7 +179,7 @@ export default function FilterBar() {
 
         <Collapse style={{marginBottom: 10}} in={ratingOpen && filterOpen} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
-                <Stack onMouseEnter={() => setTwoRatingHover(true)} onMouseLeave={() => setTwoRatingHover(false)} spacing={1} direction="row" onClick={() => {if(!twoRating){ setOneRating(false); setThreeRating(false); setFourRating(false);} setTwoRating(!twoRating); }}>
+                <Stack className="pointer-link" onMouseEnter={() => setTwoRatingHover(true)} onMouseLeave={() => setTwoRatingHover(false)} spacing={1} direction="row" onClick={() => {if(!twoRating){ setOneRating(false); setThreeRating(false); setFourRating(false);} setTwoRating(!twoRating); }}>
                     <Rating className="grow" sx={{"& .MuiRating-iconFilled": {color: twoRating||twoRatingHover? "#F59200" : "#F5B100"}, pl: 8}} size={(twoRating||twoRatingHover)? 'large' : 'medium'} name="read-only" value={2} readOnly />
                     <Typography color={twoRating||twoRatingHover? '#F59C00' : "black"} fontSize={twoRating||twoRatingHover? 20:16}> & Up </Typography>
                 </Stack>
@@ -140,7 +188,7 @@ export default function FilterBar() {
 
         <Collapse style={{marginBottom: 10}} in={ratingOpen && filterOpen} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
-                <Stack onMouseEnter={() => setOneRatingHover(true)} onMouseLeave={() => setOneRatingHover(false)} spacing={1} direction="row" onClick={() => {if(!oneRating){ setTwoRating(false); setThreeRating(false); setFourRating(false);} setOneRating(!oneRating); }}>
+                <Stack className="pointer-link" onMouseEnter={() => setOneRatingHover(true)} onMouseLeave={() => setOneRatingHover(false)} spacing={1} direction="row" onClick={() => {if(!oneRating){ setTwoRating(false); setThreeRating(false); setFourRating(false);} setOneRating(!oneRating); }}>
                     <Rating className="grow" sx={{"& .MuiRating-iconFilled": {color: oneRating||oneRatingHover? "#F59200" : "#F5B100"}, pl: 8}} size={(oneRating||oneRatingHover)? 'large' : 'medium'} name="read-only" value={1} readOnly />
                     <Typography className="growN" color={oneRating||oneRatingHover? '#F59C00' : "black"} fontSize={oneRating||oneRatingHover? 20:16}> & Up </Typography>
                 </Stack>
@@ -164,26 +212,38 @@ export default function FilterBar() {
         
         <Collapse in={priceOpen && filterOpen} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
-            <ListItemButton sx={{ pl: 8 }}>
-                <ListItemIcon>
-                <MoneyIcon/>
-                </ListItemIcon>
-                <ListItemText primary="Price" />
-            </ListItemButton>
+            <ListItem sx={{ pl: 8 }}>
+            <Box sx={{ width: 300 }}>
+                <Stack direction={"row"} sx={{marginLeft: 2.5, width: 200, marginBottom: 3}}>
+                    <FormControl fullWidth variant="standard" sx={{marginRight: 5}}>
+                        <InputLabel htmlFor="standard-adornment-amount">Min. Price</InputLabel>
+                        <Input
+                            id="standard-adornment-amount"
+                            startAdornment={<InputAdornment position="start">$</InputAdornment>}
+                            value= {value[0]}
+                        />
+                    </FormControl>
+                    <FormControl fullWidth variant="standard">
+                        <InputLabel htmlFor="standard-adornment-amount">Max. Price</InputLabel>
+                        <Input
+                            id="standard-adornment-amount"
+                            startAdornment={<InputAdornment position="start">$</InputAdornment>}
+                            value= {value[1]}
+                        />
+                    </FormControl>
+                </Stack>
+                <Slider
+                    getAriaLabel={() => 'Minimum distance shift'}
+                    value={value}
+                    onChange={handleChange}
+                    valueLabelDisplay="auto"
+                    disableSwap
+                />
+            </Box>
+            </ListItem>
             </List>
         </Collapse>
-
         
-        <Collapse in={priceOpen && filterOpen} timeout="auto" unmountOnExit>
-            <List component="div" disablePadding>
-            <ListItemButton sx={{ pl: 8 }}>
-                <ListItemIcon>
-                <MoneyIcon/>
-                </ListItemIcon>
-                <ListItemText primary="Price" />
-            </ListItemButton>
-            </List>
-        </Collapse>
         </List>
     </div>
   );

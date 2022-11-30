@@ -5,3 +5,8 @@
 .grow:hover { 
         transform: scale(1.1); 
     }
+
+
+.pointer-link {
+    cursor: pointer;
+    }
