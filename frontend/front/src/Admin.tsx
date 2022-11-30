@@ -33,7 +33,7 @@ const Admin = (props:any) => {
                 <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 15 }}>
                     {courses && courses.map((course) => (
                         <Grid marginTop={2} item xs={2} sm={4} md={4} key={course._id}>
-                            <Card courseName={course.title} courseDescription={course.description} courseRating={course.rating} courseImg={course.img} courseInstructor={course.givenBy} courseTotalHours={course.totalHours} courseSubtitles={course.subtitles}/>
+                            <Card courseName={course.title} courseDescription={course.description} courseRating={course.rating} courseImg={course.img} courseInstructor={course.givenBy} courseTotalHours={course.totalHours} courseSubtitles={course.subtitles} coursePrice={"$" +course.price}/>
                         </Grid>
                     ))}
                 </Grid>

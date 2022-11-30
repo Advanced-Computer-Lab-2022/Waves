@@ -24,7 +24,7 @@ const BasicRating: React.FC<props> = ({rating}) => {
             <Box marginRight={1} marginTop={0.25}>
                 <Typography color="orange" component="legend">{value![0]}</Typography>
             </Box>
-            <Rating name="read-only" value={value![0]} readOnly />
+            <Rating name="read-only" value={value![0]} readOnly precision={0.1}/>
             <Box marginLeft={1} marginTop={0.25}>
                 <Typography color="grey" variant="body2" component="legend">{"(" + value![1] + ")"}</Typography>
             </Box>

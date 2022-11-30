@@ -10,6 +10,7 @@ import RatingRead from './RatingRead';
 interface props {
   courseName: string;
   courseDescription: string;
+  coursePrice: string;
   courseRating: Array<number>;
   courseInstructor: string;
   courseTotalHours: string;
@@ -19,10 +20,10 @@ interface props {
   customChild?: React.ReactNode;
 }
 
-const Course: React.FC<props> = ({courseName, courseDescription, courseRating, courseInstructor, courseTotalHours, courseImg, courseSubtitles}) => {
+const Course: React.FC<props> = ({courseName, coursePrice, courseDescription, courseRating, courseInstructor, courseTotalHours, courseImg, courseSubtitles}) => {
   return (
     <Card sx={{ maxWidth: 345 }}>
-      <CardActionArea/>
+      <CardActionArea>
         <CardMedia
           component="img"
           height="170"
@@ -45,13 +46,14 @@ const Course: React.FC<props> = ({courseName, courseDescription, courseRating, c
           </Typography>
           <Stack direction="row">
           <RatingRead rating={courseRating}/>
-          <Grid container justifyContent="flex-end" marginTop={2}>
-            <Button style={{maxWidth: '75px', maxHeight: '75px'}} size="small" color="primary">
-                    View Course
-            </Button>
-          </Grid>
+          <Box sx={{marginLeft: 5, justifyContent:'end', display: 'flex', alignItems: 'flex-end'}}>
+            <Typography variant="h6" color="green">
+              {coursePrice}
+            </Typography>
+          </Box>
           </Stack>
         </CardContent>
+        </CardActionArea>
     </Card>
   );
 }
