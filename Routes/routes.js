@@ -162,6 +162,39 @@ router.get("/exams", async(req,res) => {
 // });
 
 
+router.put('/changePassword/:username', async (req,res)=>{
+    if(req.body.oldPassword=="" || req.body.newPassword1=="" || req.body.newPassword2=="")
+        res.send({errors:"All fields must be filled"})
+    else{
+      await Users.findOne({username:req.params.username}).then(async (user)=>{
+        var errors="";
+        var match=false;
+        match=await bcrypt.compare(req.body.oldPassword,user.password);
+        if(match){
+            if(req.body.newPassword1!=req.body.newPassword2)
+                errors="New passwords don't match";
+            else if(req.body.newPassword1==req.body.oldPassword)
+                errors="New password cannot be the same as old password"
+            else{
+                try{
+                    const hashedPassword = await bcrypt.hash(req.body.newPassword1, 10);
+                    user.password=hashedPassword;
+                    user.save();
+                    errors="Password changed successfully!";
+                }
+                catch{
+                    res.send("oops")
+                }
+            }
+        }
+        else
+            errors="Incorrect old password";
+        res.send({errors:errors});
+      })
+    }
+})
+
+
 router.post('/authenticate', async(req, res) =>{
     const str = CircularJSON.stringify(req);
     const user = await guestController.authenticateUser(JSON.parse(str).body);
@@ -194,6 +227,8 @@ router.post('/authenticate', async(req, res) =>{
         res.send("No One")
     }
 });
+
+
 
 router.post('/register', async(req, res) => {
     const newUser = new IndividualTrainee ({
