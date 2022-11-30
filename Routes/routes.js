@@ -8,11 +8,6 @@ var Administrator = require("../models/Users/Administrator");
 var CircularJSON = require('circular-json')
 
 var router = express.Router();
-const bp = require('body-parser')
-router.use(bp.json())
-router.use(bp.urlencoded({ extended: true }))
-router.use(express.json());
-router.use(express.urlencoded());
 
 router.get("/", async (req,res) => {
     if(req.session.user == "admin"){
