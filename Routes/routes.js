@@ -2,6 +2,7 @@ var express = require("express");
 var instructorController = require("../controller/InstructorController");
 var adminController = require("../controller/AdminController");
 var guestController = require("../controller/GuestController");
+var individualTrainee = require("../controller/IndividualTraineeController");
 var IndividualTrainee = require("../models/IndividualTrainee"); 
 var Administrator = require("../models/Users/Administrator"); 
 var CircularJSON = require('circular-json')
@@ -145,6 +146,15 @@ router.post("/add-exam", async(req,res) => {
     instructorController.addQuestionToExam(JSON.parse(str).body);
     res.send("/instructor")
 });
+
+router.get("/exams", async(req,res) => {
+    // const allCourses = await guestController.getCourses();
+    // res.send(JSON.stringify(allCourses))
+    const allExams = await individualTrainee.getExams()
+    console.log(JSON.stringify(allExams))
+    res.send(JSON.stringify(allExams))
+});
+
 
 // router.post("/add-question", async(req,res) => {
 //     instructorController.addQuestionToExam(req.body);

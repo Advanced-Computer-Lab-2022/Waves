@@ -1,7 +1,15 @@
 var Courses=require("../models/Courses"); 
+var Exams=require("../models/Exam"); 
+var ExamSolution=require("../models/ExamSolution");
 
 async function getCourses (){
     const docs=await Courses.find({},'title totalHours courseRating').exec();
+    //docs.wait()
+    return docs
+}
+
+async function getExams (){
+    const docs=await Exams.find({},'belongsToCourse name').exec();
     //docs.wait()
     return docs
 }
@@ -11,5 +19,20 @@ async function getCoursesByPrice (){
     //docs.wait()
     return docs
 }
-module.exports= {getCourses,getCoursesByPrice};
+
+function takeExam (body){
+    const newExamSolution = new ExamSolution({
+        s1: body.s1,
+        s2: body.s2,
+        s3: body.s3,
+        s4: body.s4
+    });
+    newExamSolution.save();
+}
+
+async function getMyCourses (courses, username){
+    return courses.filter(item => item.givenBy==username);
+}
+
+module.exports= {getCourses,getCoursesByPrice,takeExam,getMyCourses, getExams};
     //res.render("guest");
