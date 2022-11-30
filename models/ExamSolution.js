@@ -1,6 +1,6 @@
 var mongoose = require("mongoose");
 var ExamSolutionSchema = new mongoose.Schema({
-    s1: {
+      s1: {
         type: String,
         required: true,
       },

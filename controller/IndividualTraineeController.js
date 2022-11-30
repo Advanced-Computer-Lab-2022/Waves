@@ -39,8 +39,9 @@ async function getSpecificExam (belongsToCourse, name){
     var exams = await Exams.find({}).exec();
     var questions = await Questions.find({}).exec();
     var subExams= exams.filter(item => (item.belongsToCourse==belongsToCourse && item.name==name));
-    //console.log(subExams + " ************************")
-    return questions.filter(item => (item.belongsToExam==name && subExams.name==name));
+    var subQuestions=questions.filter(item => (item.belongsToExam==name));
+    //console.log(subQuestions)
+    return subQuestions
 }
 
 module.exports= {getCourses,getCoursesByPrice,takeExam,getMyCourses, getExams, getSpecificExam};

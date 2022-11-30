@@ -157,11 +157,10 @@ router.get("/exams", async(req,res) => {
 
 router.post("/exam-session", async(req,res) =>{
     const str = CircularJSON.stringify(req);
-    const instructor = JSON.parse(JSON.stringify(JSON.parse(str).body)).belongsToCourse;
+    const belongsToCourse = JSON.parse(JSON.stringify(JSON.parse(str).body)).belongsToCourse;
     const name = JSON.parse(JSON.stringify(JSON.parse(str).body)).name;
-    console.log(instructor)
-    console.log(name)
-    //const ExamQuestions = await individualTrainee.getSpecificExam(JSON.parse(str).belongsToCourse,JSON.parse(str).name)
+    const ExamQuestions = await individualTrainee.getSpecificExam(belongsToCourse,name)
+    res.send(JSON.stringify(ExamQuestions))
     //console.log((ExamQuestions))
     //console.log("work****************")
     //res.send(JSON.stringify(ExamQuestions))
