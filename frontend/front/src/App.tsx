@@ -19,6 +19,7 @@ import Exam from './Exam';
 import ViewCourse from './ViewCourse';
 import ExamsPage from './ExamsPage';
 import ExamSession from './ExamSession';
+import ViewRating from './ViewRating';
 
 const arr = ["String1", "String2", "String3", "String4", "String5"]
 
@@ -66,6 +67,7 @@ function App() {
         <Route path="/coporateTrainee" element = {<CorporateTrainee/>}/>
         <Route path="/individualTrainee" element = {<IndividualTrainee/>}/>
         <Route path="/viewcourse" element = {<ViewCourse/>}/>
+        <Route path="/view-rating" element = {<ViewRating/>}/>
         </Routes>
       </Router>
   );

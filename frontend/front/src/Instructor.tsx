@@ -23,6 +23,14 @@ const Instructor = (props:any) => {
                  Add Exam
             </Button>
 
+            <Button variant="contained"
+                onClick={() => {
+                navigate("../view-rating");
+            }}
+            >
+                 Review Rating
+            </Button>
+
 
         </>
     )

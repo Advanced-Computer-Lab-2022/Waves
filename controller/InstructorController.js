@@ -4,6 +4,7 @@
 const Courses = require("../models/Courses");
 const Question = require("../models/Question");
 const Exam=require("../models/Exam");
+const Instructor=require("../models/Instructor");
 
 function addCourse (body, username){
     const newCourse = new Courses({
@@ -44,7 +45,13 @@ function addQuestionToExam (body){
     newQuestion.save();
 }
 
-module.exports= {addCourse, getMyCourses,addExam, addQuestionToExam};
+async function getMyRating (name){
+    const thisinstructor = await Instructor.findOne({username : name}).exec()
+    return thisinstructor.rating;
+}
+
+
+module.exports= {addCourse, getMyCourses,addExam, addQuestionToExam, getMyRating};
     //res.render("guest");
 
 
