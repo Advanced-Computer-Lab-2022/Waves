@@ -221,14 +221,24 @@ export default function FilterBar() {
                             id="standard-adornment-amount"
                             startAdornment={<InputAdornment position="start">$</InputAdornment>}
                             value= {value[0]}
+                            onChange={(v)=>{
+                              const u = parseFloat(v.target.value);
+                              isNaN(u) || setValue(([a,b])=>([u,b]));
+
+                            }}
                         />
                     </FormControl>
                     <FormControl fullWidth variant="standard">
                         <InputLabel htmlFor="standard-adornment-amount">Max. Price</InputLabel>
                         <Input
                             id="standard-adornment-amount"
-                            startAdornment={<InputAdornment position="start">$</InputAdornment>}
+                            startAdornment={<InputAdornment position="end">$</InputAdornment>}
                             value= {value[1]}
+                            onChange={(v)=>{
+                              const u = parseFloat(v.target.value);
+                              isNaN(u) || setValue(([a,b])=>([a,u]));
+
+                            }}
                         />
                     </FormControl>
                 </Stack>
@@ -236,8 +246,12 @@ export default function FilterBar() {
                     getAriaLabel={() => 'Minimum distance shift'}
                     value={value}
                     onChange={handleChange}
+                
                     valueLabelDisplay="auto"
                     disableSwap
+                    min={0}
+                    max={1000}
+
                 />
             </Box>
             </ListItem>
