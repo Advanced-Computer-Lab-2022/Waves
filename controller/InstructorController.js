@@ -51,6 +51,7 @@ async function getMyRating (name){
 }
 
 
+
 module.exports= {addCourse, getMyCourses,addExam, addQuestionToExam, getMyRating};
     //res.render("guest");
 

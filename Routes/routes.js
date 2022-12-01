@@ -6,6 +6,10 @@ var individualTrainee = require("../controller/IndividualTraineeController");
 var IndividualTrainee = require("../models/IndividualTrainee"); 
 var Administrator = require("../models/Users/Administrator"); 
 var CircularJSON = require('circular-json')
+const Instructor=require("../models/Instructor");
+const jwt = require('jsonwebtoken')
+const bcrypt = require('bcrypt')
+const createError = require('http-errors')
 
 var router = express.Router();
 
@@ -51,19 +55,62 @@ router.get("/admin", async(req,res) => {
    // }
 });
 
-router.get("/login", function(req,res){
-    res.render("login", {
-        err: ''
-    })
+// router.get("/login", function(req,res){
+//     res.render("login", {
+//         err: ''
+//     })
+// });
+
+router.post("/sign-up", async(req,res) => {
+    const { name, email, password } = req.body;
+    try {
+        const salt = await bcrypt.genSalt();
+        const hashedPassword = await bcrypt.hash(req.body.password, salt);
+        const user = await userModel.create({ name: name, email: email, password: hashedPassword });
+        const token = createToken(user.name);
+
+        res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
+        res.status(200).json(user)
+    } catch (error) {
+        res.status(400).json({ error: error.message })
+    }
 });
 
-router.post("/logout", function(req,res){
-    req.session.username = null
-    req.session.password = null
-    req.session.isLoggedIn = null
-    req.session.user = null
-    res.redirect("/")
+router.post("/login", async(req,res) => {
+    const{username, password} = req.body;
+    console.log(password + " xxx")
+    try {
+        const user = await Instructor.findOne({username : "Instructor"}).exec()
+        console.log(user + "************")
+        if(user){
+            const flag=await bcrypt.compare("Instructor",user.password);
+            if(flag){
+                const token=createToken(user.username);
+                res.cookie("jwt", token, {httpOnly: true, maxAge: maxAge*1000});
+                res.status(200).json(user);      
+            }else {
+                res.status(404).json({error: "Not the same"});
+            }
+        }else{
+            res.status(404).json({error: "User not found"})
+        }
+    } catch (error){
+        res.status(400).json({error: error.message});
+    }
 });
+
+router.get("/logout", async(req,res) => {
+    return res.clearCookie("jwt").status(200).json({ message: "Successfully logged out" });
+});
+
+
+// router.post("/logout", function(req,res){
+//     req.session.username = null
+//     req.session.password = null
+//     req.session.isLoggedIn = null
+//     req.session.user = null
+//     res.redirect("/")
+// });
 
 router.post("/search", async(req,res) => {
     const user = req.session.user
