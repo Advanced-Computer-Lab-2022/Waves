@@ -176,6 +176,15 @@ router.get("/view-rating", async(req,res) => {
         res.send(JSON.stringify(instructorRating))
     //}
 });
+router.get("/view-instructorcourserating", async(req,res) => {
+    // if(!req.session.isLoggedIn)
+    //     res.redirect('./login')
+    // else {
+        const instructorCourseRating = await instructorController.getMyCoursesratings("Omar Ghoniem"); //should be updated with different instructors
+        console.log(instructorCourseRating)
+        res.send(JSON.stringify(instructorCourseRating))
+    //}
+});
 
 // router.post("/add-question", async(req,res) => {
 //     instructorController.addQuestionToExam(req.body);

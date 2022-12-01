@@ -8,12 +8,13 @@ var InstructorSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  inbox: {
-    type: Array,
-    require: false
+  rating: {
+    type: String,
+   
   },
-  rating:{
-    type: String
+  reviews: {
+    type: Array,
+    required: true,
   }
 });
 const Instructor = mongoose.model("Instructor", InstructorSchema);
