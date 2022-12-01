@@ -6,7 +6,12 @@ import Container from '@mui/material/Container';
 import { Card, Divider, Stack } from "@mui/material";
 import ResponsiveNavBar from "../components/ResponsiveNavBar";
 import Footer from "../components/Footer";
-
+import {
+    BrowserRouter as Router,
+    Route,
+    useNavigate,
+    Link
+  } from "react-router-dom";
 import FilterBar from "../components/FilterBar";
 import ExamsPage from './ExamsPage';
 
@@ -27,7 +32,7 @@ const CourseRating = (props:any) => {
                 <Stack spacing ={5} divider={<Divider orientation="vertical" flexItem />}>
                     {courseratings && courseratings.map((courserating) => (
                         <div key={courserating._id}>
-                            <Card title={courserating.title} name={courserating.rating} />
+                            {/* <Card title={courserating.title} name={courserating.rating} /> */}
                         </div>
                     ))}
                 </Stack>

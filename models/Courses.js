@@ -22,8 +22,7 @@ var CoursesSchema = new mongoose.Schema({
     required: true,
   },
   rating: {
-    type: String,
-   
+    type: Array,
   },
   subject: {
     type: String,
