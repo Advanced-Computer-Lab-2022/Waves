@@ -1,5 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Navbar from './navbar';
+import Navbar from '../components/navbar';
 
 const Signup = (props:any) => {
     

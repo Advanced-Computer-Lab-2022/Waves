@@ -5,7 +5,7 @@ import {
     Link
   } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import LoggedInNavbar from "./LoggedInNavbar";
+import LoggedInNavbar from "../components/LoggedInNavbar";
 
 const CorporateTrainee = (props:any) => {
     return (

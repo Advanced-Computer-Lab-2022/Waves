@@ -5,7 +5,7 @@ import {
     Link
   } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import ResponsiveNavBar from "./ResponsiveNavBar";
+import ResponsiveNavBar from "../components/ResponsiveNavBar";
 
 const ViewCourse = (props:any) => {
     return (

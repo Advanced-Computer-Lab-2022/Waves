@@ -5,8 +5,8 @@ import {
     Link
   } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Navbar from "./navbar";
-import LoggedInNavbar from "./LoggedInNavbar";
+import Navbar from "../components/navbar";
+import LoggedInNavbar from "../components/LoggedInNavbar";
 import { Button } from "@mui/material";
 
 const Instructor = (props:any) => {

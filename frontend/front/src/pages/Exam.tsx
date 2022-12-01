@@ -8,9 +8,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import axios from 'axios';
 import React, { useEffect } from "react";
-import Question from "./Question";
+import Question from "../components/Question";
 import { Button, TextField } from "@mui/material";
-import LoggedInNavbar from "./LoggedInNavbar";
+import LoggedInNavbar from "../components/LoggedInNavbar";
 
 const Exam = (props:any) => {
     const navigate = useNavigate();
