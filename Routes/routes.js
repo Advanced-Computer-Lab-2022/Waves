@@ -9,7 +9,9 @@ var CircularJSON = require('circular-json')
 const Instructor=require("../models/Instructor");
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
-const createError = require('http-errors')
+const createError = require('http-errors');
+const CorporateTrainee = require("../models/users/CorporateTrainee");
+const auth = require("./auth");
 
 var router = express.Router();
 
@@ -45,7 +47,7 @@ router.get("/terms", function(req,res){
     res.render("terms");
 });
 
-router.get("/admin", async(req,res) => {
+router.get("/admin", auth, async(req,res) => {
     // if(!req.session.isLoggedIn)
     //     res.redirect('./login')
     // else {
@@ -54,12 +56,6 @@ router.get("/admin", async(req,res) => {
         res.send(JSON.stringify(allCourses))
    // }
 });
-
-// router.get("/login", function(req,res){
-//     res.render("login", {
-//         err: ''
-//     })
-// });
 
 router.post("/sign-up", async(req,res) => {
     const { name, email, password } = req.body;
@@ -77,26 +73,64 @@ router.post("/sign-up", async(req,res) => {
 });
 
 router.post("/login", async(req,res) => {
-    const{username, password} = req.body;
-    console.log(password + " xxx")
+
     try {
-        const user = await Instructor.findOne({username : "Instructor"}).exec()
-        console.log(user + "************")
-        if(user){
-            const flag=await bcrypt.compare("Instructor",user.password);
-            if(flag){
-                const token=createToken(user.username);
-                res.cookie("jwt", token, {httpOnly: true, maxAge: maxAge*1000});
-                res.status(200).json(user);      
-            }else {
-                res.status(404).json({error: "Not the same"});
-            }
-        }else{
-            res.status(404).json({error: "User not found"})
+        // Get user input
+        const { username, password } = req.body;
+    
+        // Validate user input
+        if (!(username && password)) {
+          res.status(400).send("All input is required");
         }
-    } catch (error){
-        res.status(400).json({error: error.message});
-    }
+        // Validate if user exist in our database
+        const admin = await Administrator.findOne({ username });
+        const instructor = await Instructor.findOne({ username });
+        const corporateTrainee = await CorporateTrainee.findOne({ username });
+        const individualTrainee = await IndividualTrainee.findOne({ username });
+
+        const user = admin || instructor || corporateTrainee || individualTrainee;
+    
+        if (user && (await bcrypt.compare(password, user.password))) {
+          // Create token
+          const token = jwt.sign(
+            { user_id: user._id, username },
+            process.env.TOKEN_KEY,
+            {
+              expiresIn: "2h",
+            }
+          );
+    
+          // save user token
+          user.token = token;
+    
+          // user
+          res.status(200).json(user);
+        }
+        res.status(400).send("Invalid Credentials");
+      } catch (err) {
+        console.log(err);
+      }
+
+    // const{username, password} = req.body;
+    // console.log(password + " xxx")
+    // try {
+    //     const user = await Instructor.findOne({username : "Instructor"}).exec()
+    //     console.log(user + "************")
+    //     if(user){
+    //         const flag=await bcrypt.compare("Instructor",user.password);
+    //         if(flag){
+    //             const token=createToken(user.username);
+    //             res.cookie("jwt", token, {httpOnly: true, maxAge: maxAge*1000});
+    //             res.status(200).json(user);      
+    //         }else {
+    //             res.status(404).json({error: "Not the same"});
+    //         }
+    //     }else{
+    //         res.status(404).json({error: "User not found"})
+    //     }
+    // } catch (error){
+    //     res.status(400).json({error: error.message});
+    // }
 });
 
 router.get("/logout", async(req,res) => {

@@ -20,8 +20,7 @@ const Admin = (props:any) => {
 
     useEffect(() => {
     axios.get('http://localhost:3001/admin').then (response => {
-        setCourses(response.data);
-        console.log(response.data);
+            setCourses(response.data);
         })
     }, []);
 

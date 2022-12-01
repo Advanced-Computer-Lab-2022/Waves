@@ -17,11 +17,13 @@ async function getInbox(username) {
 }
 
 async function authenticateUser (body){
+
+    
     const isAdmin = await Administrator.findOne({username:body.username , password:body.password})
     if(isAdmin){
         return 'admin';
     }
-    
+
     const isIndividualTrainee = await IndividualTrainee.findOne({username:body.username , password:body.password})
     if(isIndividualTrainee){
         return 'individual';
