@@ -68,5 +68,5 @@ async function getinstructorAvgRatings(instructorename){
 
 
 
-module.exports= {addCourse, getMyCourses,addExam, addQuestionToExam, getMyRating,  getMyCoursesratings, getinstructorAvgRatings};
+module.exports= {addCourse, getMyCourses,addExam, addQuestionToExam, getMyRating, getinstructorAvgRatings};
     //res.render("guest");
