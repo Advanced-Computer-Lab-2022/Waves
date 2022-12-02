@@ -57,6 +57,47 @@ router.get("/admin", auth, async(req,res) => {
    // }
 });
 
+router.post("/register", async(req,res) => {
+
+  // Our register logic starts here
+  try {
+    // Get user input
+    const {username, email, password, first_name, last_name, country} = req.body;
+
+    // Validate user input
+    if (!(username && email && password && first_name && last_name && country)) {
+      res.status(400).send("All input is required");
+    }
+
+    // check if user already exist
+    // Validate if user exist in our database
+    const oldEmailUser = await IndividualTrainee.findOne({ email });
+
+    if (oldEmailUser) {
+      return res.status(409).send("Email Already Exist. Please Login");
+    }
+
+    const oldUser = await IndividualTrainee.findOne({ username });
+
+    if (oldUser) {
+        return res.status(409).send("Username Already Exist. Please Login");
+      }
+
+    //Encrypt user password
+    encryptedPassword = await bcrypt.hash(password, 10);
+
+    // Create user in our database
+    const user = await IndividualTrainee.create({
+      username, first_name, last_name, country,
+      email: email.toLowerCase(),
+      password: encryptedPassword,
+    });
+
+  } catch (err) {
+    console.log(err);
+  }
+});
+
 router.post("/sign-up", async(req,res) => {
     const { name, email, password } = req.body;
     try {
@@ -94,7 +135,7 @@ router.post("/login", async(req,res) => {
           // Create token
           const token = jwt.sign(
             { user_id: user._id, username },
-            process.env.TOKEN_KEY,
+                process.env.TOKEN_KEY,
             {
               expiresIn: "2h",
             }

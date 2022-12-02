@@ -10,6 +10,7 @@ import './App.css';
 import Navbar from './components/navbar';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import SignUp from './SignUp';
 import Admin from './pages/Admin';
 import CorporateTrainee from './pages/CorporateTrainee';
 import IndividualTrainee from './pages/IndividualTrainee';
@@ -70,6 +71,7 @@ function App() {
         <Route path="/individualTrainee" element = {<IndividualTrainee/>}/>
         <Route path="/viewcourse" element = {<ViewCourse/>}/>
         <Route path="/view-rating" element = {<ViewRating/>}/>
+        <Route path="/sign-up" element = {<SignUp/>}/>
         </Routes>
       </Router>
   );

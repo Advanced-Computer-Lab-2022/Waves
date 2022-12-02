@@ -12,7 +12,7 @@ const Navbar = (props:any) => {
             <>
                 <nav className="navbar navbar-expand-lg bg-secondary bg-gradient">
                     <div className="container-fluid">
-                        <img style={{width:30, height:40, marginRight:20}} src={require('./AlienwareLogo.png')} alt="Alien"/>
+                        <img style={{width:30, height:40, marginRight:20}} src={'../AlienwareLogo.png'} alt="Alien"/>
                         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                             <span className="navbar-toggler-icon"></span>
                         </button>

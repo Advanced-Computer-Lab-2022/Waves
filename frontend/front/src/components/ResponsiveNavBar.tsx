@@ -53,7 +53,7 @@ function ResponsiveNavBar() {
         <AppBar position="static">
         <Container maxWidth="xl">
             <Toolbar disableGutters>
-            <img style={{width:30, height:40, marginRight:20}} src={require('./AlienwareLogo.png')} alt="Alien"/>
+            <img style={{width:30, height:40, marginRight:20}} src={'../AlienwareLogo.png'} alt="Alien"/>
             <Typography
                 variant="h6"
                 noWrap
