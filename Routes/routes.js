@@ -135,11 +135,24 @@ router.post("/search", async(req,res) => {
     }
 });
 
-router.post("/add-admin", async(req,res) => {
-    adminController.addAdmin(req.body);
-    const allCourses = await guestController.getCourses();
-    res.render("admin", {data: 'Success!', courses: allCourses})
+router.post("/add-user", async(req,res) => {
+    const str = CircularJSON.stringify(req);
+    //console.log(JSON.parse(str).body.index)
+    var index=JSON.parse(str).body.index
+    if(index==0) adminController.addAdmin(JSON.parse(str).body);
+    else if(index==1) adminController.addInstructor(JSON.parse(str).body);
+    else if(index==2) adminController.addCorporate(JSON.parse(str).body);
+    //adminController.addAdmin(JSON.parse(str).body);
+    //res.send("/admin")
 });
+
+router.post("/add-exam", async(req,res) => {
+        const str = CircularJSON.stringify(req);
+        console.log(JSON.parse(str))
+        instructorController.addExam(JSON.parse(str).body);
+        instructorController.addQuestionToExam(JSON.parse(str).body);
+        res.send("/instructor")
+    });
 
 router.post("/add-instructor", async(req,res) => {
     adminController.addInstructor(req.body);
