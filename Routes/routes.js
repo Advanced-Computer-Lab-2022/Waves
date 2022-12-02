@@ -221,25 +221,25 @@ router.post("/add-user", async(req,res) => {
     //res.send("/admin")
 });
 
-router.post("/add-exam", async(req,res) => {
-        const str = CircularJSON.stringify(req);
-        console.log(JSON.parse(str))
-        instructorController.addExam(JSON.parse(str).body);
-        instructorController.addQuestionToExam(JSON.parse(str).body);
-        res.send("/instructor")
-    });
+// router.post("/add-exam", async(req,res) => {
+//         const str = CircularJSON.stringify(req);
+//         console.log(JSON.parse(str))
+//         instructorController.addExam(JSON.parse(str).body);
+//         instructorController.addQuestionToExam(JSON.parse(str).body);
+//         res.send("/instructor")
+//     });
 
-router.post("/add-instructor", async(req,res) => {
-    adminController.addInstructor(req.body);
-    const allCourses = await guestController.getCourses();
-    res.render("admin", {data: 'Success!', courses: allCourses})
-});
+// router.post("/add-instructor", async(req,res) => {
+//     adminController.addInstructor(req.body);
+//     const allCourses = await guestController.getCourses();
+//     res.render("admin", {data: 'Success!', courses: allCourses})
+// });
 
-router.post("/add-trainee", async(req,res) => {
-    adminController.addCorporate(req.body);
-    const allCourses = await guestController.getCourses();
-    res.render("admin", {data: 'Success!', courses: allCourses})
-});
+// router.post("/add-trainee", async(req,res) => {
+//     adminController.addCorporate(req.body);
+//     const allCourses = await guestController.getCourses();
+//     res.render("admin", {data: 'Success!', courses: allCourses})
+// });
 
 router.get("/instructor", async(req,res) => {
     // if(!req.session.isLoggedIn)
@@ -269,9 +269,10 @@ router.get("/corporateTrainee", async(req,res) => {
 });
 
 router.post("/add-course", async(req,res) => {
-    instructorController.addCourse(req.body, req.session.username);
-    const allCourses = await guestController.getCourses();
-    res.render("instructor", {data: 'Success', courses: allCourses})
+    const str = CircularJSON.stringify(req);
+    //console.log(JSON.parse(str))
+    instructorController.addCourse(JSON.parse(str).body);
+    res.send("/instructor")
 });
 
 router.post("/add-exam", async(req,res) => {

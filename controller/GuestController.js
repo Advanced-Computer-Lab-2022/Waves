@@ -69,4 +69,23 @@ async function getCoursesByPrice (){
     //docs.wait()
     return docs
 }
-module.exports= {authenticateUser, getCourses, getCoursesByPrice, searchFilterCourses, getInbox, changePassword};
+async function getCourseAvgRatings(coursename){
+    let insCourses= await Courses.find({title:coursename}).exec()
+    TotalRatings = insCourses.rating.length;
+    sum=0;
+   
+   
+   insCourses.rating.forEach(course => {sum=sum+course[1]});
+   Avgratings= sum/TotalRatings
+   
+    FinalRating =[Avgratings,TotalRatings];
+   
+   
+   return FinalRating;
+   
+   }
+   
+
+
+
+module.exports= {authenticateUser, getCourses, getCoursesByPrice, searchFilterCourses, getInbox, changePassword,getCourseAvgRatings};
