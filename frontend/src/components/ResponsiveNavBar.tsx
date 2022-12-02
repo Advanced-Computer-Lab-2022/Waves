@@ -18,11 +18,10 @@ import {
     useNavigate,
     Link
   } from "react-router-dom";
+import axios from 'axios';
 
 const pages = ['Courses', 'Instructors', 'About Us', 'Add User'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
-
-const array = [["omar",2], [["adam"],4]];
 
 function ResponsiveNavBar() {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
@@ -44,7 +43,12 @@ function ResponsiveNavBar() {
     setAnchorElNav(null);
   };
 
-  const handleCloseUserMenu = () => {
+  const handleCloseUserMenu = (key: string) => {
+    if(key == 'Logout'){
+        axios.get('http://localhost:3001/logout').then (() => {
+            navigate('../')
+        })
+    }
     setAnchorElUser(null);
   };
 
@@ -162,7 +166,13 @@ function ResponsiveNavBar() {
                 onClose={handleCloseUserMenu}
                 >
                 {settings.map((setting) => (
-                    <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                    <MenuItem key={setting} onClick={() => {
+                        if(setting == 'Logout'){
+                            axios.get('http://localhost:3001/logout').then (() => {
+                                navigate('../')
+                            })
+                        }
+                    }}>
                     <Typography textAlign="center">{setting}</Typography>
                     </MenuItem>
                 ))}
