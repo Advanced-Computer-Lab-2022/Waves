@@ -45,14 +45,28 @@ async function getMyRating (name){
     const thisinstructor = await Instructor.findOne({username : name}).exec()
     return thisinstructor.rating;
 }
-async function getMyCoursesratings (username){
- 
- var instructorcourses= await Courses.find({givenBy:username}).exec()
- 
- //onsole.log(instructorcourses[0])
- return instructorcourses;
-}
 
 
-module.exports= {addCourse, getMyCourses,addExam, addQuestionToExam, getMyRating,  getMyCoursesratings};
+
+async function getinstructorAvgRatings(instructorename){
+    let insInstructor= await Instructor.find({username:instructorname}).exec()
+    TotalRatings = insInstructor.rating.length;
+    sum=0;
+   
+   
+   insInstructor.rating.forEach(instructor => {sum=sum+instructor[1]});
+   Avgratings= sum/TotalRatings
+   
+   FinalRating =[Avgratings,TotalRatings];
+   
+   
+   return FinalRating;
+   
+   }
+
+
+
+
+
+module.exports= {addCourse, getMyCourses,addExam, addQuestionToExam, getMyRating,  getMyCoursesratings, getinstructorAvgRatings};
     //res.render("guest");
