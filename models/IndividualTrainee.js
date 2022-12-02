@@ -14,17 +14,20 @@ var IndividualTraineeSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  first: {
+  first_name: {
     type: String,
     required: true,
   },
-  last: {
+  last_name: {
     type: String,
     required: true,
   },
   inbox: {
     type: Array,
     require: false
+  },
+  token: {
+    type: String
   }
 });
 var IndividualTrainee = mongoose.model("Individual Trainees", IndividualTraineeSchema);

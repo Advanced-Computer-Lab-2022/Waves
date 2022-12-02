@@ -15,6 +15,9 @@ var InstructorSchema = new mongoose.Schema({
   reviews: {
     type: Array,
     required: true,
+  },
+  token: {
+    type: String
   }
 });
 const Instructor = mongoose.model("Instructor", InstructorSchema);

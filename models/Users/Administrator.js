@@ -11,6 +11,9 @@ var AdministratorSchema = new mongoose.Schema({
   inbox: {
     type: Array,
     require: false
+  },
+  token: {
+    type: String
   }
 });
 
