@@ -12,7 +12,7 @@ import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import StarBorder from '@mui/icons-material/StarBorder';
 import axios from 'axios';
-import { TextField, Button } from '@mui/material';
+import { TextField, Button, Stack } from '@mui/material';
 
 const User = (props:any) => {
   const [open, setOpen] = React.useState(true);
@@ -62,6 +62,9 @@ const User = (props:any) => {
   
   return (
     <>
+    <Stack spacing={1.5} direction="column"
+            justifyContent="space-evenly"
+            alignItems="baseline" marginTop={1.5} marginLeft={1.5}>
     <List
       sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
       component="nav"
@@ -105,6 +108,7 @@ const User = (props:any) => {
     <div/>
     <button className="ms-2 mt-1 btn btn-primary">Add User</button>
     </form>
+    </Stack>
     </>
   );
 }

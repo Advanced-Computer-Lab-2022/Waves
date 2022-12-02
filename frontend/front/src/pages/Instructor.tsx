@@ -7,14 +7,21 @@ import {
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Navbar from "../components/navbar";
 import LoggedInNavbar from "../components/LoggedInNavbar";
-import { Button } from "@mui/material";
+import { Button, Stack } from "@mui/material";
+import ResponsiveNavBar from "../components/ResponsiveNavBar";
 
 const Instructor = (props:any) => {
     const navigate = useNavigate();
     return (
         <>
-            <LoggedInNavbar/>
-
+            <ResponsiveNavBar/>
+            <Stack
+                direction="row"
+                justifyContent="center"
+                alignItems="baseline"
+                spacing={0.5}
+                marginTop={0.7}
+            >
             <Button variant="contained"
                 onClick={() => {
                 navigate("../add-exam");
@@ -31,7 +38,14 @@ const Instructor = (props:any) => {
                  Review Rating
             </Button>
 
-
+            <Button variant="contained"
+                onClick={() => {
+                navigate("../add-course");
+            }}
+            >
+                 Add Course
+            </Button>
+            </Stack>
         </>
     )
 }

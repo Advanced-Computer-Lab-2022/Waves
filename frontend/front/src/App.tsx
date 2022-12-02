@@ -21,6 +21,7 @@ import ExamsPage from './pages/ExamsPage';
 import ExamSession from './pages/ExamSession';
 import ViewRating from './pages/ViewRating';
 import NewUser from './pages/NewUser';
+import AddCourse from './pages/AddCourse';
 
 const arr = ["String1", "String2", "String3", "String4", "String5"]
 
@@ -59,6 +60,7 @@ function App() {
           }/>
         <Route path="/login" element = {<Login/>}/>
         <Route path="/add-user" element = {<NewUser/>}/>
+        <Route path="/add-course" element = {<AddCourse/>}/>
         <Route path="/add-exam" element = {<Exam/>}/>
         <Route path="/exams" element = {<ExamsPage/>}/>
         <Route path="/exam-session" element = {<ExamSession/>}/>

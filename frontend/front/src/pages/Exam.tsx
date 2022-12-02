@@ -9,8 +9,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 import React, { useEffect } from "react";
 import Question from "../components/Question";
-import { Button, TextField } from "@mui/material";
+import { Button, Stack, TextField } from "@mui/material";
 import LoggedInNavbar from "../components/LoggedInNavbar";
+import ResponsiveNavBar from "../components/ResponsiveNavBar";
 
 const Exam = (props:any) => {
     const navigate = useNavigate();
@@ -51,8 +52,11 @@ const Exam = (props:any) => {
 
     return (
         <>
-            <LoggedInNavbar/>
+            <ResponsiveNavBar/>
             <form onSubmit={handleSubmit}>
+            <Stack spacing={1.5} direction="column"
+                justifyContent="space-evenly"
+                alignItems="baseline" marginTop={1.5} marginLeft={1.5}>
             <TextField
                 id="belongsToCourse"
                 name="belongsToCourse"
@@ -68,7 +72,8 @@ const Exam = (props:any) => {
                 multiline
             />
             <Question/>
-            <button>Add Exam</button>
+            </Stack>
+            <button className="ms-2 mt-1 btn btn-primary">Add Exam</button>
             </form>
 
         </>

@@ -34,7 +34,6 @@ var CoursesSchema = new mongoose.Schema({
   },
   reviews: {
     type: Array,
-    required: true
   }
 });
 var Courses = mongoose.model("Courses", CoursesSchema);
