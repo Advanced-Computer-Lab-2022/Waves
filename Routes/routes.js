@@ -230,7 +230,9 @@ router.post("/login", async(req,res) => {
           // user
           res.send(type);
         }
-        res.status(400).send("Invalid Credentials");
+        else{
+            res.send("Invalid Credentials");
+        }
       } catch (err) {
         console.log(err);
       }
