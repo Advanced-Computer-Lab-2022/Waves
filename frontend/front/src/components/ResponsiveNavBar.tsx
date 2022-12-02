@@ -12,10 +12,17 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
-import FilterBar from './FilterBar';
+import {
+    BrowserRouter as Router,
+    Route,
+    useNavigate,
+    Link
+  } from "react-router-dom";
 
-const pages = ['Courses', 'Instructors', 'About Us'];
+const pages = ['Courses', 'Instructors', 'About Us', 'Add User'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+
+const array = [["omar",2], [["adam"],4]];
 
 function ResponsiveNavBar() {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
@@ -28,7 +35,12 @@ function ResponsiveNavBar() {
     setAnchorElUser(event.currentTarget);
   };
 
-  const handleCloseNavMenu = () => {
+  const navigate = useNavigate();
+
+  function handleCloseNavMenu(page: string) {
+    if(page == 'Add User'){
+        navigate("../add-user");
+    }
     setAnchorElNav(null);
   };
 
@@ -90,7 +102,7 @@ function ResponsiveNavBar() {
                 }}
                 >
                 {pages.map((page) => (
-                    <MenuItem key={page} onClick={handleCloseNavMenu}>
+                    <MenuItem key={page} onClick={() => {if(page == 'Add User'){navigate("../add-user");}}}>
                     <Typography textAlign="center">{page}</Typography>
                     </MenuItem>
                 ))}
@@ -116,10 +128,10 @@ function ResponsiveNavBar() {
                 LOGO
             </Typography>
             <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-                {pages.map((page) => (
+                {pages.map((page:string) => (
                 <Button
                     key={page}
-                    onClick={handleCloseNavMenu}
+                    onClick={() => {if(page == 'Add User'){navigate("../add-user");}}}
                     sx={{ my: 2, color: 'white', display: 'block' }}
                 >
                     {page}

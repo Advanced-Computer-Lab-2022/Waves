@@ -22,7 +22,7 @@ interface props {
 
 const Course: React.FC<props> = ({courseName, coursePrice, courseDescription, courseRating, courseInstructor, courseTotalHours, courseImg, courseSubtitles}) => {
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card sx={{ maxWidth: 350, minHeight: 440}}>
       <CardActionArea>
         <CardMedia
           component="img"

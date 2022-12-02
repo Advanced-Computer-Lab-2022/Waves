@@ -14,7 +14,7 @@ function addCourse (body, username){
         totalHours: body.totalHours,
         courseRating: body.rating,
         subject: body.subject,
-        givenBy: username     
+        givenBy: body.givenBy     
  });
     newCourse.save();
 }
