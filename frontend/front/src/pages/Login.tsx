@@ -21,7 +21,7 @@ const Login = (props:any) => {
         const username = Object.fromEntries(userInfo.entries()).username
         const password = Object.fromEntries(userInfo.entries()).password
     
-        axios.post('http://localhost:3001/authenticate', {
+        axios.post('http://localhost:3001/login', {
             username: username,
             password: password
           }, {
