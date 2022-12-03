@@ -47,7 +47,7 @@ router.get("/terms", function(req,res){
     res.render("terms");
 });
 
-router.get("/admin", auth, async(req,res) => {
+router.get("/admin", async(req,res) => {
     // if(!req.session.isLoggedIn)
     //     res.redirect('./login')
     // else {
@@ -57,7 +57,7 @@ router.get("/admin", auth, async(req,res) => {
    // }
 });
 
-router.post("/register", async(req,res) => {
+router.post("/register", auth, async(req,res) => {
     const str = CircularJSON.stringify(req);
     const input = JSON.parse(str).body
     console.log(input)
@@ -230,7 +230,9 @@ router.post("/login", async(req,res) => {
           // user
           res.send(type);
         }
-        res.status(400).send("Invalid Credentials");
+        else{
+            res.send("Invalid Credentials");
+        }
       } catch (err) {
         console.log(err);
       }
@@ -260,15 +262,6 @@ router.post("/login", async(req,res) => {
 router.get("/logout", async(req,res) => {
     return res.clearCookie("jwt").status(200).json({ message: "Successfully logged out" });
 });
-
-
-// router.post("/logout", function(req,res){
-//     req.session.username = null
-//     req.session.password = null
-//     req.session.isLoggedIn = null
-//     req.session.user = null
-//     res.redirect("/")
-// });
 
 router.post("/search", async(req,res) => {
     const user = req.session.user

@@ -92,7 +92,7 @@ const midBar: CSSProperties = {
 const signUpBox: CSSProperties = {
     backgroundImage: `url('../Test.jpg')`,
     width: "28%",
-    minHeight: "800px",
+    minHeight: "70%",
     borderRadius: "15px",
     border: "solid black 1px",
     marginBottom: 100

@@ -9,7 +9,6 @@ import Alien from './Alien';
 import './App.css';
 import Navbar from './components/navbar';
 import Login from './pages/Login';
-import Signup from './pages/Signup';
 import SignUp from './SignUp';
 import Admin from './pages/Admin';
 import CorporateTrainee from './pages/CorporateTrainee';
@@ -66,14 +65,13 @@ function App() {
         <Route path="/exams" element = {<ExamsPage/>}/>
         <Route path="/exam-session" element = {<ExamSession/>}/>
         <Route path="/inbox" element = {<Inbox/>}/>
-        <Route path="/signup" element = {<Signup/>}/>
         <Route path="/admin" element = {<Admin/>}/>
         <Route path="/instructor" element = {<Instructor/>}/>
         <Route path="/coporateTrainee" element = {<CorporateTrainee/>}/>
         <Route path="/individualTrainee" element = {<IndividualTrainee/>}/>
         <Route path="/viewcourse" element = {<ViewCourse/>}/>
         <Route path="/view-rating" element = {<ViewRating/>}/>
-        <Route path="/sign-up" element = {<SignUp/>}/>
+        <Route path="/signup" element = {<SignUp/>}/>
         </Routes>
       </Router>
   );
