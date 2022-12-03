@@ -20,7 +20,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from "axios";
 //CSS - Variables
 const darkBlue = "#28536B"
-const customRed = 'rgb(210,40,40)'
+const customRed = 'rgb(180,40,40)'
 
 //CSS - Style Objects
 

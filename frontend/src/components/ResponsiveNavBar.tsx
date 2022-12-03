@@ -19,6 +19,25 @@ import {
     Link
   } from "react-router-dom";
 import axios from 'axios';
+import { createTheme, ThemeProvider } from '@mui/material';
+
+const customRed = 'rgb(150,40,40)'
+
+const theme = createTheme({
+    status: {
+      danger: 'rgb(200,25,25)',
+    },
+    palette: {
+      primary: {
+        main: customRed,
+        darker: '#053e85',
+      },
+      neutral: {
+        main: '#64748B',
+        contrastText: '#fff',
+      },
+    },
+  });
 
 const pages = ['Courses', 'Instructors', 'About Us', 'Add User'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
@@ -53,8 +72,8 @@ function ResponsiveNavBar() {
   };
 
   return (
-    <>
-        <AppBar position="static">
+    <ThemeProvider theme={theme}>
+        <AppBar style={{paddingTop: 1, height: 80}} position="static">
         <Container maxWidth="xl">
             <Toolbar disableGutters>
             <img style={{width:30, height:40, marginRight:20}} src={'../AlienwareLogo.png'} alt="Alien"/>
@@ -68,6 +87,7 @@ function ResponsiveNavBar() {
                 display: { xs: 'none', md: 'flex' },
                 fontFamily: 'monospace',
                 fontWeight: 700,
+                fontSize: 25,
                 letterSpacing: '.3rem',
                 color: 'inherit',
                 textDecoration: 'none',
@@ -107,7 +127,7 @@ function ResponsiveNavBar() {
                 >
                 {pages.map((page) => (
                     <MenuItem key={page} onClick={() => {if(page == 'Add User'){navigate("../add-user");}}}>
-                    <Typography textAlign="center">{page}</Typography>
+                        <Typography color={'black'} fontSize={45}  textAlign="center">{page}</Typography>
                     </MenuItem>
                 ))}
                 </Menu>
@@ -134,6 +154,7 @@ function ResponsiveNavBar() {
             <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                 {pages.map((page:string) => (
                 <Button
+                    style={{fontSize:20}}
                     key={page}
                     onClick={() => {if(page == 'Add User'){navigate("../add-user");}}}
                     sx={{ my: 2, color: 'white', display: 'block' }}
@@ -181,7 +202,7 @@ function ResponsiveNavBar() {
             </Toolbar>
         </Container>
         </AppBar>
-    </>
+    </ThemeProvider>
   );
 }
 export default ResponsiveNavBar;

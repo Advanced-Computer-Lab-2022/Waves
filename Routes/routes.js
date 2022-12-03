@@ -71,7 +71,7 @@ router.get("/admin", async(req,res) => {
     res.send(JSON.stringify(allCourses))
 });
 
-router.post("/register", auth, async(req,res) => {
+router.post("/register", async(req,res) => {
     const str = CircularJSON.stringify(req);
     const input = JSON.parse(str).body
     console.log(input)
@@ -82,7 +82,7 @@ router.post("/register", auth, async(req,res) => {
     const {username, password, type} = input;
     if(type == "Individual"){
 
-        const {email, first_name, last_name, country} = req.body;
+        const {email, first_name, last_name, country} = input;
 
         // check if user already exist
         // Validate if user exist in our database
