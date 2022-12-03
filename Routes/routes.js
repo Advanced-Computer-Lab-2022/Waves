@@ -58,40 +58,108 @@ router.get("/admin", auth, async(req,res) => {
 });
 
 router.post("/register", async(req,res) => {
-
+    const str = CircularJSON.stringify(req);
+    const input = JSON.parse(str).body
+    console.log(input)
   // Our register logic starts here
   try {
     // Get user input
-    const {username, email, password, first_name, last_name, country} = req.body;
 
-    // Validate user input
-    if (!(username && email && password && first_name && last_name && country)) {
-      res.status(400).send("All input is required");
+    const {username, password, type} = input;
+    if(type == "Individual"){
+
+        const {email, first_name, last_name, country} = req.body;
+
+        // check if user already exist
+        // Validate if user exist in our database
+
+        const oldEmailUser = await IndividualTrainee.findOne({ email });
+
+        if (oldEmailUser) {
+        throw "Email Already Exist. Please Login";
+        }
+
+        const oldUser = await IndividualTrainee.findOne({ username });
+
+        if (oldUser) {
+            throw "Username Already Exist. Please Login"
+        }
+
+        //Encrypt user password
+        encryptedPassword = await bcrypt.hash(password, 10);
+
+        // Create user in our database
+        await IndividualTrainee.create({
+        username, first_name, last_name, country,
+        email: email.toLowerCase(),
+        password: encryptedPassword,
+        });
     }
 
-    // check if user already exist
-    // Validate if user exist in our database
-    const oldEmailUser = await IndividualTrainee.findOne({ email });
+    else if (type == "Admin"){
+    
+        // check if user already exist
+        // Validate if user exist in our database
 
-    if (oldEmailUser) {
-      return res.status(409).send("Email Already Exist. Please Login");
+        const oldUser = await Administrator.findOne({ username });
+
+        if (oldUser) {
+            throw "Username Already Exist. Please Login"
+        }
+
+        //Encrypt user password
+        encryptedPassword = await bcrypt.hash(password, 10);
+
+        // Create user in our database
+        await Administrator.create({
+        username,
+        password: encryptedPassword,
+        });
     }
 
-    const oldUser = await IndividualTrainee.findOne({ username });
+    else if (type == "Corporate"){
+        
+    
+        // check if user already exist
+        // Validate if user exist in our database
 
-    if (oldUser) {
-        return res.status(409).send("Username Already Exist. Please Login");
-      }
+        const oldUser = await CorporateTrainee.findOne({ username });
 
-    //Encrypt user password
-    encryptedPassword = await bcrypt.hash(password, 10);
+        if (oldUser) {
+            throw "Username Already Exist. Please Login"
+        }
 
-    // Create user in our database
-    const user = await IndividualTrainee.create({
-      username, first_name, last_name, country,
-      email: email.toLowerCase(),
-      password: encryptedPassword,
-    });
+        //Encrypt user password
+        encryptedPassword = await bcrypt.hash(password, 10);
+
+        // Create user in our database
+        await CorporateTrainee.create({
+        username,
+        password: encryptedPassword,
+        });
+    }
+
+    else if(type == "Instructor"){
+        
+    
+        // check if user already exist
+        // Validate if user exist in our database
+
+        const oldUser = await Instructor.findOne({ username });
+
+        if (oldUser) {
+            throw "Username Already Exist. Please Login"
+        }
+
+        //Encrypt user password
+        encryptedPassword = await bcrypt.hash(password, 10);
+
+        // Create user in our database
+        await Instructor.create({
+        username,
+        password: encryptedPassword,
+        });
+    }
 
   } catch (err) {
     console.log(err);
@@ -130,11 +198,26 @@ router.post("/login", async(req,res) => {
         const individualTrainee = await IndividualTrainee.findOne({ username });
 
         const user = admin || instructor || corporateTrainee || individualTrainee;
+        
+        let type = "NoOne"
+        
+        if(admin){
+            type = "admin"
+        }
+        else if(instructor){
+            type = "instructor"
+        }
+        else if(corporateTrainee){
+            type = "corporateTrainee"
+        }
+        else if(individualTrainee){
+            type = "individualTrainee"
+        }
     
         if (user && (await bcrypt.compare(password, user.password))) {
           // Create token
           const token = jwt.sign(
-            { user_id: user._id, username },
+            { user_id: user._id, username, type: type},
                 process.env.TOKEN_KEY,
             {
               expiresIn: "2h",
@@ -145,7 +228,7 @@ router.post("/login", async(req,res) => {
           user.token = token;
     
           // user
-          res.status(200).json(user);
+          res.send(type);
         }
         res.status(400).send("Invalid Credentials");
       } catch (err) {
@@ -393,31 +476,6 @@ router.post('/authenticate', async(req, res) =>{
         res.send("No One")
     }
 });
-
-
-
-router.post('/register', async(req, res) => {
-    const newUser = new IndividualTrainee ({
-        username: req.body.username,
-        password: req.body.password,
-        email: req.body.email,
-        first: req.body.first,
-        last: req.body.last
-    })
-    newUser.save(function(err) {
-        if (err) {
-            if(err.code == 11000) {
-                res.render('sign_up', {err: "This Username is already taken!", succ: ""})
-            }
-            else{
-                res.render('sign_up', {err: "Invalid Username Or Password!", succ: ""})
-            }
-        }
-        else{
-            res.render('sign_up', {err: "", succ: "Your Account Has Been Successfully Registered!"})
-        }
-    })
-})
 
 module.exports = router
 

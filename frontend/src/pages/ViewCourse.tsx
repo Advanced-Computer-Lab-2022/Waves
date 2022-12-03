@@ -6,10 +6,17 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import ResponsiveNavBar from "../components/ResponsiveNavBar";
 import RatingRead from '../components/RatingRead';
 import { Stack } from '@mui/material';
 //var Blur = require('react-blur');
+import {
+    BrowserRouter as Router,
+    Route,
+    useNavigate,
+    Link
+  } from "react-router-dom";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import ResponsiveNavBar from "../components/ResponsiveNavBar";
 
 const ViewCourse = (props:any) => {
     return (
@@ -75,6 +82,15 @@ const ViewCourse = (props:any) => {
             <Typography gutterBottom variant="h5" component="div">
                 Reviews
             </Typography>      
+            <ResponsiveNavBar></ResponsiveNavBar>
+            <div
+                style={{
+                    backgroundColor: 'rgb(25, 25, 25)',
+                    height: '300px'
+                }}
+            >
+                
+            </div>
         </>
     )
 }

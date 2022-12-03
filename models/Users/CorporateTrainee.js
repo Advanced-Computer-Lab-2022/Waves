@@ -11,6 +11,9 @@ var CorporateTraineeSchema = new mongoose.Schema({
   inbox: {
     type: Array,
     require: false
+  },
+  token: {
+    type: String
   }
 });
 
