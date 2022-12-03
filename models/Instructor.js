@@ -9,7 +9,7 @@ var InstructorSchema = new mongoose.Schema({
     required: true,
   },
   rating: {
-    type: String,
+    type: Array,
    
   },
   reviews: {
