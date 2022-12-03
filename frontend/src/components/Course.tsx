@@ -4,7 +4,7 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { Box, Button, CardActionArea, CardActions, Grid, Stack } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import RatingRead from './RatingRead';
 
 
@@ -22,10 +22,18 @@ interface props {
 }
 
 const Course: React.FC<props> = ({courseName, coursePrice, courseDescription, courseRating, courseInstructor, courseTotalHours, courseImg, courseSubtitles}) => {
+
+  const navigate = useNavigate();
+
   return (
-    <Link to="/viewcourse" state={{ data: [courseName, coursePrice, courseDescription, courseRating, courseInstructor, courseTotalHours, courseImg, courseSubtitles]}} className="link">
     <Card sx={{ maxWidth: 350, minHeight: 440}}>
-      <CardActionArea>
+      <CardActionArea onClick={() => {navigate('../viewCourse', 
+      {
+        state: {
+          data: [courseName, coursePrice, courseDescription, courseRating, courseInstructor, courseTotalHours, courseImg, courseSubtitles]
+        }
+      }
+      )}}>
         <CardMedia
           component="img"
           height="170"
@@ -56,8 +64,7 @@ const Course: React.FC<props> = ({courseName, coursePrice, courseDescription, co
           </Stack>
         </CardContent>
         </CardActionArea>
-    </Card>  
-    </Link>
+    </Card>
   );
 }
 
