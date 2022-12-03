@@ -13,6 +13,7 @@ const createError = require('http-errors');
 const CorporateTrainee = require("../models/users/CorporateTrainee");
 const auth = require("./auth");
 const nodemailer = require('nodemailer');
+const Courses = require("../models/Courses");
 
 var router = express.Router();
 
@@ -35,6 +36,23 @@ router.get("/", async (req,res) => {
     }
 });
 
+router.post('/filterCourses', async(req,res) =>{
+    const str = CircularJSON.stringify(req.body);
+    const {rating, subject, minPrice, maxPrice} = JSON.parse(str)
+    const courses = await Courses.find({$and: [
+        {
+          $or: [
+            { rating: { $gte:  rating} },
+            { subject: { "$in" : subject} },
+            { price: {$gte: minPrice} }
+          ]
+        },
+        { price: {$lte: maxPrice}}]
+        }).exec();
+        console.log(courses)
+        return courses;
+})
+
 router.get('/inbox', async(req, res) => {
     console.log(await guestController.getInbox('admin'))
     res.send(await guestController.getInbox('admin'))
@@ -49,13 +67,9 @@ router.get("/terms", function(req,res){
 });
 
 router.get("/admin", async(req,res) => {
-    // if(!req.session.isLoggedIn)
-    //     res.redirect('./login')
-    // else {
-        const allCourses = await guestController.getCourses();
-        console.log(JSON.stringify(allCourses))
-        res.send(JSON.stringify(allCourses))
-   // }
+    const allCourses = await guestController.getCourses();
+    console.log(JSON.stringify(allCourses))
+    res.send(JSON.stringify(allCourses))
 });
 
 router.post("/register", auth, async(req,res) => {
@@ -476,4 +490,3 @@ router.post('/authenticate', async(req, res) =>{
 });
 
 module.exports = router
-

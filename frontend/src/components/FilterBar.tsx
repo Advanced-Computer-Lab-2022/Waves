@@ -14,8 +14,10 @@ import StarIcon from '@mui/icons-material/Grade';
 import { Box, Checkbox, Divider, FormControl, FormControlLabel, FormGroup, Input, InputAdornment, InputLabel, ListItem, Rating, Slider, Stack, Typography } from '@mui/material';
 import Search from './Search';
 import './styles.css'
+import axios from 'axios';
+import { useEffect } from 'react';
 
-export default function FilterBar() {
+export default function FilterBar(setCourses:any) {
   const [filterOpen, setFilterOpen] = React.useState(true);
   const [subjectOpen, setSubjectOpen] = React.useState(true);
   const [ratingOpen, setRatingOpen] = React.useState(true);
@@ -24,6 +26,7 @@ export default function FilterBar() {
   const [computerScience, setComputerScience] = React.useState(true);
   const [math, setMath] = React.useState(true);
   const [physics, setPhysics] = React.useState(true);
+  const [filterBySubject, setFilterBySubject] = React.useState<any[]>([]);
 
   const [fourRating, setFourRating] = React.useState(false);
   const [threeRating, setThreeRating] = React.useState(false);
@@ -34,6 +37,41 @@ export default function FilterBar() {
   const [threeRatingHover, setThreeRatingHover] = React.useState(false);
   const [twoRatingHover, setTwoRatingHover] = React.useState(false);
   const [oneRatingHover, setOneRatingHover] = React.useState(false);
+
+  const [rating, setRating] = React.useState(0);
+  
+  const [price, setPrice] = React.useState<number[]>([100, 500]);
+
+  function handleSubjectChange() {
+    const arr = [];
+    if(computerScience)
+      arr.push("Computer Science")
+    else if(math){
+      arr.push("Math")
+    }
+    else if(physics){
+      arr.push("Physics")
+    }
+    return arr;
+  }
+  
+
+  useEffect(() => {
+
+  axios.post('http://localhost:3001/filterCourses', {
+    rating: rating,
+    subject: filterBySubject,
+    minPrice: price[0],
+    maxPrice:  price[1]
+  }, {
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    }
+  })
+    .then((response:any) => {console.log(response.data);
+      setCourses(response.data);
+    });
+  });
 
   const handleFilterClick = () => {
     setFilterOpen(!filterOpen);
@@ -53,7 +91,6 @@ export default function FilterBar() {
 
   const minDistance = 10;
 
-  const [value, setValue] = React.useState<number[]>([20, 37]);
 
   const handlePriceChange = (
     event: Event,
@@ -67,13 +104,13 @@ export default function FilterBar() {
     if (newValue[1] - newValue[0] < minDistance) {
       if (activeThumb === 0) {
         const clamped = Math.min(newValue[0], 100 - minDistance);
-        setValue([clamped, clamped + minDistance]);
+        setPrice([clamped, clamped + minDistance]);
       } else {
         const clamped = Math.max(newValue[1], minDistance);
-        setValue([clamped - minDistance, clamped]);
+        setPrice([clamped - minDistance, clamped]);
       }
     } else {
-      setValue(newValue as number[]);
+      setPrice(newValue as number[]);
     }
   };
 
@@ -89,13 +126,13 @@ export default function FilterBar() {
     if (newValue[1] - newValue[0] < minDistance) {
       if (activeThumb === 0) {
         const clamped = Math.min(newValue[0], 100 - minDistance);
-        setValue([clamped, clamped + minDistance]);
+        setPrice([clamped, clamped + minDistance]);
       } else {
         const clamped = Math.max(newValue[1], minDistance);
-        setValue([clamped - minDistance, clamped]);
+        setPrice([clamped - minDistance, clamped]);
       }
     } else {
-      setValue(newValue as number[]);
+      setPrice(newValue as number[]);
     }
   };
 
@@ -129,19 +166,19 @@ export default function FilterBar() {
 
         <Collapse in={subjectOpen && filterOpen} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
-            <FormControlLabel onClick={() => {setComputerScience(!computerScience)}} sx={{pl: 8}} control={<Checkbox checked={computerScience} />} label="Computer Science" />
+            <FormControlLabel onClick={() => {setComputerScience(!computerScience); setFilterBySubject(handleSubjectChange())}} sx={{pl: 8}} control={<Checkbox checked={computerScience} />} label="Computer Science" />
             </List>
         </Collapse>
 
         <Collapse in={subjectOpen && filterOpen} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
-            <FormControlLabel onClick={() => {setMath(!math)}} sx={{pl: 8}} control={<Checkbox  checked={math} />} label="Math" />
+            <FormControlLabel onClick={() => {setMath(!math); setFilterBySubject(handleSubjectChange())}} sx={{pl: 8}} control={<Checkbox  checked={math} />} label="Math" />
             </List>
         </Collapse>
 
         <Collapse in={subjectOpen && filterOpen} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
-            <FormControlLabel onClick={() => {setPhysics(!physics)}} sx={{pl: 8}} control={<Checkbox checked={physics} />} label="Physics" />
+            <FormControlLabel onClick={() => {setPhysics(!physics); setFilterBySubject(handleSubjectChange())}} sx={{pl: 8}} control={<Checkbox checked={physics} />} label="Physics" />
             </List>
         </Collapse>
         
@@ -161,7 +198,7 @@ export default function FilterBar() {
 
         <Collapse style={{marginBottom: 10}} in={ratingOpen && filterOpen} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
-                <Stack className="pointer-link" onMouseEnter={() => setFourRatingHover(true)} onMouseLeave={() => setFourRatingHover(false)} spacing={1} direction="row" onClick={() => {if(!fourRating){ setOneRating(false); setTwoRating(false); setThreeRating(false);} setFourRating(!fourRating); }}>
+                <Stack className="pointer-link" onMouseEnter={() => setFourRatingHover(true)} onMouseLeave={() => setFourRatingHover(false)} spacing={1} direction="row" onClick={() => {if(!fourRating){ setOneRating(false); setTwoRating(false); setThreeRating(false); setRating(4);} else{setRating(0)} setFourRating(!fourRating); }}>
                     <Rating className="grow" sx={{"& .MuiRating-iconFilled": {color: fourRating||fourRatingHover? "#F59200" : "#F5B100"}, pl: 8}} size={(fourRating||fourRatingHover)? 'large' : 'medium'} name="read-only" value={4} readOnly />
                     <Typography color={fourRating||fourRatingHover? '#F59C00' : "black"} fontSize={fourRating||fourRatingHover? 20:16}> & Up </Typography>
                 </Stack>
@@ -170,7 +207,7 @@ export default function FilterBar() {
 
         <Collapse style={{marginBottom: 10}} in={ratingOpen && filterOpen} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
-                <Stack className="pointer-link" onMouseEnter={() => setThreeRatingHover(true)} onMouseLeave={() => setThreeRatingHover(false)} spacing={1} direction="row" onClick={() => {if(!threeRating){ setOneRating(false); setTwoRating(false); setFourRating(false);} setThreeRating(!threeRating); }}>
+                <Stack className="pointer-link" onMouseEnter={() => setThreeRatingHover(true)} onMouseLeave={() => setThreeRatingHover(false)} spacing={1} direction="row" onClick={() => {if(!threeRating){ setOneRating(false); setTwoRating(false); setFourRating(false); setRating(3)} else{setRating(0)} setThreeRating(!threeRating); }}>
                     <Rating className="grow" sx={{"& .MuiRating-iconFilled": {color: threeRating||threeRatingHover? "#F59200" : "#F5B100"}, pl: 8}} size={(threeRating||threeRatingHover)? 'large' : 'medium'} name="read-only" value={3} readOnly />
                     <Typography color={threeRating||threeRatingHover? '#F59C00' : "black"} fontSize={threeRating||threeRatingHover? 20:16}> & Up </Typography>
                 </Stack>
@@ -179,7 +216,7 @@ export default function FilterBar() {
 
         <Collapse style={{marginBottom: 10}} in={ratingOpen && filterOpen} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
-                <Stack className="pointer-link" onMouseEnter={() => setTwoRatingHover(true)} onMouseLeave={() => setTwoRatingHover(false)} spacing={1} direction="row" onClick={() => {if(!twoRating){ setOneRating(false); setThreeRating(false); setFourRating(false);} setTwoRating(!twoRating); }}>
+                <Stack className="pointer-link" onMouseEnter={() => setTwoRatingHover(true)} onMouseLeave={() => setTwoRatingHover(false)} spacing={1} direction="row" onClick={() => {if(!twoRating){ setOneRating(false); setThreeRating(false); setFourRating(false);} else{setRating(0)} setTwoRating(!twoRating); setRating(2)}}>
                     <Rating className="grow" sx={{"& .MuiRating-iconFilled": {color: twoRating||twoRatingHover? "#F59200" : "#F5B100"}, pl: 8}} size={(twoRating||twoRatingHover)? 'large' : 'medium'} name="read-only" value={2} readOnly />
                     <Typography color={twoRating||twoRatingHover? '#F59C00' : "black"} fontSize={twoRating||twoRatingHover? 20:16}> & Up </Typography>
                 </Stack>
@@ -188,7 +225,7 @@ export default function FilterBar() {
 
         <Collapse style={{marginBottom: 10}} in={ratingOpen && filterOpen} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
-                <Stack className="pointer-link" onMouseEnter={() => setOneRatingHover(true)} onMouseLeave={() => setOneRatingHover(false)} spacing={1} direction="row" onClick={() => {if(!oneRating){ setTwoRating(false); setThreeRating(false); setFourRating(false);} setOneRating(!oneRating); }}>
+                <Stack className="pointer-link" onMouseEnter={() => setOneRatingHover(true)} onMouseLeave={() => setOneRatingHover(false)} spacing={1} direction="row" onClick={() => {if(!oneRating){ setTwoRating(false); setThreeRating(false); setFourRating(false);} else{setRating(0)} setOneRating(!oneRating); setRating(1)}}>
                     <Rating className="grow" sx={{"& .MuiRating-iconFilled": {color: oneRating||oneRatingHover? "#F59200" : "#F5B100"}, pl: 8}} size={(oneRating||oneRatingHover)? 'large' : 'medium'} name="read-only" value={1} readOnly />
                     <Typography className="growN" color={oneRating||oneRatingHover? '#F59C00' : "black"} fontSize={oneRating||oneRatingHover? 20:16}> & Up </Typography>
                 </Stack>
@@ -220,10 +257,10 @@ export default function FilterBar() {
                         <Input
                             id="standard-adornment-amount"
                             startAdornment={<InputAdornment position="start">$</InputAdornment>}
-                            value= {value[0]}
+                            value= {price[0]}
                             onChange={(v)=>{
                               const u = parseFloat(v.target.value);
-                              isNaN(u) || setValue(([a,b])=>([u,b]));
+                              isNaN(u) || setPrice(([a,b])=>([u,b]));
 
                             }}
                         />
@@ -233,10 +270,10 @@ export default function FilterBar() {
                         <Input
                             id="standard-adornment-amount"
                             startAdornment={<InputAdornment position="end">$</InputAdornment>}
-                            value= {value[1]}
+                            value= {price[1]}
                             onChange={(v)=>{
                               const u = parseFloat(v.target.value);
-                              isNaN(u) || setValue(([a,b])=>([a,u]));
+                              isNaN(u) || setPrice(([a,b])=>([a,u]));
 
                             }}
                         />
@@ -244,7 +281,7 @@ export default function FilterBar() {
                 </Stack>
                 <Slider
                     getAriaLabel={() => 'Minimum distance shift'}
-                    value={value}
+                    value={price}
                     onChange={handleChange}
                 
                     valueLabelDisplay="auto"
@@ -257,7 +294,6 @@ export default function FilterBar() {
             </ListItem>
             </List>
         </Collapse>
-        
         </List>
     </div>
   );

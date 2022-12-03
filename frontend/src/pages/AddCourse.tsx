@@ -14,7 +14,6 @@ import LoggedInNavbar from "../components/LoggedInNavbar";
 import ResponsiveNavBar from "../components/ResponsiveNavBar";
 
 const AddCourse = (props:any) => {
-    const navigate = useNavigate();
 
     const handleSubmit = (e: any) => {
         e.preventDefault();
