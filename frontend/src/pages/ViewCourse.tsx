@@ -17,8 +17,11 @@ import {
   } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ResponsiveNavBar from "../components/ResponsiveNavBar";
+import {useLocation} from "react-router-dom";
 
 const ViewCourse = (props:any) => {
+    const location = useLocation();
+    const data = location.state?.data;
     return (
         <>
             <ResponsiveNavBar/>
@@ -33,38 +36,42 @@ const ViewCourse = (props:any) => {
             </div> */}
             {/* <img src={require('./PhysicsCourse.jpg')} style={{width: 1270, height: 200}}>
             </img> */}
+
+            <img src={data[6]} style={{width: 1270, height: 200}}/>
+
             <Card sx={{ maxWidth: 585 }}>
             <CardContent>
             <Typography gutterBottom variant="h5" component="div">
-                Course Name
+                {data[0]}
             </Typography>
             <Stack marginTop={1.5}>
             <Typography variant="body2" color="text.secondary">
-                Subtitle:  
+                {data[7]}  
             </Typography>
             </Stack>
             <Stack marginTop={1.5}>
             <Typography variant="h6" color="text.secondary">
-                Summary: 
+                {data[2]} 
                 <div/>
                 <Stack marginTop={1.5}></Stack>
-                Learn Unity in C# & Code Your First Five 2D Video Games for Web, Mac & PC. The Tutorials Cover Tilemap
+               
             </Typography>
             </Stack>
             <Stack marginTop={1.5}>
             <Typography variant="body2" color="text.secondary">
-                Total Hours:  
+                Total Hours :  
+                {" " + data[5]}  
             </Typography>
             </Stack>
-            <RatingRead rating={[]}/>
+            <RatingRead rating={data[3]}/>
             <Stack marginTop={1.5}>
             <Typography variant="body2" color="text.secondary">
-                Given By : 
+                {data[4]} 
             </Typography>
             </Stack>
             <Stack marginTop={1.5}></Stack>
             <Typography variant="body2" color="text.secondary">
-                Price : 
+                {data[1]} 
             </Typography>
             <Stack marginTop={1.5} direction="row" spacing={2}>
             <Button variant="contained">Add To Cart</Button>
@@ -82,7 +89,6 @@ const ViewCourse = (props:any) => {
             <Typography gutterBottom variant="h5" component="div">
                 Reviews
             </Typography>      
-            <ResponsiveNavBar></ResponsiveNavBar>
             <div
                 style={{
                     backgroundColor: 'rgb(25, 25, 25)',
