@@ -12,6 +12,7 @@ const bcrypt = require('bcrypt')
 const createError = require('http-errors');
 const CorporateTrainee = require("../models/users/CorporateTrainee");
 const auth = require("./auth");
+const nodemailer = require('nodemailer');
 
 var router = express.Router();
 
@@ -261,6 +262,10 @@ router.post("/login", async(req,res) => {
 
 router.get("/logout", async(req,res) => {
     return res.clearCookie("jwt").status(200).json({ message: "Successfully logged out" });
+});
+
+router.post("/reset-password", async(req,res) => {
+    return await adminController.sendEmail('alienlearning8@gmail.com')
 });
 
 router.post("/search", async(req,res) => {
