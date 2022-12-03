@@ -28,7 +28,7 @@ const Admin = (props:any) => {
         <>  
             <ResponsiveNavBar/>
             <Stack marginTop={0.6} direction={"row"}>
-                <FilterBar/>
+                <FilterBar setCourses={setCourses}/>
                 <Courses/>
             </Stack>
             <p/>
