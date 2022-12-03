@@ -172,6 +172,9 @@ function ResponsiveNavBar() {
                                 navigate('../')
                             })
                         }
+                        if(setting == 'Account'){
+                                navigate('/account')
+                        }
                     }}>
                     <Typography textAlign="center">{setting}</Typography>
                     </MenuItem>

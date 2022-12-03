@@ -8,13 +8,18 @@ var InstructorSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  email:{
+    type: String,
+  },
+  biography:{
+    type: String
+  },
   rating: {
     type: Array,
    
   },
   reviews: {
     type: Array,
-    required: true,
   },
   token: {
     type: String
