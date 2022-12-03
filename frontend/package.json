@@ -21,6 +21,7 @@
     "mdb-react-ui-kit": "^5.0.0",
     "mui": "^0.0.1",
     "react": "^18.2.0",
+    "react-blur": "^1.1.1",
     "react-bootstrap": "^2.6.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.4.4",
