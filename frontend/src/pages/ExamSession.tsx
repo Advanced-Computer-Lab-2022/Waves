@@ -3,29 +3,46 @@ import axios from 'axios';
 import React, { useEffect } from "react";
 import LoggedInNavbar from "../components/LoggedInNavbar";
 import Container from '@mui/material/Container';
-import { Button, Divider, FormControl, FormControlLabel, FormLabel, Grid, Radio, RadioGroup, Stack } from "@mui/material";
+import { Button, Divider, FormControl, FormControlLabel, FormLabel, Grid, List, ListItemButton, ListItemText, Radio, RadioGroup, Stack } from "@mui/material";
 import ResponsiveNavBar from "../components/ResponsiveNavBar";
 import Footer from "../components/Footer";
 import Card from "../components/ExamCard";
+import Card2 from '@mui/material/Card';
 import FilterBar from "../components/FilterBar";
-import {useLocation, useNavigate} from "react-router-dom";
+import {Link, useLocation, useNavigate} from "react-router-dom";
 import { response } from 'express';
 
 const ExamSession = (props:any) => {
-    const fifo=[];
-    fifo.push(1);
+    var fifo: string[]=[];
+    fifo.push("A")
+    fifo.push("B")
+    fifo.push("C")
+    fifo.push("D")
+    //fifo.pop()
+    //(fifo:any)[0]
     //const navigate = useNavigate();
     const [examsQuestions, setExamQuestions] = React.useState<any[]>([]);
+    const [currentQuestion, setCurrentQuestion] = React.useState(0);
+    const [answers, setAnswers] = React.useState(["A","B","C","D"]);
     const [values, setValue] = React.useState('');
     //var [score, setScore] = React.useState(0);
     const [error, setError] = React.useState(false);
+    const [score, setScore] = React.useState(0);
     const [helperText, setHelperText] = React.useState('Choose wisely');
     const location = useLocation();
     const data = location.state?.data;
-    var score=0;
+    var flag=0;
+
+    const optionClicked = (ansGiven: string) => {
+      const x=answers.shift()
+      console.log(x + " " +ansGiven)
+      setAnswers(answers)  
+      if(ansGiven==x && answers.length>=0) {setScore(score + 1)}
+    }
    
     const handleRadioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-      setValue((event.target as HTMLInputElement).value);
+      //fifo.push(((event.target as HTMLInputElement).value))
+      //setValue((event.target as HTMLInputElement).value);
       setHelperText(' ');
       setError(false);
     };
@@ -45,7 +62,7 @@ const ExamSession = (props:any) => {
             }
           })
             .then(response => {
-                console.log(values)
+                console.log()
             });
        
     }
@@ -60,63 +77,59 @@ const ExamSession = (props:any) => {
             .then(response => {
                 setExamQuestions(response.data)
             });
-           // console.log(s1)
+
+            var cardStyle = {
+              width: '50vw',
+              
+            }
     return (
         <>
         <ResponsiveNavBar/>
-        
-        <Stack marginTop={0.6} direction="column">
+        <h1>{score}</h1>
+        <Stack marginTop={5} marginLeft={40} direction="column">
                 <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 15 }}>
+                <Card2 style={cardStyle}>
                     {examsQuestions && examsQuestions.map((examsQuestion) => (
                         <><Grid marginTop={2} item xs={2} sm={4} md={4} key={examsQuestion._id}>
+                          
                             <Stack direction="column" marginLeft={2}>
                             question: {examsQuestion.question} 
                             <div/>
-                            A: {examsQuestion.c1}
-                            <div/> 
-                            B: {examsQuestion.c2}
-                            <div/> 
-                            C: {examsQuestion.c3}
-                            <div/> 
-                            D: {examsQuestion.c4}
+                            <List>
+                            <ListItemButton component="a" onClick={() => optionClicked('A')}>
+                                <ListItemText primary={examsQuestion.c1} />
+                            </ListItemButton>
+                            <ListItemButton component="a" onClick={() => optionClicked('B')}>
+                                <ListItemText primary={examsQuestion.c2} />
+                            </ListItemButton>
+                            <ListItemButton component="a" onClick={() => optionClicked('C')}>
+                                <ListItemText primary={examsQuestion.c3} />
+                            </ListItemButton>
+                            <ListItemButton component="a" onClick={() => optionClicked('D')}>
+                                <ListItemText primary={examsQuestion.c4} />
+                            </ListItemButton>
+                            </List>                       
                             </Stack>
-                            <form onSubmit={handleSubmit}>
-                            <Stack marginTop={2} marginLeft={2}>
-                        <FormControl>
-                                <FormLabel id="demo-radio-buttons-group-label">Answer</FormLabel>
-                                <RadioGroup
-                                    aria-labelledby="demo-radio-buttons-group-label"
-                                    name="answer"
-                                     //value={values}
-                                    // onChange={handleRadioChange}
-                                >
-                                    <Stack marginTop={0.5} direction={"row"}>
-                                    
-                                    <FormControlLabel value="A" control={<Radio />} label="A" name="A"/>
-                                    <FormControlLabel value="B" control={<Radio />} label="B" name="B"/>
-                                    <FormControlLabel value="C" control={<Radio />} label="C" name="C"/>
-                                    <FormControlLabel value="D" control={<Radio />} label="D" name="D"/>
-        
-                                    </Stack>
-                                </RadioGroup> 
-                            </FormControl>
-                            </Stack>
-                            </form>
                             
                         </Grid>
                             </>
                     ))}
+                    </Card2>
                 </Grid>
             </Stack>
             <Stack marginTop={4}></Stack>
-            <Button variant="contained" href="/results">
-                Submit Answers
+            <Button variant="contained">
+              <Link to="/results" state={{ data: [score,examsQuestions.length]}} className="link" color="#f5f5f5">
+                Submit results
+              </Link>
             </Button>
+            
             
             <p/>
             <Footer></Footer>
         </>
     )
+                    
 }
 
 export default ExamSession

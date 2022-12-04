@@ -24,6 +24,7 @@ import NewUser from './pages/NewUser';
 import AddCourse from './pages/AddCourse';
 import Account from './components/Account';
 import Info from './pages/PersonalInfo';
+import Results from './pages/results';
 
 const arr = ["String1", "String2", "String3", "String4", "String5"]
 
@@ -68,6 +69,7 @@ function App() {
         <Route path="/add-exam" element = {<Exam/>}/>
         <Route path="/exams" element = {<ExamsPage/>}/>
         <Route path="/exam-session" element = {<ExamSession/>}/>
+        <Route path="/results" element = {<Results/>}/>
         <Route path="/inbox" element = {<Inbox/>}/>
         <Route path="/admin" element = {<Admin/>}/>
         <Route path="/instructor" element = {<Instructor/>}/>
