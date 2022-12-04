@@ -17,48 +17,46 @@ import { TextField, Button, Stack } from '@mui/material';
 const User = (props:any) => {
   const [open, setOpen] = React.useState(true);
   const [selectedIndex, setSelectedIndex] = React.useState(1);
-  //const [user, setUser] = React.useState(null);
+  const [type, setType] = React.useState<String>("");
 
   const handleClick = () => {
     setOpen(!open);
   };
 
-  const handleListItemClick = (
-    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
-    index: number,
-  ) => {
-    setSelectedIndex(index);
-    // axios.post('http://localhost:3001/add-user', {
-    //         index:index
-    //       }, {
-    //         headers: {
-    //           'Content-Type': 'application/x-www-form-urlencoded'
-    //         }
-    //       })
-    //         .then(response => {
-                
-    //         });
-  };
+
   const handleSubmit = (e: any) => {
     e.preventDefault();
     const userInfo = new FormData(e.target)
     const username = Object.fromEntries(userInfo.entries()).username
     const password = Object.fromEntries(userInfo.entries()).password
-    console.log(selectedIndex)
 
-    axios.post('http://localhost:3001/add-user', {
+    axios.post('http://localhost:3001/register', {
             username: username,
             password: password,
-            index: selectedIndex
+            type: type
           }, {
             headers: {
               'Content-Type': 'application/x-www-form-urlencoded'
             }
           })
             .then(response => {
+              console.log(username)
+              console.log(password)
+              console.log(type)
+              console.log(response.data);
                 alert('User added successfully')
             });
   }
+
+    const handleListItemClick = (
+      event: React.MouseEvent<HTMLDivElement, MouseEvent>,
+      index: number,
+      type: string
+    ) => {
+      setSelectedIndex(index);
+      setType(type);
+    };        
+  
   
   return (
     <>
@@ -84,17 +82,17 @@ const User = (props:any) => {
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
           <ListItemButton sx={{ pl: 4 }} selected={selectedIndex === 0}
-          onClick={(event) => handleListItemClick(event, 0)}>   
+          onClick={(event) => handleListItemClick(event, 0, 'Admin')}>   
             <ListItemText primary="Admin" />
              </ListItemButton>
 
              <ListItemButton sx={{ pl: 4 }} selected={selectedIndex === 1}
-          onClick={(event) => handleListItemClick(event, 1)}>
+          onClick={(event) => handleListItemClick(event, 1, 'Instructor')}>
             <ListItemText primary="Instructor" />
             </ListItemButton>
 
             <ListItemButton sx={{ pl: 4 }} selected={selectedIndex === 2}
-          onClick={(event) => handleListItemClick(event, 2)}>
+          onClick={(event) => handleListItemClick(event, 2, 'Corporate')}>
             <ListItemText primary="Corporate Trainee" />
             </ListItemButton>
         </List>
@@ -113,4 +111,4 @@ const User = (props:any) => {
   );
 }
 
-export default User
+export default User;

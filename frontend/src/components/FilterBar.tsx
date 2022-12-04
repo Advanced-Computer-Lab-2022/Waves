@@ -17,7 +17,7 @@ import './styles.css'
 import axios from 'axios';
 import { useEffect } from 'react';
 
-export default function FilterBar(setCourses:any) {
+export default function FilterBar(props:any) {
   const [filterOpen, setFilterOpen] = React.useState(true);
   const [subjectOpen, setSubjectOpen] = React.useState(true);
   const [ratingOpen, setRatingOpen] = React.useState(true);
@@ -26,7 +26,6 @@ export default function FilterBar(setCourses:any) {
   const [computerScience, setComputerScience] = React.useState(true);
   const [math, setMath] = React.useState(true);
   const [physics, setPhysics] = React.useState(true);
-  const [filterBySubject, setFilterBySubject] = React.useState<any[]>([]);
 
   const [fourRating, setFourRating] = React.useState(false);
   const [threeRating, setThreeRating] = React.useState(false);
@@ -38,6 +37,8 @@ export default function FilterBar(setCourses:any) {
   const [twoRatingHover, setTwoRatingHover] = React.useState(false);
   const [oneRatingHover, setOneRatingHover] = React.useState(false);
 
+  const [filterBySubject, setFilterBySubject] = React.useState<any[]>([]);
+  
   const [rating, setRating] = React.useState(0);
   
   const [price, setPrice] = React.useState<number[]>([100, 500]);
@@ -69,9 +70,9 @@ export default function FilterBar(setCourses:any) {
     }
   })
     .then((response:any) => {console.log(response.data);
-      setCourses(response.data);
+      props.setCourses(response.data);
     });
-  });
+  },[rating, price, filterBySubject]);
 
   const handleFilterClick = () => {
     setFilterOpen(!filterOpen);

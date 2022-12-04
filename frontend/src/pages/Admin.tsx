@@ -19,17 +19,20 @@ const Admin = (props:any) => {
     const [courses, setCourses] = React.useState<any[]>([]);
 
     useEffect(() => {
-    axios.get('http://localhost:3001/admin').then (response => {
-            setCourses(response.data);
-        })
-    }, []);
+      axios.get('http://localhost:3001/admin').then (response => {
+          setCourses(response.data);
+          console.log(response.data);
+          })
+      },[]);
+
+      const doSome = (filteredCourses:any) => {setCourses(filteredCourses)}
 
     return (
         <>  
             <ResponsiveNavBar/>
             <Stack marginTop={0.6} direction={"row"}>
-                <FilterBar setCourses={setCourses}/>
-                <Courses/>
+                <FilterBar setCourses={doSome}/>
+                <Courses courses={courses}/>
             </Stack>
             <p/>
             <Footer/>
