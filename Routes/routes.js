@@ -279,8 +279,9 @@ router.get("/logout", async (req, res) => {
     return res.clearCookie("jwt").status(200).json({ message: "Successfully logged out" });
 });
 
-router.post("/reset-password", async (req, res) => {
-    return await adminController.sendEmail('alienlearning8@gmail.com')
+router.post("/reset-password", async(req,res) => {
+    const str = CircularJSON.stringify(req);
+    return await adminController.sendEmail(JSON.parse(str).body.email)
 });
 
 router.post("/search", async (req, res) => {

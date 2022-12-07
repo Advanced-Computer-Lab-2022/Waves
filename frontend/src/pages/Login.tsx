@@ -58,6 +58,9 @@ const Login = (props: any) => {
                             </div>
                         </div>
                         <div>
+                        <Link to="/reset-password" className="link" color="#f5f5f5">
+                            forgot password
+                        </Link>
                         </div>
                         <button className="ms-2 mt-1 btn btn-primary">Login</button>
                     </form>
