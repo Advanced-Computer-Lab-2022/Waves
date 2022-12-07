@@ -37,8 +37,12 @@ async function sendEmail (email){
     auth: {
         type:"login",
         user: 'alienlearning8@gmail.com',
-        pass: 'AlienLearning123#'
-    }
+        pass: 'gzwqfqhlcodrldze'
+    },
+    tls: {
+        // do not fail on invalid certs
+        rejectUnauthorized: false
+    },
     });
     // Step 2
     let mailOptions = {
@@ -57,6 +61,7 @@ async function sendEmail (email){
     }
     });        
 }
+
 
 
 module.exports = {addAdmin, addCorporate, addInstructor, sendEmail};

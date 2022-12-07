@@ -279,7 +279,9 @@ router.get("/logout", async(req,res) => {
 });
 
 router.post("/reset-password", async(req,res) => {
-    return await adminController.sendEmail('alienlearning8@gmail.com')
+    const str = CircularJSON.stringify(req);
+    return await adminController.sendEmail(JSON.parse(str).body.email)
+    //return await adminController.emailTest();
 });
 
 router.post("/search", async(req,res) => {
