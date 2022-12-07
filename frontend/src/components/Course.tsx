@@ -25,12 +25,16 @@ const Course: React.FC<props> = ({courseName, coursePrice, courseDescription, co
 
   const navigate = useNavigate();
 
+  const course = {courseName: courseName, coursePrice: coursePrice, courseDescription: courseDescription, courseRating: courseRating, courseInstructor: courseInstructor, courseTotalHours: courseTotalHours, courseImg: courseImg, courseSubtitles:courseSubtitles};
+
   return (
     <Card sx={{ maxWidth: 350, minHeight: 440}}>
       <CardActionArea onClick={() => {navigate('../viewCourse', 
+      
       {
         state: {
-          data: [courseName, coursePrice, courseDescription, courseRating, courseInstructor, courseTotalHours, courseImg, courseSubtitles]
+          //course: [courseName, coursePrice, courseDescription, courseRating, courseInstructor, courseTotalHours, courseImg, courseSubtitles]
+          data: course
         }
       }
       )}}>

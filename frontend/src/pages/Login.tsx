@@ -6,13 +6,13 @@ import {
     Route,
     useNavigate,
     Link
-  } from "react-router-dom";
+} from "react-router-dom";
 import { TextField } from '@mui/material';
 import Container from '@mui/material/Container';
 
 
 
-const Login = (props:any) => {
+const Login = (props: any) => {
     const navigate = useNavigate();
 
     const handleSubmit = (e: any) => {
@@ -20,15 +20,16 @@ const Login = (props:any) => {
         const userInfo = new FormData(e.target)
         const username = Object.fromEntries(userInfo.entries()).username
         const password = Object.fromEntries(userInfo.entries()).password
-    
+
         axios.post('http://localhost:3001/login', {
             username: username,
             password: password
-          }, {
+        }, {
             headers: {
-              'Content-Type': 'application/x-www-form-urlencoded'
-            }
-          })
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            withCredentials: true,
+        })
             .then(response => {
                 navigate("../" + response.data);
             });
@@ -50,7 +51,7 @@ const Login = (props:any) => {
                         </div>
                         <div>
                             <div className="p-2">
-                            
+
                             </div>
                             <div className="p-2">
                                 <TextField id="outlined-basic" label="Password" variant="outlined" name="password" />

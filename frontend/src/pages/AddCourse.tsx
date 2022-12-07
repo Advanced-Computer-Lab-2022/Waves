@@ -1,17 +1,18 @@
 import {
     BrowserRouter as Router,
     Route,
-    useNavigate,
-    Link
+    useNavigate
   } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import axios from 'axios';
 import React, { useEffect } from "react";
 import Question from "../components/Question";
-import { Button, Stack, TextField } from "@mui/material";
+import { Button, Link, Checkbox, FormControlLabel, FormGroup, Stack, TextField } from "@mui/material";
 import LoggedInNavbar from "../components/LoggedInNavbar";
 import ResponsiveNavBar from "../components/ResponsiveNavBar";
+
+const pages = ['My Courses', 'Add User', 'Add Course', 'About Us'];
 
 const AddCourse = (props:any) => {
 
@@ -51,7 +52,7 @@ const AddCourse = (props:any) => {
 
     return (
         <>
-        <ResponsiveNavBar/>
+        <ResponsiveNavBar pages ={pages}/>
             <form onSubmit={handleSubmit}>
             <Stack spacing={1.5} direction="column"
                 justifyContent="space-evenly"
@@ -106,6 +107,14 @@ const AddCourse = (props:any) => {
                 multiline
             />
             </Stack>
+            <FormGroup>
+                <FormControlLabel sx={{marginLeft:11, marginTop:1}} control={<Checkbox />} label={<div>
+                    <span>I accept the contract </span>
+                    <Link href='/instructor-terms'>terms of use</Link>
+                    <span>.</span>
+                </div>
+                }/>
+            </FormGroup>
             <button className="ms-2 mt-1 btn btn-primary">Add Course</button>
             </form>
         </>

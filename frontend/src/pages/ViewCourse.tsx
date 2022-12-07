@@ -18,40 +18,32 @@ import {
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ResponsiveNavBar from "../components/ResponsiveNavBar";
 import {useLocation} from "react-router-dom";
+import CourseContent from '../components/CourseContent';
+
+const pages = ['Courses', 'Instructors', 'Add User', 'About Us'];
 
 const ViewCourse = (props:any) => {
     const location = useLocation();
-    const data = location.state?.data;
+    const course = location.state?.data;
     return (
         <>
-            <ResponsiveNavBar/>
+            <ResponsiveNavBar pages = {pages}/>
 
-            {/* <div
-                style={{
-                    backgroundColor: 'rgb(25, 25, 25)',
-                    height: '250px'
-                }}
-            >      
-            
-            </div> */}
-            {/* <img src={require('./PhysicsCourse.jpg')} style={{width: 1270, height: 200}}>
-            </img> */}
-
-            <img src={data[6]} style={{width: 1270, height: 200}}/>
+            <img src={course.courseImg} style={{width: 1270, height: 200}}/>
 
             <Card sx={{ maxWidth: 585 }}>
             <CardContent>
             <Typography gutterBottom variant="h5" component="div">
-                {data[0]}
+                {course.courseName}
             </Typography>
             <Stack marginTop={1.5}>
             <Typography variant="body2" color="text.secondary">
-                {data[7]}  
+                {course.courseSubtitles}  
             </Typography>
             </Stack>
             <Stack marginTop={1.5}>
             <Typography variant="h6" color="text.secondary">
-                {data[2]} 
+                {course.courseDescription} 
                 <div/>
                 <Stack marginTop={1.5}></Stack>
                
@@ -60,18 +52,18 @@ const ViewCourse = (props:any) => {
             <Stack marginTop={1.5}>
             <Typography variant="body2" color="text.secondary">
                 Total Hours :  
-                {" " + data[5]}  
+                {" " + course.courseTotalHours}  
             </Typography>
             </Stack>
-            <RatingRead rating={data[3]}/>
+            <RatingRead rating={course.courseRating}/>
             <Stack marginTop={1.5}>
             <Typography variant="body2" color="text.secondary">
-                {data[4]} 
+                {course.courseInstructor} 
             </Typography>
             </Stack>
             <Stack marginTop={1.5}></Stack>
             <Typography variant="body2" color="text.secondary">
-                {data[1]} 
+                {course.coursePrice} 
             </Typography>
             <Stack marginTop={1.5} direction="row" spacing={2}>
             <Button variant="contained">Add To Cart</Button>
@@ -85,7 +77,10 @@ const ViewCourse = (props:any) => {
                     backgroundColor: 'rgb(25, 25, 25)',
                     height: '150px'
                 }}
-            />
+                
+            >
+                <CourseContent course = {course}/>
+            </div>
             <Typography gutterBottom variant="h5" component="div">
                 Reviews
             </Typography>      

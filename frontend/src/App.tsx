@@ -9,7 +9,7 @@ import Alien from './Alien';
 import './App.css';
 import Navbar from './components/navbar';
 import Login from './pages/Login';
-import SignUp from './SignUp';
+import SignUp from './pages/SignUp';
 import Admin from './pages/Admin';
 import CorporateTrainee from './pages/CorporateTrainee';
 import IndividualTrainee from './pages/IndividualTrainee';
@@ -25,6 +25,7 @@ import AddCourse from './pages/AddCourse';
 import Account from './components/Account';
 import Info from './pages/PersonalInfo';
 import Results from './pages/results';
+import InstructorTerms from './pages/InstructorTerms';
 
 const arr = ["String1", "String2", "String3", "String4", "String5"]
 
@@ -78,6 +79,7 @@ function App() {
         <Route path="/viewcourse" element = {<ViewCourse/>}/>
         <Route path="/view-rating" element = {<ViewRating/>}/>
         <Route path="/signup" element = {<SignUp/>}/>
+        <Route path="/instructor-terms" element = {<InstructorTerms/>}/>
         </Routes>
       </Router>
   );

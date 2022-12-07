@@ -26,10 +26,11 @@ const Admin = (props:any) => {
       },[]);
 
       const doSome = (filteredCourses:any) => {setCourses(filteredCourses)}
+      const pagesArr = ['Courses', 'Instructors', 'Add User', 'About Us'];
 
     return (
         <>  
-            <ResponsiveNavBar/>
+            <ResponsiveNavBar pages={pagesArr}/>
             <Stack marginTop={0.6} direction={"row"}>
                 <FilterBar setCourses={doSome}/>
                 <Courses courses={courses}/>

@@ -54,13 +54,13 @@ async function changePassword(){
 }
 
 async function getCourses (){
-    var courses = await Courses.find({}).exec();
+    const courses = await Courses.find({}).exec();
     return courses;
 }
 
 async function searchFilterCourses (searchTerm, rating, subject, price){
-    var courses = await Courses.find({}).exec();
-    var filteredCourses = courses.filter(item => (item.title.toLocaleLowerCase().includes(searchTerm.toLocaleLowerCase()) || searchTerm=="") && (item.courseRating==rating || rating==null) && (item.subject==subject || subject==null) && (item.price==price || price==null));
+    const courses = await Courses.find({}).exec();
+    const filteredCourses = courses.filter(item => (item.title.toLocaleLowerCase().includes(searchTerm.toLocaleLowerCase()) || searchTerm=="") && (item.courseRating==rating || rating==null) && (item.subject==subject || subject==null) && (item.price==price || price==null));
     return filteredCourses;
 }
 

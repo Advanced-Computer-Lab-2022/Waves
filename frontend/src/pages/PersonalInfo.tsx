@@ -46,7 +46,7 @@ return(
                 <CreateOutlinedIcon/>
                 </Button>
                 </Stack>  
-                </Stack> 
+                </Stack>
                 <Stack marginTop={5}/>
                 <Divider sx={{ bgcolor: "secondary.light" }}/>
                 <Stack marginTop={2}>
@@ -66,6 +66,44 @@ return(
                 </Stack> 
                 <Stack marginTop={5}/>
                 <Divider sx={{ bgcolor: "secondary.light" }}/>
+
+
+                <Stack marginTop={2}>
+                <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                    PASSWORD
+                </Typography>
+                </Stack>
+                <Stack direction="row" marginTop={2}>
+                <Typography variant="h5" component="div">
+                ***********
+                </Typography>
+                <Stack marginLeft={50}>
+                <Button href="/personal-info/edit-password">
+                <CreateOutlinedIcon/>
+                </Button>
+                </Stack>  
+                </Stack>
+                <Stack marginTop={5}/>
+                <Divider sx={{ bgcolor: "secondary.light" }}/>
+                <Stack marginTop={2}>
+                <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                    Mini Biography
+                </Typography>
+                </Stack>
+                <Stack direction="row" marginTop={2}>  
+                <Typography variant="h5" component="div">
+                    your biography
+                </Typography>               
+                <Stack marginLeft={50}>
+                <Button href="/personal-info/edit-biographyA">
+                <CreateOutlinedIcon/>
+                </Button>
+                </Stack>  
+                </Stack> 
+                <Stack marginTop={5}/>
+                <Divider sx={{ bgcolor: "secondary.light" }}/>
+
+
             </CardContent>
         </Card>
         </Stack>

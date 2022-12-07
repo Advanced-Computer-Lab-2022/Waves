@@ -6,7 +6,7 @@ var CoursesSchema = new mongoose.Schema({
     //unique: true
   },
   subtitle: {
-    type: String,
+    type: Array,
     required: true,
   },
   price: {

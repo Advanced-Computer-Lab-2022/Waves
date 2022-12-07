@@ -10,11 +10,13 @@ import LoggedInNavbar from "../components/LoggedInNavbar";
 import { Button, Stack } from "@mui/material";
 import ResponsiveNavBar from "../components/ResponsiveNavBar";
 
+const pages = ['My Courses', 'Add User', 'Add Course', 'About Us'];
+
 const Instructor = (props:any) => {
     const navigate = useNavigate();
     return (
         <>
-            <ResponsiveNavBar/>
+            <ResponsiveNavBar pages ={pages}/>
             <Stack
                 direction="row"
                 justifyContent="center"

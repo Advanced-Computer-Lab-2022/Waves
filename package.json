@@ -18,7 +18,6 @@
   },
   "homepage": "https://github.com/Advanced-Computer-Lab-2022/Waves#readme",
   "dependencies": {
-    "@mui/icons-material": "^5.10.15",
     "axios": "^1.2.0",
     "bcrypt": "^5.1.0",
     "body-parser": "^1.20.1",
@@ -35,8 +34,6 @@
     "nodemailer": "^6.8.0",
     "nodemon": "^2.0.20",
     "package.json": "^0.0.0",
-    "path": "^0.12.7",
-    "react": "^18.2.0",
-    "react-router-dom": "^6.4.3"
+    "path": "^0.12.7"
   }
 }

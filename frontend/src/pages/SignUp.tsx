@@ -13,8 +13,8 @@ import { Radio, RadioGroup, FormControl, FormControlLabel, FormLabel } from "@mu
 import { Info, HelpCenter, ListAlt, LocalHospital, Person, Logout } from '@mui/icons-material';
 
 import { textAlign } from "@mui/system";
-import Navbar from "./components/navbar";
-import Footer from "./components/Footer";
+import Navbar from "../components/navbar";
+import Footer from "../components/Footer";
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from "axios";

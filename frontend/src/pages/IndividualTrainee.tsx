@@ -12,6 +12,8 @@ import React, { useEffect } from "react";
 import ResponsiveAppBar from "../components/ResponsiveNavBar";
 import Footer from "../components/Footer";
 
+const pages = ['My Courses', 'About Us'];
+
 const IndividualTrainee = (props:any) => {
     const navigate = useNavigate();
     const [courses, setCourses] = React.useState<any[]>([]);
@@ -24,7 +26,7 @@ const IndividualTrainee = (props:any) => {
     }, []);
     return (
         <>
-            <ResponsiveAppBar/>
+            <ResponsiveAppBar pages ={pages}/>
             
             <Container>
                 <Stack spacing ={5} divider={<Divider orientation="vertical" flexItem />}>

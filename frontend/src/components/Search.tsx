@@ -45,6 +45,7 @@ const Search = styled('div')(({ theme }) => ({
   }));
 
 export default function Component() {
+
     return(
         <Toolbar>
                 <Search>

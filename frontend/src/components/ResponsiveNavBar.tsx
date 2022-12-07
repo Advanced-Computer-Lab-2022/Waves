@@ -39,10 +39,14 @@ const theme = createTheme({
     },
   });
 
-const pages = ['Courses', 'Instructors', 'About Us', 'Add User'];
+//const pages = ['Courses', 'Instructors', 'About Us', 'Add User'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
-function ResponsiveNavBar() {
+interface props{
+    pages: string[];
+ }
+
+function ResponsiveNavBar(props:any) {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
@@ -54,6 +58,23 @@ function ResponsiveNavBar() {
   };
 
   const navigate = useNavigate();
+
+
+  const navigateToPage = (page:string) => {
+    const pageArr = page.split(" ");
+    page = "";
+
+    pageArr.forEach(element => {
+        if(element == pageArr[pageArr.length - 1]){
+            page += element.toLocaleLowerCase();
+        }
+        else{
+            page += element.toLocaleLowerCase() + "-";
+        }
+        
+    });
+    navigate("../" + page);
+}
 
   function handleCloseNavMenu(page: string) {
     if(page == 'Add User'){
@@ -125,8 +146,8 @@ function ResponsiveNavBar() {
                     display: { xs: 'block', md: 'none' },
                 }}
                 >
-                {pages.map((page) => (
-                    <MenuItem key={page} onClick={() => {if(page == 'Add User'){navigate("../add-user");}}}>
+                {props.pages.map((page:string) => (
+                    <MenuItem key={page} onClick={() => {navigateToPage(page)}}>
                         <Typography color={'black'} fontSize={45}  textAlign="center">{page}</Typography>
                     </MenuItem>
                 ))}
@@ -152,11 +173,11 @@ function ResponsiveNavBar() {
                 LOGO
             </Typography>
             <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-                {pages.map((page:string) => (
+                {props.pages.map((page:string) => (
                 <Button
                     style={{fontSize:20}}
                     key={page}
-                    onClick={() => {if(page == 'Add User'){navigate("../add-user");}}}
+                    onClick={() => {navigateToPage(page)}}
                     sx={{ my: 2, color: 'white', display: 'block' }}
                 >
                     {page}
