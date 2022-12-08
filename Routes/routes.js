@@ -35,19 +35,14 @@ router.get("/", async (req, res) => {
 });
 
 router.get("/getInstructorRating", async (req, res) => {
-    res.send(req.session.user.rating);
+    res.send(""+req.session.user.rating);
 });
 
 router.post('/filterCourses', async (req, res) => {
     // const str = CircularJSON.stringify(req.body);
     const { rating, subject, minPrice, maxPrice } = req.body;
     const realRating = [rating, 0];
-    console.log(req.body);
     console.log(req.session);
-    // if (req.session.user?.type !== "admin") {
-    //     return res.send("user is not an admdin");
-    // }
-    console.dir({ b: "HERERERERERER3", a: req.body }, { depth: null });
     const courses = await Courses.find(
         {
             $and: [
@@ -230,7 +225,10 @@ router.post("/login", async (req, res) => {
         }
         else if (instructor) {
             type = "instructor"
-            rating = instructor.rating;
+            instructor.rating.forEach(element => {
+                rating += element;
+            });
+            rating /= instructor.rating.length;
         }
         else if (corporateTrainee) {
             type = "corporateTrainee"
@@ -244,9 +242,6 @@ router.post("/login", async (req, res) => {
             const payload = { user_id: user._id, username, type: type, rating: rating};
             // auth.createAndSendToken(res, payload);
             req.session.user = payload;
-
-            console.log(payload);
-            // user
 
             res.send(type);
         }
@@ -302,7 +297,6 @@ router.post("/search", async (req, res) => {
     }
     else if (user == "instructor") {
         const myFilteredCourses = await instructorController.getMyCourses(filteredCourses, req.session.username);
-        console.log(req.body.showMyCourses)
         if (req.body.showMyCourses)
             //res.render("instructor", {data: '', courses: myFilteredCourses})
             res.send(filteredCourses)

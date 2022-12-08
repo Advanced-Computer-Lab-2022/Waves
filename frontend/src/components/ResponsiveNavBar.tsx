@@ -217,6 +217,9 @@ function ResponsiveNavBar(props:any) {
                         if(setting == 'Account'){
                                 navigate('/account')
                         }
+                        if(setting == 'Profile'){
+                            navigate('/profile')
+                        }
                     }}>
                     <Typography textAlign="center">{setting}</Typography>
                     </MenuItem>

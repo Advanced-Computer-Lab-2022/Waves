@@ -28,6 +28,7 @@ import Results from './pages/results';
 import InstructorTerms from './pages/InstructorTerms';
 import ResetPassword from './pages/ResetPassword';
 import EditPassword from './pages/EditPassword';
+import Profile from './pages/Profile';
 
 const arr = ["String1", "String2", "String3", "String4", "String5"]
 
@@ -84,6 +85,7 @@ function App() {
         <Route path="/signup" element = {<SignUp/>}/>
         <Route path="/instructor-terms" element = {<InstructorTerms/>}/>
         <Route path="/personal-info/edit-password" element = {<EditPassword/>}/>
+        <Route path="profile" element = {<Profile/>}/>
         </Routes>
       </Router>
   );

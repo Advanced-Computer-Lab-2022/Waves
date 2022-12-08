@@ -1,14 +1,14 @@
 import { Rating, Typography } from '@mui/material';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import React from 'react';
 
 const Profile = (props: any) => {
 
-    let instructorRating = 0;
+    const [instructorRating, setInstructorRating] = React.useState(0);
 
-
-    axios.get('http://localhost:3001/getInstructorRating').then(response => {
-        instructorRating = response.data;
+    axios.get('http://localhost:3001/getInstructorRating',{ withCredentials: true }).then(response => {
+        setInstructorRating(response.data);
     });
 
     return (
