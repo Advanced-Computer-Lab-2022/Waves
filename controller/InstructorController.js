@@ -8,12 +8,15 @@ const Instructor=require("../models/Instructor");
 function addCourse (body, username){
     const newCourse = new Courses({
         title: body.title,
-        subtitle: body.subtitle,
+        subtitles: body.subtitle,
         price: body.price,
-        shortSummary: body.shortSummary,
+        img: body.img,
+        videoLinks: body.videoLinks,
+        description: body.description,
         totalHours: body.totalHours,
-        courseRating: body.rating,
+        rating: [1.2,79],
         subject: body.subject,
+        videoPreview: body.videoPreview,
         givenBy: body.givenBy     
  });
     newCourse.save();

@@ -17,15 +17,17 @@ interface props {
   courseTotalHours: string;
   courseImg: string;
   courseSubtitles: Array<String>;
+  courseVideoLinks: Array<String>;
+  courseVideoPreview: string;
   children?: React.ReactNode;
   customChild?: React.ReactNode;
 }
 
-const Course: React.FC<props> = ({courseName, coursePrice, courseDescription, courseRating, courseInstructor, courseTotalHours, courseImg, courseSubtitles}) => {
+const Course: React.FC<props> = ({courseName, coursePrice, courseDescription, courseRating, courseInstructor, courseTotalHours, courseImg, courseSubtitles, courseVideoLinks, courseVideoPreview}) => {
 
   const navigate = useNavigate();
 
-  const course = {courseName: courseName, coursePrice: coursePrice, courseDescription: courseDescription, courseRating: courseRating, courseInstructor: courseInstructor, courseTotalHours: courseTotalHours, courseImg: courseImg, courseSubtitles:courseSubtitles};
+  const course = {courseName: courseName, coursePrice: coursePrice, courseDescription: courseDescription, courseRating: courseRating, courseInstructor: courseInstructor, courseTotalHours: courseTotalHours, courseImg: courseImg, courseSubtitles:courseSubtitles, courseVideoLinks: courseVideoLinks, courseVideoPreview: courseVideoPreview};
 
   return (
     <Card sx={{ maxWidth: 350, minHeight: 440}}>
@@ -33,7 +35,6 @@ const Course: React.FC<props> = ({courseName, coursePrice, courseDescription, co
       
       {
         state: {
-          //course: [courseName, coursePrice, courseDescription, courseRating, courseInstructor, courseTotalHours, courseImg, courseSubtitles]
           data: course
         }
       }

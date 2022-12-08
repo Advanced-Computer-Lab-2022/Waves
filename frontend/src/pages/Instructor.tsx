@@ -1,53 +1,36 @@
-import {
-    BrowserRouter as Router,
-    Route,
-    useNavigate,
-    Link
-  } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Navbar from "../components/navbar";
-import LoggedInNavbar from "../components/LoggedInNavbar";
+import axios from 'axios';
+import React, { useEffect } from "react";
 import { Button, Stack } from "@mui/material";
 import ResponsiveNavBar from "../components/ResponsiveNavBar";
-
-const pages = ['My Courses', 'Add User', 'Add Course', 'About Us'];
+import Footer from "../components/Footer";
+import Courses from "../components/Courses";
+import FilterBar from "../components/FilterBar";
 
 const Instructor = (props:any) => {
-    const navigate = useNavigate();
+    
+    const pages = ['My Courses', 'Add User', 'Add Course', 'Add Exam', 'Review Rating', 'About Us'];
+
+    const [courses, setCourses] = React.useState<any[]>([]);
+
+    useEffect(() => {
+      axios.get('http://localhost:3001/instructor').then (response => {
+          setCourses(response.data);
+          console.log(response.data);
+          })
+      },[]);
+
+      const doSome = (filteredCourses:any) => {setCourses(filteredCourses)}
+      
     return (
         <>
             <ResponsiveNavBar pages ={pages}/>
-            <Stack
-                direction="row"
-                justifyContent="center"
-                alignItems="baseline"
-                spacing={0.5}
-                marginTop={0.7}
-            >
-            <Button variant="contained"
-                onClick={() => {
-                navigate("../add-exam");
-            }}
-            >
-                 Add Exam
-            </Button>
-
-            <Button variant="contained"
-                onClick={() => {
-                navigate("../view-rating");
-            }}
-            >
-                 Review Rating
-            </Button>
-
-            <Button variant="contained"
-                onClick={() => {
-                navigate("../add-course");
-            }}
-            >
-                 Add Course
-            </Button>
+            <Stack marginTop={0.6} direction={"row"}>
+                <FilterBar setCourses={doSome}/>
+                <Courses courses={courses}/>
             </Stack>
+            <p/>
+            <Footer/>
         </>
     )
 }

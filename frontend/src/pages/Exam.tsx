@@ -16,6 +16,8 @@ import ResponsiveNavBar from "../components/ResponsiveNavBar";
 const Exam = (props:any) => {
     const navigate = useNavigate();
 
+    const pages = ['My Courses', 'Add User', 'Add Course', 'Add Exam', 'Review Rating', 'About Us'];
+
     const handleSubmit = (e: any) => {
         e.preventDefault();
         const userInfo = new FormData(e.target)
@@ -29,6 +31,8 @@ const Exam = (props:any) => {
         const c4= Object.fromEntries(userInfo.entries()).choice4
         const solution= Object.fromEntries(userInfo.entries()).solution
         console.log(solution)
+
+
         axios.post('http://localhost:3001/add-exam', {
             belongsToCourse: belongsToCourse,
             belongsToExam: belongsToExam,
@@ -52,7 +56,7 @@ const Exam = (props:any) => {
 
     return (
         <>
-            <ResponsiveNavBar/>
+            <ResponsiveNavBar pages={pages}/>
             <form onSubmit={handleSubmit}>
             <Stack spacing={1.5} direction="column"
                 justifyContent="space-evenly"

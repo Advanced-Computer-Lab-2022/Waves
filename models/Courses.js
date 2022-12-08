@@ -5,16 +5,28 @@ var CoursesSchema = new mongoose.Schema({
     required: true,
     //unique: true
   },
-  subtitle: {
+  description: {
+    type: String,
+    required: true,
+  },
+  img: {
+    type: String,
+    required: true,
+  },
+  videoPreview: {
+    type: String,
+    required: true,
+  },
+  subtitles: {
+    type: Array,
+    required: true,
+  },
+  videoLinks: {
     type: Array,
     required: true,
   },
   price: {
     type: Number,
-    required: true,
-  },
-  shortSummary: {
-    type: String,
     required: true,
   },
   totalHours: {
@@ -23,7 +35,6 @@ var CoursesSchema = new mongoose.Schema({
   },
   rating: {
     type: Array,
-   
   },
   subject: {
     type: String,

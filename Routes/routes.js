@@ -17,22 +17,25 @@ const Courses = require("../models/Courses");
 var router = express.Router();
 
 router.get("/", async (req, res) => {
-    if (req.session.user == "admin") {
+    if (req.session.user?.type == "admin") {
         res.send("/admin")
     }
-    else if (req.session.user == "individual") {
+    else if (req.session.user?.type == "individual") {
         res.send("/individual")
     }
-    else if (req.session.user == "corporate") {
+    else if (req.session.user?.type == "corporate") {
         res.send("/corporateTrainee")
     }
-    else if (req.session.user == "instructor") {
+    else if (req.session.user?.type == "instructor") {
         res.send("/instructor")
     }
     else {
-        const allCourses = await guestController.getCourses();
-        res.render("home", { data: '', courses: allCourses })
+        res.send("/")
     }
+});
+
+router.get("/getInstructorRating", async (req, res) => {
+    res.send(req.session.user.rating);
 });
 
 router.post('/filterCourses', async (req, res) => {
@@ -41,9 +44,9 @@ router.post('/filterCourses', async (req, res) => {
     const realRating = [rating, 0];
     console.log(req.body);
     console.log(req.session);
-    if (req.session.user?.type !== "admin") {
-        return res.send("user is not an admdin");
-    }
+    // if (req.session.user?.type !== "admin") {
+    //     return res.send("user is not an admdin");
+    // }
     console.dir({ b: "HERERERERERER3", a: req.body }, { depth: null });
     const courses = await Courses.find(
         {
@@ -74,8 +77,7 @@ router.get("/terms", function (req, res) {
 
 router.get("/admin", async (req, res) => {
     const allCourses = await guestController.getCourses();
-    console.log(JSON.stringify(allCourses))
-    res.send(JSON.stringify(allCourses))
+    res.send(allCourses)
 });
 
 router.post("/register", async (req, res) => {
@@ -221,12 +223,14 @@ router.post("/login", async (req, res) => {
         const user = admin || instructor || corporateTrainee || individualTrainee;
 
         let type = "NoOne"
+        let rating = 0
 
         if (admin) {
             type = "admin"
         }
         else if (instructor) {
             type = "instructor"
+            rating = instructor.rating;
         }
         else if (corporateTrainee) {
             type = "corporateTrainee"
@@ -237,7 +241,7 @@ router.post("/login", async (req, res) => {
 
         if (user && (await bcrypt.compare(password, user.password))) {
             // Create token
-            const payload = { user_id: user._id, username, type: type };
+            const payload = { user_id: user._id, username, type: type, rating: rating};
             // auth.createAndSendToken(res, payload);
             req.session.user = payload;
 
@@ -318,33 +322,9 @@ router.post("/add-user", async (req, res) => {
     //res.send("/admin")
 });
 
-// router.post("/add-exam", async(req,res) => {
-//         const str = CircularJSON.stringify(req);
-//         console.log(JSON.parse(str))
-//         instructorController.addExam(JSON.parse(str).body);
-//         instructorController.addQuestionToExam(JSON.parse(str).body);
-//         res.send("/instructor")
-//     });
-
-// router.post("/add-instructor", async(req,res) => {
-//     adminController.addInstructor(req.body);
-//     const allCourses = await guestController.getCourses();
-//     res.render("admin", {data: 'Success!', courses: allCourses})
-// });
-
-// router.post("/add-trainee", async(req,res) => {
-//     adminController.addCorporate(req.body);
-//     const allCourses = await guestController.getCourses();
-//     res.render("admin", {data: 'Success!', courses: allCourses})
-// });
-
 router.get("/instructor", async (req, res) => {
-    // if(!req.session.isLoggedIn)
-    //     res.redirect('./login')
-    // else {
     const allCourses = await guestController.getCourses();
-    res.render("instructor", { data: '', courses: allCourses })
-    //}
+    res.send(allCourses);
 });
 
 router.get("/individual", async (req, res) => {
@@ -456,39 +436,5 @@ router.put('/changePassword/:username', async (req, res) => {
         })
     }
 })
-
-
-router.post('/authenticate', async (req, res) => {
-    const str = CircularJSON.stringify(req);
-    const user = await guestController.authenticateUser(JSON.parse(str).body);
-    console.log(user);
-    if (user == "admin") {
-        req.session.isLoggedIn = true;
-        req.session.username = req.body.username;
-        req.session.user = user;
-        res.send("/admin");
-    }
-    else if (user == "individual") {
-        req.session.isLoggedIn = true
-        req.session.username = req.body.username
-        req.session.user = user;
-        res.send("/individual");
-    }
-    else if (user == "corporate") {
-        req.session.isLoggedIn = true
-        req.session.username = req.body.username
-        req.session.user = user;
-        res.send("/corporateTrainee");
-    }
-    else if (user == "instructor") {
-        req.session.isLoggedIn = true
-        req.session.username = req.body.username
-        req.session.user = user;
-        res.send("/instructor");
-    }
-    else {
-        res.send("No One")
-    }
-});
 
 module.exports = router
