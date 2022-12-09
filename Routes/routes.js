@@ -1,20 +1,16 @@
-var express = require("express");
-var instructorController = require("../controller/InstructorController");
-var adminController = require("../controller/AdminController");
-var guestController = require("../controller/GuestController");
-var individualTrainee = require("../controller/IndividualTraineeController");
-var IndividualTrainee = require("../models/IndividualTrainee");
-var Administrator = require("../models/Users/Administrator");
-var CircularJSON = require('circular-json')
-const Instructor = require("../models/Instructor");
-const jwt = require('jsonwebtoken')
-const bcrypt = require('bcrypt')
-const createError = require('http-errors');
+const express = require("express");
+const instructorController = require("../controller/InstructorController");
+const adminController = require("../controller/AdminController");
+const guestController = require("../controller/GuestController");
+const individualTrainee = require("../controller/IndividualTraineeController");
+const Administrator = require("../models/Users/Administrator");
 const CorporateTrainee = require("../models/users/CorporateTrainee");
-const nodemailer = require('nodemailer');
+const IndividualTrainee = require("../models/users/IndividualTrainee");
+const Instructor = require("../models/users/Instructor");
 const Courses = require("../models/Courses");
-
-var router = express.Router();
+const CircularJSON = require('circular-json')
+const bcrypt = require('bcrypt')
+const router = express.Router();
 
 router.get("/", async (req, res) => {
     if (req.session.user?.type == "admin") {
@@ -33,6 +29,10 @@ router.get("/", async (req, res) => {
         res.send("/")
     }
 });
+
+router.get('/getProfilePic', async (req, res) => {
+    res.send(req.session.user.profilePic)
+})
 
 router.get("/getInstructorRating", async (req, res) => {
     res.send(""+req.session.user.rating);
@@ -62,10 +62,6 @@ router.get('/inbox', async (req, res) => {
     res.send(await guestController.getInbox('admin'))
 })
 
-router.get("/sign-up", function (req, res) {
-    res.render("sign_up", { err: "", succ: "" });
-});
-
 router.get("/terms", function (req, res) {
     res.render("terms");
 });
@@ -76,8 +72,7 @@ router.get("/admin", async (req, res) => {
 });
 
 router.post("/register", async (req, res) => {
-    const str = CircularJSON.stringify(req);
-    const input = JSON.parse(str).body
+    const input = req.body
     console.log(input)
     // Our register logic starts here
     try {
@@ -111,6 +106,7 @@ router.post("/register", async (req, res) => {
                 username, first_name, last_name, country,
                 email: email.toLowerCase(),
                 password: encryptedPassword,
+                profilePic: 'https://t4.ftcdn.net/jpg/02/15/84/43/240_F_215844325_ttX9YiIIyeaR7Ne6EaLLjMAmy4GvPC69.jpg'
             });
         }
 
@@ -132,6 +128,7 @@ router.post("/register", async (req, res) => {
             await Administrator.create({
                 username,
                 password: encryptedPassword,
+                profilePic: 'https://t4.ftcdn.net/jpg/02/15/84/43/240_F_215844325_ttX9YiIIyeaR7Ne6EaLLjMAmy4GvPC69.jpg',
             });
         }
 
@@ -154,6 +151,7 @@ router.post("/register", async (req, res) => {
             await CorporateTrainee.create({
                 username,
                 password: encryptedPassword,
+                profilePic: 'https://t4.ftcdn.net/jpg/02/15/84/43/240_F_215844325_ttX9YiIIyeaR7Ne6EaLLjMAmy4GvPC69.jpg'
             });
         }
 
@@ -176,6 +174,7 @@ router.post("/register", async (req, res) => {
             await Instructor.create({
                 username,
                 password: encryptedPassword,
+                profilePic: 'https://t4.ftcdn.net/jpg/02/15/84/43/240_F_215844325_ttX9YiIIyeaR7Ne6EaLLjMAmy4GvPC69.jpg'
             });
         }
 
@@ -239,7 +238,7 @@ router.post("/login", async (req, res) => {
 
         if (user && (await bcrypt.compare(password, user.password))) {
             // Create token
-            const payload = { user_id: user._id, username, type: type, rating: rating};
+            const payload = { user_id: user._id, username, type: type, rating: rating, profilePic: user.profilePic};
             // auth.createAndSendToken(res, payload);
             req.session.user = payload;
 
@@ -251,27 +250,6 @@ router.post("/login", async (req, res) => {
     } catch (err) {
         console.log(err);
     }
-
-    // const{username, password} = req.body;
-    // console.log(password + " xxx")
-    // try {
-    //     const user = await Instructor.findOne({username : "Instructor"}).exec()
-    //     console.log(user + "************")
-    //     if(user){
-    //         const flag=await bcrypt.compare("Instructor",user.password);
-    //         if(flag){
-    //             const token=createToken(user.username);
-    //             res.cookie("jwt", token, {httpOnly: true, maxAge: maxAge*1000});
-    //             res.status(200).json(user);      
-    //         }else {
-    //             res.status(404).json({error: "Not the same"});
-    //         }
-    //     }else{
-    //         res.status(404).json({error: "User not found"})
-    //     }
-    // } catch (error){
-    //     res.status(400).json({error: error.message});
-    // }
 });
 
 router.get("/logout", async (req, res) => {

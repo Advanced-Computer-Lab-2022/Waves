@@ -1,12 +1,13 @@
-var Administrator=require("../models/users/Administrator"); 
-var CorporateTrainee=require("../models/users/CorporateTrainee");
-var Instructor=require("../models/Instructor"); 
+const Administrator=require("../models/users/Administrator"); 
+const CorporateTrainee=require("../models/users/CorporateTrainee");
+const Instructor=require("../models/users/Instructor"); 
 const nodemailer=require('nodemailer')
 
 function addAdmin (body){
     const newAdmin =new Administrator({
         username: body.username,
         password: body.password,
+        profilePic: 'https://t4.ftcdn.net/jpg/02/15/84/43/240_F_215844325_ttX9YiIIyeaR7Ne6EaLLjMAmy4GvPC69.jpg'
     });
     newAdmin.save();
 }
@@ -15,6 +16,7 @@ function addCorporate (body){
     const newCorporate =new CorporateTrainee({
         username: body.username,
         password: body.password,
+        profilePic: 'https://t4.ftcdn.net/jpg/02/15/84/43/240_F_215844325_ttX9YiIIyeaR7Ne6EaLLjMAmy4GvPC69.jpg'
     });
     newCorporate.save();
 }
@@ -23,6 +25,7 @@ function addInstructor (body){
     const newInstructor =new Instructor({
         username: body.username,
         password: body.password,
+        profilePic: 'https://t4.ftcdn.net/jpg/02/15/84/43/240_F_215844325_ttX9YiIIyeaR7Ne6EaLLjMAmy4GvPC69.jpg'
     });
     newInstructor.save();
 }
