@@ -1,38 +1,25 @@
-import * as React from 'react';
 import Box from '@mui/material/Box';
 import Rating from '@mui/material/Rating';
 import Typography from '@mui/material/Typography';
 import { Stack } from '@mui/material';
-import { TupleType } from 'typescript';
 
 interface props {
     rating: Array<number>;
     children?: React.ReactNode;
     customChild?: React.ReactNode;
-  }
+}
 
-const BasicRating: React.FC<props> = ({rating}) => {
-    const [value, setValue] = React.useState<Array<number> | null>(rating);
+const BasicRating: React.FC<props> = ({ rating }) => {
+
     return (
-        <Box
-            sx={{
-            '& > legend': { mt: 2 },
-            }}
-        >
-            <Typography component="legend">Rating</Typography>
             <Stack direction="row">
-            <Box marginRight={1} marginTop={0.25}>
-                <Typography color="orange" component="legend">{value![0]}</Typography>
-            </Box>
-            <Rating name="read-only" value={value![0]} readOnly precision={0.1}/>
-            <Box marginLeft={1} marginTop={0.25}>
-                <Typography color="grey" variant="body2" component="legend">{"(" + value![1] + ")"}</Typography>
-            </Box>
+                <Typography style={{maxWidth:'40px'}} marginTop={0.25} color="orange" component="legend">{rating[0]}</Typography>
+                <Rating name="read-only" value={rating[0]} readOnly precision={0.1} />
+                <Typography marginLeft={1} marginTop={0.25} color="grey" variant="body2" component="legend">{"(" + rating[1] + ")"}</Typography>
             </Stack>
-        </Box>
-    )};
+    )
+};
 
 export default BasicRating;
-  
 
- 
+
