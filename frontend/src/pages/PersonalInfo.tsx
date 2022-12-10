@@ -50,14 +50,17 @@ const Info = (props: any) => {
                                     Profile Picture
                                 </Typography>
                                 <div style={{ width: 125, height: 125, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                                    <Avatar onClick={handleUpload} style={profilePicHover ? { filter: 'blur(2px)' } : {}} onMouseEnter={() => { setProfilePicHover(true) }} onMouseLeave={() => { setProfilePicHover(false) }} title="Profile Picture" sx={{ position: 'absolute', width: 125, height: 125 }} alt="Remy Sharp" src={profilePic} />
-                                    <input type='file' id='file' ref={inputRef} style={{display: 'none'}}/>
+                                    <Avatar onClick={handleUpload} style={profilePicHover ? { transition: '.3s ease', filter: 'blur(2px)' } : {transition: '.3s ease'}} onMouseEnter={() => { setProfilePicHover(true) }} onMouseLeave={() => { setProfilePicHover(false) }} title="Profile Picture" sx={{ position: 'absolute', width: 125, height: 125 }} alt="Remy Sharp" src={profilePic} />
+                                    <input type='file' id='file' ref={inputRef} style={{ display: 'none' }} />
                                     {profilePicHover ?
-                                        <div style={{ width: 125, height: 125, display: 'flex', justifyContent: 'center' }}>
-                                            <Typography fontFamily={"initial"} fontSize={15} style={{pointerEvents:'none', userSelect: 'none', marginTop: '45px', position: 'absolute' }}>Upload Image</Typography>
-                                            <PhotoCameraBackIcon style={{pointerEvents:'none',  marginTop: '65px', position: 'absolute' }} />
+                                        <div style={{ transition: '.5s ease', width: 125, height: 125, display: 'flex', justifyContent: 'center' }}>
+                                            <Typography fontFamily={"initial"} fontSize={15} style={{ transition: '.5s ease', opacity: '1', pointerEvents: 'none', userSelect: 'none', marginTop: '45px', position: 'absolute' }}>Upload Image</Typography>
+                                            <PhotoCameraBackIcon style={{ transition: '.5s ease', opacity: '1', pointerEvents: 'none', marginTop: '65px', position: 'absolute' }} />
                                         </div>
-                                        : <></>}
+                                        : <div style={{ transition: '.5s ease', width: 125, height: 125, display: 'flex', justifyContent: 'center' }}>
+                                            <Typography fontFamily={"initial"} fontSize={15} style={{ transition: '.5s ease', opacity: '0', pointerEvents: 'none', userSelect: 'none', marginTop: '45px', position: 'absolute' }}>Upload Image</Typography>
+                                            <PhotoCameraBackIcon style={{ transition: '.5s ease', opacity: '0', pointerEvents: 'none', marginTop: '65px', position: 'absolute' }} />
+                                        </div>}
                                 </div>
                             </Stack>
                             <Stack marginTop={3} />

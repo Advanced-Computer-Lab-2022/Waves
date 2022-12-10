@@ -55,7 +55,6 @@ export default function FilterBar(props: any) {
     return arr;
   }
 
-
   useEffect(() => {
 
     axios.post('http://localhost:3001/filterCourses', {

@@ -13,6 +13,8 @@ import FilterBar from "../components/FilterBar";
 const ExamsPage = (props:any) => {
     const [exams, setExams] = React.useState<any[]>([]);
 
+    const pagesArr = ['Courses', 'Instructors', 'Add User', 'About Us'];
+
     useEffect(() => {
     axios.get('http://localhost:3001/exams').then (response => {
         setExams(response.data);
@@ -20,7 +22,7 @@ const ExamsPage = (props:any) => {
     }, []);
     return (
         <>  
-            <ResponsiveNavBar/>
+            <ResponsiveNavBar pages={pagesArr}/>
             
             <Container>
                 <Stack spacing ={5} divider={<Divider orientation="vertical" flexItem />}>

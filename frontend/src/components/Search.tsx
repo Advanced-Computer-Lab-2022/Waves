@@ -55,6 +55,7 @@ export default function Component() {
                     <StyledInputBase
                         placeholder="Search…"
                         inputProps={{ 'aria-label': 'search' }}
+                        
                     />
                 </Search>
         </Toolbar>

@@ -21,9 +21,11 @@ const bull = (
 const Results = (props:any) => {
     const location = useLocation();
     const data = location.state?.data;
+    
+    const pagesArr = ['Courses', 'Instructors', 'Add User', 'About Us'];
     return (
         <>
-            <ResponsiveNavBar/>
+            <ResponsiveNavBar pages={pagesArr}/>
             <Card sx={{ minWidth: 275 }}>
                 <CardContent>
                     <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom align='center'>

@@ -13,7 +13,8 @@ import {Link, useLocation, useNavigate} from "react-router-dom";
 import { response } from 'express';
 
 const ExamSession = (props:any) => {
-    var fifo: string[]=[];
+    const pagesArr = ['Courses', 'Instructors', 'Add User', 'About Us'];
+    let fifo: string[]=[];
     fifo.push("A")
     fifo.push("B")
     fifo.push("C")
@@ -31,7 +32,7 @@ const ExamSession = (props:any) => {
     const [helperText, setHelperText] = React.useState('Choose wisely');
     const location = useLocation();
     const data = location.state?.data;
-    var flag=0;
+    let flag=0;
 
     const optionClicked = (ansGiven: string) => {
       const x=answers.shift()
@@ -84,7 +85,7 @@ const ExamSession = (props:any) => {
             }
     return (
         <>
-        <ResponsiveNavBar/>
+        <ResponsiveNavBar pages={pagesArr}/>
         <h1>{score}</h1>
         <Stack marginTop={5} marginLeft={40} direction="column">
                 <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 15 }}>

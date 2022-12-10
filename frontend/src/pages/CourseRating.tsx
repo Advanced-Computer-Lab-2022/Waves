@@ -18,6 +18,8 @@ import ExamsPage from './ExamsPage';
 
 const CourseRating = (props:any) => {
     const [courseratings, setRating] = React.useState<any[]>([]);
+    
+    const pagesArr = ['Courses', 'Instructors', 'Add User', 'About Us'];
 
     useEffect(() => {
     axios.get('http://localhost:3001/view-instructorcourserating').then (response => {
@@ -26,7 +28,7 @@ const CourseRating = (props:any) => {
     }, []);
     return (
         <>  
-            <ResponsiveNavBar/>
+            <ResponsiveNavBar pages={pagesArr}/>
             
             <Container>
                 <Stack spacing ={5} divider={<Divider orientation="vertical" flexItem />}>

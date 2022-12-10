@@ -12,21 +12,11 @@ const CircularJSON = require('circular-json')
 const bcrypt = require('bcrypt')
 const router = express.Router();
 
-router.get("/", async (req, res) => {
-    if (req.session.user?.type == "admin") {
-        res.send("/admin")
-    }
-    else if (req.session.user?.type == "individual") {
-        res.send("/individual")
-    }
-    else if (req.session.user?.type == "corporate") {
-        res.send("/corporateTrainee")
-    }
-    else if (req.session.user?.type == "instructor") {
-        res.send("/instructor")
-    }
-    else {
-        res.send("/")
+router.get("/getType", async (req, res) => {
+    if (req.session.user?.type)
+        res.send(req.session.user.type);
+    else{
+        res.send('/');
     }
 });
 
@@ -35,14 +25,13 @@ router.get('/getProfilePic', async (req, res) => {
 })
 
 router.get("/getInstructorRating", async (req, res) => {
-    res.send(""+req.session.user.rating);
+    res.send("" + req.session.user.rating);
 });
 
 router.post('/filterCourses', async (req, res) => {
     // const str = CircularJSON.stringify(req.body);
     const { rating, subject, minPrice, maxPrice } = req.body;
     const realRating = [rating, 0];
-    console.log(req.session);
     const courses = await Courses.find(
         {
             $and: [
@@ -74,17 +63,13 @@ router.get("/admin", async (req, res) => {
 router.post("/register", async (req, res) => {
     const input = req.body
     console.log(input)
-    // Our register logic starts here
+
     try {
-        // Get user input
 
         const { username, password, type } = input;
         if (type == "Individual") {
 
             const { email, first_name, last_name, country } = input;
-
-            // check if user already exist
-            // Validate if user exist in our database
 
             const oldEmailUser = await IndividualTrainee.findOne({ email });
 
@@ -112,19 +97,14 @@ router.post("/register", async (req, res) => {
 
         else if (type == "Admin") {
 
-            // check if user already exist
-            // Validate if user exist in our database
-
             const oldUser = await Administrator.findOne({ username });
 
             if (oldUser) {
                 throw "Username Already Exist. Please Login"
             }
 
-            //Encrypt user password
             encryptedPassword = await bcrypt.hash(password, 10);
 
-            // Create user in our database
             await Administrator.create({
                 username,
                 password: encryptedPassword,
@@ -134,20 +114,14 @@ router.post("/register", async (req, res) => {
 
         else if (type == "Corporate") {
 
-
-            // check if user already exist
-            // Validate if user exist in our database
-
             const oldUser = await CorporateTrainee.findOne({ username });
 
             if (oldUser) {
                 throw "Username Already Exist. Please Login"
             }
 
-            //Encrypt user password
             encryptedPassword = await bcrypt.hash(password, 10);
 
-            // Create user in our database
             await CorporateTrainee.create({
                 username,
                 password: encryptedPassword,
@@ -157,20 +131,14 @@ router.post("/register", async (req, res) => {
 
         else if (type == "Instructor") {
 
-
-            // check if user already exist
-            // Validate if user exist in our database
-
             const oldUser = await Instructor.findOne({ username });
 
             if (oldUser) {
                 throw "Username Already Exist. Please Login"
             }
 
-            //Encrypt user password
             encryptedPassword = await bcrypt.hash(password, 10);
 
-            // Create user in our database
             await Instructor.create({
                 username,
                 password: encryptedPassword,
@@ -180,21 +148,6 @@ router.post("/register", async (req, res) => {
 
     } catch (err) {
         console.log(err);
-    }
-});
-
-router.post("/sign-up", async (req, res) => {
-    const { name, email, password } = req.body;
-    try {
-        const salt = await bcrypt.genSalt();
-        const hashedPassword = await bcrypt.hash(req.body.password, salt);
-        const user = await userModel.create({ name: name, email: email, password: hashedPassword });
-        const token = createToken(user.name);
-
-        res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
-        res.status(200).json(user)
-    } catch (error) {
-        res.status(400).json({ error: error.message })
     }
 });
 
@@ -253,34 +206,12 @@ router.post("/login", async (req, res) => {
 });
 
 router.get("/logout", async (req, res) => {
-    return res.clearCookie("jwt").status(200).json({ message: "Successfully logged out" });
+    req.session.user = null;
 });
 
 router.post("/reset-password", async(req,res) => {
     const str = CircularJSON.stringify(req);
     return await adminController.sendEmail(JSON.parse(str).body.email)
-});
-
-router.post("/search", async (req, res) => {
-    const user = req.session.user
-    const filteredCourses = await guestController.searchFilterCourses(req.body.searchTerm, req.body.rating, req.body.subject, req.body.price);
-    if (user == "admin") {
-        res.render(user, { data: '', courses: filteredCourses })
-    }
-    else if (user == "individual") {
-        res.render(user, { data: '', courses: filteredCourses })
-    }
-    else if (user == "corporate") {
-        res.render("corporateTrainee", { data: '', courses: filteredCourses })
-    }
-    else if (user == "instructor") {
-        const myFilteredCourses = await instructorController.getMyCourses(filteredCourses, req.session.username);
-        if (req.body.showMyCourses)
-            //res.render("instructor", {data: '', courses: myFilteredCourses})
-            res.send(filteredCourses)
-        else
-            res.render("instructor", { data: '', courses: filteredCourses })
-    }
 });
 
 router.post("/add-user", async (req, res) => {
