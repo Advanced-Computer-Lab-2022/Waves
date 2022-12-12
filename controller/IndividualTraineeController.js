@@ -45,12 +45,14 @@ async function getMyCourses (courses, username){
 }
 
 async function getSpecificExam (belongsToCourse, name){
-    var exams = await Exams.find({}).exec();
-    var questions = await Questions.find({}).exec();
-    var subExams= exams.filter(item => (item.belongsToCourse==belongsToCourse && item.name==name));
-    var subQuestions=questions.filter(item => (item.belongsToExam==name));
+    //var exams = await Exams.find({}).exec();
+    //var questions = await Questions.find({}).exec();
+    const specificExam= await Exams.findOne({belongsToCourse: belongsToCourse , name: name}).exec()
+    //exams.filter(item => (item.belongsToCourse==belongsToCourse && item.name==name));
+    //var subQuestions=questions.filter(item => (item.belongsToExam==name));
     //console.log(subQuestions)
-    return subQuestions
+    //console.log(specificExam.questions)
+    return specificExam.questions
 }
 
 module.exports= {getCourses,getCoursesByPrice,takeExam,getMyCourses, getExams, getSpecificExam, CalculateExamResult};

@@ -62,10 +62,10 @@ import React from 'react';
                     aria-labelledby="demo-row-radio-buttons-group-label"
                     name="solution"
                 >
-                    <FormControlLabel value="choice 1" control={<Radio />} label="choice 1" />
-                    <FormControlLabel value="choice 2" control={<Radio />} label="choice 2" />
-                    <FormControlLabel value="choice 3" control={<Radio />} label="choice 3" />
-                    <FormControlLabel value="choice 4" control={<Radio />} label="choice 4" />
+                    <FormControlLabel value="A" control={<Radio />} label="choice 1" />
+                    <FormControlLabel value="B" control={<Radio />} label="choice 2" />
+                    <FormControlLabel value="C" control={<Radio />} label="choice 3" />
+                    <FormControlLabel value="D" control={<Radio />} label="choice 4" />
                 </RadioGroup>
             </FormControl>
         </>

@@ -66,7 +66,13 @@ const ViewCourse = (props: any) => {
                         </Typography>
                         <Stack marginTop={1.5} direction="row" spacing={2}>
                             <Button variant="contained">Add To Cart</Button>
-                            <Button variant="contained">Buy Now</Button>
+                            <Button variant="contained"
+                                onClick={() => {
+                                alert('clicked');
+                            }}
+                            >
+                            Buy Course
+                            </Button>
                         </Stack>
 
                     </CardContent>
