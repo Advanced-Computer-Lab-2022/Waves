@@ -1,7 +1,7 @@
 const Courses = require("../models/Courses");
-const IndividualTrainee = require("../models/IndividualTrainee");
-const Instructor = require("../models/Instructor");
-var Administrator = require("../models/Users/Administrator");
+const IndividualTrainee = require("../models/users/IndividualTrainee");
+const Instructor = require("../models/users/Instructor");
+const Administrator = require("../models/Users/Administrator");
 const CorporateTrainee = require("../models/users/CorporateTrainee");
 
 async function getInbox(username) {

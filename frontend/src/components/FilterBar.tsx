@@ -55,7 +55,6 @@ export default function FilterBar(props: any) {
     return arr;
   }
 
-
   useEffect(() => {
 
     axios.post('http://localhost:3001/filterCourses', {
@@ -87,29 +86,6 @@ export default function FilterBar(props: any) {
   };
 
   const minDistance = 10;
-
-
-  const handlePriceChange = (
-    event: Event,
-    newValue: number | number[],
-    activeThumb: number,
-  ) => {
-    if (!Array.isArray(newValue)) {
-      return;
-    }
-
-    if (newValue[1] - newValue[0] < minDistance) {
-      if (activeThumb === 0) {
-        const clamped = Math.min(newValue[0], 100 - minDistance);
-        setPrice([clamped, clamped + minDistance]);
-      } else {
-        const clamped = Math.max(newValue[1], minDistance);
-        setPrice([clamped - minDistance, clamped]);
-      }
-    } else {
-      setPrice(newValue as number[]);
-    }
-  };
 
   const handleChange = (
     event: Event,

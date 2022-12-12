@@ -16,6 +16,7 @@ import FilterBar from "../components/FilterBar";
 
 const Rating = (props:any) => {
     const [ratings, setRating] = React.useState<any[]>([]);
+    const pagesArr = ['Courses', 'Instructors', 'Add User', 'About Us'];
 
     useEffect(() => {
     axios.get('http://localhost:3001/view-rating').then (response => {
@@ -26,7 +27,7 @@ const Rating = (props:any) => {
 
     return (
         <>  
-            <ResponsiveNavBar/>
+            <ResponsiveNavBar pages={pagesArr}/>
             <h1>{ratings}</h1>
             <p/>
             <Footer/>

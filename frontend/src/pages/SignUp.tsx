@@ -18,6 +18,7 @@ import Footer from "../components/Footer";
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from "axios";
+import ResponsiveNavBar from "../components/ResponsiveNavBar";
 //CSS - Variables
 const darkBlue = "#28536B"
 const customRed = 'rgb(180,40,40)'
@@ -188,6 +189,8 @@ const SignUp = () => {
              setInvCr(true)
             }
     }
+    
+    const pagesArr = ['Courses', 'Instructors', 'Add User', 'About Us'];
 
     //External functions
 
@@ -195,7 +198,7 @@ const SignUp = () => {
 
     return (
         <>
-        <Navbar></Navbar>
+        <ResponsiveNavBar pages={pagesArr} isNotLoggedIn={false}/>
             
         <ThemeProvider theme={theme}>
             <div style={backgroundStyle}>

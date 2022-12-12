@@ -31,7 +31,7 @@ const ExamSession = (props:any) => {
     const [helperText, setHelperText] = React.useState('Choose wisely');
     const location = useLocation();
     const data = location.state?.data;
-    var flag=0;
+    let flag=0;
 
     const optionClicked = (ansGiven: string, solution: string) => {  
       if(ansGiven==solution) {setScore(score + 1)}

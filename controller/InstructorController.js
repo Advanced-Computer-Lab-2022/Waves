@@ -4,7 +4,7 @@
 const Courses = require("../models/Courses");
 const Question = require("../models/Question");
 const Exam=require("../models/Exam");
-const Instructor=require("../models/Instructor");
+const Instructor=require("../models/users/Instructor");
 function addCourse (body, username){
     const newCourse = new Courses({
         title: body.title,

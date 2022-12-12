@@ -1,5 +1,5 @@
-var mongoose = require("mongoose");
-var IndividualTraineeSchema = new mongoose.Schema({
+const mongoose = require("mongoose");
+const IndividualTraineeSchema = new mongoose.Schema({
   username: {
     type: String,
     required: true,
@@ -26,9 +26,12 @@ var IndividualTraineeSchema = new mongoose.Schema({
     type: Array,
     require: false
   },
+  profilePic:{
+    type: String,
+  },
   token: {
     type: String
   }
 });
-var IndividualTrainee = mongoose.model("Individual Trainees", IndividualTraineeSchema);
+const IndividualTrainee = mongoose.model("Individual Trainees", IndividualTraineeSchema);
 module.exports = IndividualTrainee;

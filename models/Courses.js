@@ -1,5 +1,5 @@
-var mongoose = require("mongoose");
-var CoursesSchema = new mongoose.Schema({
+const mongoose = require("mongoose");
+const CoursesSchema = new mongoose.Schema({
   title: {
     type: String,
     required: true,
@@ -48,5 +48,5 @@ var CoursesSchema = new mongoose.Schema({
     type: Array,
   }
 });
-var Courses = mongoose.model("Courses", CoursesSchema);
+const Courses = mongoose.model("Courses", CoursesSchema);
 module.exports = Courses;

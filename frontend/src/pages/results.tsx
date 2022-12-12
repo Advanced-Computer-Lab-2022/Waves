@@ -40,8 +40,11 @@ const Results = (props:any) => {
             var cardStyle = {
                 width: '50vw', 
               } 
+    
+    const pagesArr = ['Courses', 'Instructors', 'Add User', 'About Us'];
     return (
-        <>  
+        <>
+            <ResponsiveNavBar pages={pagesArr}/>
             <Card sx={{ minWidth: 275 }}>
                 <CardContent>
                     <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom align='center'>
