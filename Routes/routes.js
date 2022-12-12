@@ -280,6 +280,10 @@ router.post("/exam-session", async (req, res) => {
 });
 
 
+router.get("/getUsername", async (req, res) => {
+    res.send(req.session.user);
+})
+
 router.get("/view-rating", async (req, res) => {
     // if(!req.session.isLoggedIn)
     //     res.redirect('./login')

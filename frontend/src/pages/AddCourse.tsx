@@ -35,12 +35,17 @@ const AddCourse = (props: any) => {
         const totalHours = Object.fromEntries(userInfo.entries()).totalHours
         const courseRating = Object.fromEntries(userInfo.entries()).courseRating
         const subject = Object.fromEntries(userInfo.entries()).subject
-        const givenBy = Object.fromEntries(userInfo.entries()).givenBy
+        let givenBy = Object.fromEntries(userInfo.entries()).givenBy
         const img = Object.fromEntries(userInfo.entries()).img
         const videoPreview = Object.fromEntries(userInfo.entries()).videoPreview
         const reviews = Object.fromEntries(userInfo.entries()).reviews
         const videoLink = [subtitle1Video, subtitle2Video, subtitle3Video];
         const subtitles = [[subtitle1, subtitle1VideoDescription], [subtitle2, subtitle2VideoDescription], [subtitle3, subtitle3VideoDescription]];
+
+        axios.get('http://localhost:3001/getUsername', { withCredentials: true }).then(response => {
+            givenBy = response.data.user;
+        });
+
         axios.post('http://localhost:3001/add-course', {
             title: title,
             subtitle: subtitles,
@@ -131,7 +136,7 @@ const AddCourse = (props: any) => {
                             multiline
                             style={{ width: '35%' }}
                         />
-                        
+
                         <TextField
                             id="videoPreview"
                             name="videoPreview"

@@ -32,7 +32,8 @@ function addExam (body){
     });
     newExam.save();
 }
-function addQuestionToExam (body){
+async function addQuestionToExam (body){
+
     const newQuestion = new Question({
         belongsToExam: body.belongsToExam,
         question: body.question,
@@ -43,6 +44,12 @@ function addQuestionToExam (body){
         solution: body.solution
     });
     newQuestion.save();
+
+    await Exam.findOneAndUpdate({belongsToCourse: body.belongsToCourse, name: body.belongsToExam}, {
+        $addToSet:{
+            questions: newQuestion
+        }
+    })
 }
 async function getMyRating (name){
     const thisinstructor = await Instructor.findOne({username : name}).exec()

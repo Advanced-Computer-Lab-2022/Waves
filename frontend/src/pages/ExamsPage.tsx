@@ -22,7 +22,6 @@ const ExamsPage = (props:any) => {
     }, []);
     return (
         <>  
-            <ResponsiveNavBar pages={pagesArr}/>
             
             <Container>
                 <Stack spacing ={5} divider={<Divider orientation="vertical" flexItem />}>
