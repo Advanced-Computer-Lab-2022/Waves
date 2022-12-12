@@ -19,11 +19,12 @@ interface props {
   courseSubtitles: Array<String>;
   courseVideoLinks: Array<String>;
   courseVideoPreview: string;
+  noPrice?: boolean;
   children?: React.ReactNode;
   customChild?: React.ReactNode;
 }
 
-const Course: React.FC<props> = ({ courseName, coursePrice, courseDescription, courseSubject, courseRating, courseInstructor, courseTotalHours, courseImg, courseSubtitles, courseVideoLinks, courseVideoPreview }) => {
+const Course: React.FC<props> = ({ courseName, coursePrice, courseDescription, courseSubject, courseRating, courseInstructor, courseTotalHours, courseImg, courseSubtitles, courseVideoLinks, courseVideoPreview, noPrice }) => {
 
   const navigate = useNavigate();
 
@@ -78,9 +79,10 @@ const Course: React.FC<props> = ({ courseName, coursePrice, courseDescription, c
               <Typography style={{ maxWidth: '40px' }} marginTop={0.25} color="orange" component="legend">{courseRating[0]}</Typography>
               <Rating name="read-only" value={courseRating[0]} readOnly precision={0.1} />
               <Typography marginLeft={1} marginTop={0.25} color="grey" variant="body2" component="legend">{"(" + courseRating[1] + ")"}</Typography>
-              <Typography style={{ justifySelf: 'end', alignSelf: 'end' }} variant="h6" color="green">
-                {coursePrice}
-              </Typography>
+              {noPrice ? <></>
+                : <Typography style={{ justifySelf: 'end', alignSelf: 'end' }} variant="h6" color="green">
+                  {coursePrice}
+                </Typography>}
             </Stack>
           </CardContent>
         </div>

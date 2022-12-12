@@ -11,6 +11,30 @@ const Courses = require("../models/Courses");
 const bcrypt = require('bcrypt')
 const router = express.Router();
 
+router.get('/getCorporateTrainees', async (req, res) => {
+    const corporateTrainees = await CorporateTrainee.find({}).exec();
+    res.send(corporateTrainees);
+})
+
+router.get('/getCourses', async (req, res) => {
+    const allCourses = await guestController.getCourses();
+    res.send(allCourses)
+})
+
+router.get('/getMyCourses', async (req, res) => {
+    const userCourses = await (() => {
+        if (req.session.user.type == 'individualTrainee') return IndividualTrainee.findOne({ username: req.session.user.username })
+
+        if (req.session.user.type == 'corporateTrainee') return CorporateTrainee.findOne({ username: req.session.user.username })
+
+        throw "";
+    })().catch(() => null);
+
+    if (!userCourses) return res.status(400).send("database exploded");
+
+    res.send(userCourses.courses);
+})
+
 router.get("/getType", async (req, res) => {
     if (req.session.user?.type)
         res.send(req.session.user.type);
@@ -28,41 +52,74 @@ router.get("/getInstructorRating", async (req, res) => {
 });
 
 router.post('/filterCourses', async (req, res) => {
-    const { rating, subject, minPrice, maxPrice, searchTerm } = req.body;
+    const { rating, subject, minPrice, maxPrice, searchTerm, username, type, courseTitles } = req.body;
     const realRating = [rating, 0];
-    const courses = await Courses.find(
-        {
-            $and: [
-                { rating: { $gte: realRating } },
-                { subject: { $in: subject } },
-                { price: { $gte: minPrice } },
-                { price: { $lte: maxPrice } }, {
-                    $or: [
-                        {title: new RegExp(searchTerm, 'i')},
-                        {subject: new RegExp(searchTerm, 'i')},
-                        {givenBy: new RegExp(searchTerm, 'i')}
-                    ]
-                }
-            ]
-        }).exec().catch(() => res.status(400).send("database exploded"));
-    console.log(courses)
-    if (courses)
+    let courses;
+    if (type == 'instructor') {
+        courses = await Courses.find(
+            {
+                $and: [
+                    { givenBy: new RegExp("^" + username, "i") },
+                    { rating: { $gte: realRating } },
+                    { subject: { $in: subject } },
+                    { price: { $gte: minPrice } },
+                    { price: { $lte: maxPrice } }, {
+                        $or: [
+                            { title: new RegExp(searchTerm, 'i') },
+                            { subject: new RegExp(searchTerm, 'i') },
+                            { givenBy: new RegExp(searchTerm, 'i') }
+                        ]
+                    }
+                ]
+            }).exec().catch(() => res.status(400).send("database exploded"));
+    }
+
+    else if (type == 'corporateTrainee' || type == 'individualTrainee') {
+        courses = await Courses.find(
+            {
+                $and: [
+                    { title: { $in: courseTitles } },
+                    { rating: { $gte: realRating } },
+                    { subject: { $in: subject } },
+                    { price: { $gte: minPrice } },
+                    { price: { $lte: maxPrice } }, {
+                        $or: [
+                            { title: new RegExp(searchTerm, 'i') },
+                            { subject: new RegExp(searchTerm, 'i') },
+                            { givenBy: new RegExp(searchTerm, 'i') }
+                        ]
+                    }
+                ]
+            }).exec().catch(() => res.status(400).send("database exploded"));
+    }
+
+    else {
+
+        courses = await Courses.find(
+            {
+                $and: [
+                    { rating: { $gte: realRating } },
+                    { subject: { $in: subject } },
+                    { price: { $gte: minPrice } },
+                    { price: { $lte: maxPrice } }, {
+                        $or: [
+                            { title: new RegExp(searchTerm, 'i') },
+                            { subject: new RegExp(searchTerm, 'i') },
+                            { givenBy: new RegExp(searchTerm, 'i') }
+                        ]
+                    }
+                ]
+            }).exec().catch(() => res.status(400).send("database exploded"));
+    }
+    if (courses) {
         res.send(courses);
+    }
 })
 
 router.get('/inbox', async (req, res) => {
     console.log(await guestController.getInbox('admin'))
     res.send(await guestController.getInbox('admin'))
 })
-
-router.get("/terms", function (req, res) {
-    res.render("terms");
-});
-
-router.get("/admin", async (req, res) => {
-    const allCourses = await guestController.getCourses();
-    res.send(allCourses)
-});
 
 router.post("/register", async (req, res) => {
     const input = req.body
@@ -158,14 +215,11 @@ router.post("/register", async (req, res) => {
 router.post("/login", async (req, res) => {
 
     try {
-        // Get user input
         const { username, password } = req.body;
 
-        // Validate user input
         if (!(username && password)) {
             return res.status(400).send("All input is required");
         }
-        // Validate if user exist in our database
         const admin = await Administrator.findOne({ username });
         const instructor = await Instructor.findOne({ username });
         const corporateTrainee = await CorporateTrainee.findOne({ username });
@@ -194,11 +248,8 @@ router.post("/login", async (req, res) => {
         }
 
         if (user && (await bcrypt.compare(password, user.password))) {
-            // Create token
             const payload = { user_id: user._id, username, type: type, rating: rating, profilePic: user.profilePic };
-            // auth.createAndSendToken(res, payload);
             req.session.user = payload;
-
             res.send(type);
         }
         else {
@@ -215,42 +266,14 @@ router.get("/logout", async (req, res) => {
 });
 
 router.post("/reset-password", async (req, res) => {
-    const str = req;
-    return await adminController.sendEmail(JSON.parse(str).body.email)
+    return await adminController.sendEmail(req.body.email)
 });
 
 router.post("/add-user", async (req, res) => {
-    const str = req;
-    //console.log(JSON.parse(str).body.index)
-    var index = JSON.parse(str).body.index
-    if (index == 0) adminController.addAdmin(JSON.parse(str).body);
-    else if (index == 1) adminController.addInstructor(JSON.parse(str).body);
-    else if (index == 2) adminController.addCorporate(JSON.parse(str).body);
-    //adminController.addAdmin(JSON.parse(str).body);
-    //res.send("/admin")
-});
-
-router.get("/instructor", async (req, res) => {
-    const allCourses = await guestController.getCourses();
-    res.send(allCourses);
-});
-
-router.get("/individual", async (req, res) => {
-    if (!req.session.isLoggedIn)
-        res.redirect('./login')
-    else {
-        const allCourses = await guestController.getCourses();
-        res.render("individualTrainee", { data: '', courses: allCourses })
-    }
-});
-
-router.get("/corporateTrainee", async (req, res) => {
-    if (!req.session.isLoggedIn)
-        res.redirect('./login')
-    else {
-        const allCourses = await guestController.getCourses();
-        res.render("corporateTrainee", { data: '', courses: allCourses })
-    }
+    var index = req.body.index
+    if (index == 0) adminController.addAdmin(req.body);
+    else if (index == 1) adminController.addInstructor(req.body);
+    else if (index == 2) adminController.addCorporate(req.body);
 });
 
 router.post("/add-course", async (req, res) => {
@@ -266,47 +289,19 @@ router.post("/add-exam", async (req, res) => {
 
 router.get("/exams", async (req, res) => {
     const allExams = await individualTrainee.getExams()
-    res.send(JSON.stringify(allExams))
+    res.send(allExams)
 });
 
 router.post("/exam-session", async (req, res) => {
     const belongsToCourse = req.body.belongsToCourse;
     const name = req.body.name;
     const ExamQuestions = await individualTrainee.getSpecificExam(belongsToCourse, name)
-    res.send(JSON.stringify(ExamQuestions))
-    //console.log((ExamQuestions))
-    //console.log("work****************")
-    //res.send(JSON.stringify(ExamQuestions))
+    res.send(ExamQuestions)
 });
-
 
 router.get("/getUsername", async (req, res) => {
-    res.send(req.session.user);
+    res.send(req.session.user.username);
 })
-
-router.get("/view-rating", async (req, res) => {
-    // if(!req.session.isLoggedIn)
-    //     res.redirect('./login')
-    // else {
-    const instructorRating = await instructorController.getMyRating("Instructor"); //should be updated with different instructors
-    //console.log(instructorRating)
-    res.send(JSON.stringify(instructorRating))
-    //}
-});
-router.get("/view-instructorcourserating", async (req, res) => {
-    // if(!req.session.isLoggedIn)
-    //     res.redirect('./login')
-    // else {
-    const instructorCourseRating = await instructorController.getMyCoursesratings("Omar Ghoniem"); //should be updated with different instructors
-    console.log(instructorCourseRating)
-    res.send(JSON.stringify(instructorCourseRating))
-    //}
-});
-
-// router.post("/add-question", async(req,res) => {
-//     instructorController.addQuestionToExam(req.body);
-//     res.render("instructor", {data: 'question added successfully'})
-// });
 
 
 router.put('/changePassword/:username', async (req, res) => {

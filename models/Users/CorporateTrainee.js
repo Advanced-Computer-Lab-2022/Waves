@@ -18,6 +18,9 @@ var CorporateTraineeSchema = new mongoose.Schema({
   profilePic:{
     type: String,
   },
+  courses:{
+    type: Array
+  }
 });
 
 function loadModel(modelName, modelSchema) {

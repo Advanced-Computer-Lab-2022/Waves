@@ -40,11 +40,10 @@ const theme = createTheme({
     },
 });
 
-//const pages = ['Courses', 'Instructors', 'About Us', 'Add User'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 interface props {
-    pages: string[],
+    pages?: any,
     isNotLoggedIn?: boolean
 }
 
@@ -159,7 +158,7 @@ const ResponsiveNavBar: React.FC<props> = ({ pages, isNotLoggedIn }) => {
                                     display: { xs: 'block', md: 'none' },
                                 }}
                             >
-                                {pages.map((page: string) => (
+                                {pages?.map((page: string) => (
                                     <MenuItem key={page} onClick={() => { navigateToPage(page) }}>
                                         <Typography color={'black'} fontSize={45} textAlign="center">{page}</Typography>
                                     </MenuItem>
@@ -186,9 +185,9 @@ const ResponsiveNavBar: React.FC<props> = ({ pages, isNotLoggedIn }) => {
                             LOGO
                         </Typography>
                         <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-                            {pages.map((page: string) => (
+                            {pages?.map((page: string) => (
                                 <Button
-                                    style={{ fontSize: 20 }}
+                                    style={{ fontSize: 20, fontFamily: 'Cairo' }}
                                     key={page}
                                     onClick={() => { navigateToPage(page) }}
                                     sx={{ my: 2, color: 'white', display: 'block' }}

@@ -23,20 +23,19 @@ const Homepage = (props: any) => {
     const [courses, setCourses] = React.useState<any[]>([]);
 
     useEffect(() => {
-        axios.get('http://localhost:3001/admin').then(response => {
+        axios.get('http://localhost:3001/getCourses').then(response => {
             setCourses(response.data);
             console.log(response.data);
         })
     }, []);
 
-    const filterCourses = (filteredCourses: any) => { setCourses(filteredCourses) }
-    const pagesArr = ['Courses', 'Instructors', 'Add User', 'About Us'];
+    const pagesArr = ['All Courses', 'About Us'];
 
     return (
         <>
             <ResponsiveNavBar isNotLoggedIn={true} pages={pagesArr} />
             <Stack marginTop={0.6} direction={"row"}>
-                <FilterBar setCourses={filterCourses} />
+                <FilterBar setCourses={setCourses} />
                 <Courses courses={courses} />
             </Stack>
             <p />
