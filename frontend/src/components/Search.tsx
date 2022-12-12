@@ -44,7 +44,7 @@ const Search = styled('div')(({ theme }) => ({
     },
   }));
 
-export default function Component() {
+const SearchComponent = (props:any) => {
 
     return(
         <Toolbar>
@@ -55,9 +55,11 @@ export default function Component() {
                     <StyledInputBase
                         placeholder="Search…"
                         inputProps={{ 'aria-label': 'search' }}
-                        
+                        onChange={(e) => props.setSearch(e.target.value)}
                     />
                 </Search>
         </Toolbar>
     )
 }
+
+export default SearchComponent

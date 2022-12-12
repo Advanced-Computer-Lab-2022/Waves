@@ -41,7 +41,7 @@ const ExamCard: React.FC<props> = ({belongsToCourse, name}) => {
       </CardContent>
       <CardActions>
       
-       <Link to="/exam-session" state={{ data: [belongsToCourse, name]}} className="link">
+       <Link to="/exam-session" style={{textDecoration: 'none'}} state={{ data: [belongsToCourse, name]}} className="link">
            Take Exam
        </Link>
         

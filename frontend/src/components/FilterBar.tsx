@@ -37,6 +37,8 @@ export default function FilterBar(props: any) {
   const [twoRatingHover, setTwoRatingHover] = React.useState(false);
   const [oneRatingHover, setOneRatingHover] = React.useState(false);
 
+  const [search, setSearch] = React.useState("");
+
 
   const [rating, setRating] = React.useState(0);
 
@@ -61,13 +63,14 @@ export default function FilterBar(props: any) {
       rating: rating,
       subject: handleSubjectChange(),
       minPrice: price[0],
-      maxPrice: price[1]
+      maxPrice: price[1],
+      searchTerm: search,
     }, { withCredentials: true })
       .then((response: any) => {
         console.log(response.data);
         props.setCourses(response.data);
       });
-  }, [rating, price, computerScience, math, physics]);
+  }, [rating, price, computerScience, math, physics, search]);
 
   const handleFilterClick = () => {
     setFilterOpen(!filterOpen);
@@ -116,7 +119,7 @@ export default function FilterBar(props: any) {
         component="nav"
         aria-labelledby="nested-list-subheader"
       >
-        <Search />
+        <Search setSearch={setSearch}/>
         <ListItemButton onClick={handleFilterClick}>
           <ListItemIcon>
             <FilterIcon />

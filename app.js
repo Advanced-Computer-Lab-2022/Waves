@@ -1,12 +1,12 @@
 require('dotenv').config();
-var cors = require("cors");
-var express = require("express");
-var path = require("path");
-var routes = require("./Routes/routes");
-var app = express();
-var mongoose = require("mongoose");
-var bodyParser = require('body-parser')
-var session = require('express-session');
+const cors = require("cors");
+const express = require("express");
+const path = require("path");
+const routes = require("./Routes/routes");
+const app = express();
+const mongoose = require("mongoose");
+const bodyParser = require('body-parser')
+const session = require('express-session');
 //const { Mongoose } = require("mongoose/lib");
 
 console.log(process.env.ATLAS_URI);

@@ -8,14 +8,13 @@ const CorporateTrainee = require("../models/users/CorporateTrainee");
 const IndividualTrainee = require("../models/users/IndividualTrainee");
 const Instructor = require("../models/users/Instructor");
 const Courses = require("../models/Courses");
-const CircularJSON = require('circular-json')
 const bcrypt = require('bcrypt')
 const router = express.Router();
 
 router.get("/getType", async (req, res) => {
     if (req.session.user?.type)
         res.send(req.session.user.type);
-    else{
+    else {
         res.send('/');
     }
 });
@@ -29,19 +28,24 @@ router.get("/getInstructorRating", async (req, res) => {
 });
 
 router.post('/filterCourses', async (req, res) => {
-    // const str = CircularJSON.stringify(req.body);
-    const { rating, subject, minPrice, maxPrice } = req.body;
+    const { rating, subject, minPrice, maxPrice, searchTerm } = req.body;
     const realRating = [rating, 0];
     const courses = await Courses.find(
         {
             $and: [
-                { rating: { $gte: realRating} },
+                { rating: { $gte: realRating } },
                 { subject: { $in: subject } },
                 { price: { $gte: minPrice } },
-                { price: { $lte: maxPrice } },
+                { price: { $lte: maxPrice } }, {
+                    $or: [
+                        {title: new RegExp(searchTerm, 'i')},
+                        {subject: new RegExp(searchTerm, 'i')},
+                        {givenBy: new RegExp(searchTerm, 'i')}
+                    ]
+                }
             ]
         }).exec().catch(() => res.status(400).send("database exploded"));
-    // console.log(courses)
+    console.log(courses)
     if (courses)
         res.send(courses);
 })
@@ -191,7 +195,7 @@ router.post("/login", async (req, res) => {
 
         if (user && (await bcrypt.compare(password, user.password))) {
             // Create token
-            const payload = { user_id: user._id, username, type: type, rating: rating, profilePic: user.profilePic};
+            const payload = { user_id: user._id, username, type: type, rating: rating, profilePic: user.profilePic };
             // auth.createAndSendToken(res, payload);
             req.session.user = payload;
 
@@ -207,15 +211,16 @@ router.post("/login", async (req, res) => {
 
 router.get("/logout", async (req, res) => {
     req.session.user = null;
+    res.send('success')
 });
 
-router.post("/reset-password", async(req,res) => {
-    const str = CircularJSON.stringify(req);
+router.post("/reset-password", async (req, res) => {
+    const str = req;
     return await adminController.sendEmail(JSON.parse(str).body.email)
 });
 
 router.post("/add-user", async (req, res) => {
-    const str = CircularJSON.stringify(req);
+    const str = req;
     //console.log(JSON.parse(str).body.index)
     var index = JSON.parse(str).body.index
     if (index == 0) adminController.addAdmin(JSON.parse(str).body);
@@ -249,32 +254,24 @@ router.get("/corporateTrainee", async (req, res) => {
 });
 
 router.post("/add-course", async (req, res) => {
-    const str = CircularJSON.stringify(req);
-    //console.log(JSON.parse(str))
-    instructorController.addCourse(JSON.parse(str).body);
+    instructorController.addCourse(req.body);
     res.send("/instructor")
 });
 
 router.post("/add-exam", async (req, res) => {
-    const str = CircularJSON.stringify(req);
-    console.log(JSON.parse(str))
-    instructorController.addExam(JSON.parse(str).body);
-    instructorController.addQuestionToExam(JSON.parse(str).body);
+    instructorController.addExam(req.body);
+    instructorController.addQuestionToExam(req.body);
     res.send("/instructor")
 });
 
 router.get("/exams", async (req, res) => {
-    // const allCourses = await guestController.getCourses();
-    // res.send(JSON.stringify(allCourses))
     const allExams = await individualTrainee.getExams()
-    console.log(JSON.stringify(allExams))
     res.send(JSON.stringify(allExams))
 });
 
 router.post("/exam-session", async (req, res) => {
-    const str = CircularJSON.stringify(req);
-    const belongsToCourse = JSON.parse(JSON.stringify(JSON.parse(str).body)).belongsToCourse;
-    const name = JSON.parse(JSON.stringify(JSON.parse(str).body)).name;
+    const belongsToCourse = req.body.belongsToCourse;
+    const name = req.body.name;
     const ExamQuestions = await individualTrainee.getSpecificExam(belongsToCourse, name)
     res.send(JSON.stringify(ExamQuestions))
     //console.log((ExamQuestions))

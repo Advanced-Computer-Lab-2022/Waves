@@ -15,7 +15,7 @@ const Homepage = (props: any) => {
     useEffect(() => {
         axios.get('http://localhost:3001/getType', { withCredentials: true }).then(response => {
             console.log(response.data)
-            if (response.data != 'notLoggedIn')
+            if (response.data !== 'notLoggedIn')
                 navigate('/' + response.data);
         })
     }, []);
@@ -29,14 +29,14 @@ const Homepage = (props: any) => {
         })
     }, []);
 
-    const doSome = (filteredCourses: any) => { setCourses(filteredCourses) }
+    const filterCourses = (filteredCourses: any) => { setCourses(filteredCourses) }
     const pagesArr = ['Courses', 'Instructors', 'Add User', 'About Us'];
 
     return (
         <>
             <ResponsiveNavBar isNotLoggedIn={true} pages={pagesArr} />
             <Stack marginTop={0.6} direction={"row"}>
-                <FilterBar setCourses={doSome} />
+                <FilterBar setCourses={filterCourses} />
                 <Courses courses={courses} />
             </Stack>
             <p />

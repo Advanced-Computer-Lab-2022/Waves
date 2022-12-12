@@ -1,9 +1,7 @@
 import {
   BrowserRouter as Router,
   Route,
-  Routes,
-  Link,
-  useNavigate
+  Routes
 } from "react-router-dom";
 import './App.css';
 import Login from './pages/Login';
@@ -28,7 +26,7 @@ import ResetPassword from './pages/ResetPassword';
 import EditPassword from './pages/EditPassword';
 import Profile from './pages/Profile';
 import Homepage from './pages/Homepage';
-
+import Navigator from "./components/Navigator";
 function App() {
 
   return (
