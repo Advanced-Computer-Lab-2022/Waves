@@ -9,18 +9,17 @@ import { Rating, Stack } from '@mui/material';
 //var Blur = require('react-blur');
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ResponsiveNavBar from "../components/ResponsiveNavBar";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import CourseContent from '../components/CourseContent';
 import Footer from '../components/Footer';
 
 const pages = ['Courses', 'Instructors', 'Add User', 'About Us'];
 
 const background: React.CSSProperties = {
-    backgroundImage: `url('https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/0ea6dc6b-661f-483c-a9ef-eac204799228/d4ugudv-7f412932-3e06-4cd3-a2c8-b57f398f59d1.jpg/v1/fill/w_1600,h_659,q_75,strp/gray_website_background_by_maruron_d4ugudv-fullview.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NjU5IiwicGF0aCI6IlwvZlwvMGVhNmRjNmItNjYxZi00ODNjLWE5ZWYtZWFjMjA0Nzk5MjI4XC9kNHVndWR2LTdmNDEyOTMyLTNlMDYtNGNkMy1hMmM4LWI1N2YzOThmNTlkMS5qcGciLCJ3aWR0aCI6Ijw9MTYwMCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.i5u4A7oBQ756gcNRl72YJkQaA4RQdC5X9-1Wi5HGrhI')`,
-    minWidth: '100%'
+    backgroundImage: `url('https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/0ea6dc6b-661f-483c-a9ef-eac204799228/d4ugudv-7f412932-3e06-4cd3-a2c8-b57f398f59d1.jpg/v1/fill/w_1600,h_659,q_75,strp/gray_website_background_by_maruron_d4ugudv-fullview.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NjU5IiwicGF0aCI6IlwvZlwvMGVhNmRjNmItNjYxZi00ODNjLWE5ZWYtZWFjMjA0Nzk5MjI4XC9kNHVndWR2LTdmNDEyOTMyLTNlMDYtNGNkMy1hMmM4LWI1N2YzOThmNTlkMS5qcGciLCJ3aWR0aCI6Ijw9MTYwMCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.i5u4A7oBQ756gcNRl72YJkQaA4RQdC5X9-1Wi5HGrhI')`
 }
 
-const ViewCourse = (props: any) => {
+const ViewCourseUnPurchased = (props: any) => {
     const location = useLocation();
     const course = location.state?.data;
 
@@ -32,10 +31,11 @@ const ViewCourse = (props: any) => {
             <ResponsiveNavBar pages={pages} />
             <Stack direction={'row'} marginBottom={2} marginTop={2} >
                 <Stack direction={'column'} marginLeft={'auto'} marginBottom={2} marginTop={2} >
-                    <Typography sx={{textShadow: '2px 2px black'}} marginTop={'auto'} marginBottom={'auto'} fontFamily={'Cairo'} color={'rgb(200,200,200)'} fontSize={60}>{course.courseName}</Typography>
-                    <Typography sx={{textShadow: '2px 2px black'}} marginTop={'auto'} marginBottom={'auto'} fontFamily={'Cairo'} color={'rgb(200,200,200)'} fontSize={60}>{"Instructor " + course.courseInstructor}</Typography>
+
+                    <Typography marginTop={'auto'} marginBottom={'auto'} fontFamily={'Cairo'} color={'rgb(200,200,200)'} fontSize={60}>{course.courseName}</Typography>
+                    <Typography marginTop={'auto'} marginBottom={'auto'} fontFamily={'Cairo'} color={'rgb(200,200,200)'} fontSize={60}>{"Given By " + course.courseInstructor}</Typography>
                 </Stack>
-                <img src={course.courseImg} style={{boxShadow: '2px 2px', borderRadius: '30px', border: 'solid rgb(170,170,170) 5px', marginRight: '5%', width: '35%', height: '20%', marginLeft: 'auto' }} />
+                <img src={course.courseImg} style={{ borderRadius: '30px', border: 'solid rgb(170,170,170) 5px', marginRight: '5%', width: '35%', height: '20%', marginLeft: 'auto' }} />
             </Stack>
             <CourseContent course={course} />
 
@@ -76,12 +76,10 @@ const ViewCourse = (props: any) => {
                         </Typography>
                         <Stack marginTop={1.5} direction="row" spacing={2}>
                             <Button variant="contained">Add To Cart</Button>
-                            <Button variant="contained"
-                                onClick={() => {
-                                    alert('clicked');
-                                }}
-                            >
-                                Buy Course
+                            <Button variant="contained">
+                                <Link to="/payment-information" style={{textDecoration: 'none', color: 'white'}} state={{ data: {courseName:course.courseName, coursePrice:course.coursePrice}}} className="link">
+                                    Purchase Course
+                                </Link>
                             </Button>
                         </Stack>
 
@@ -127,4 +125,4 @@ const ViewCourse = (props: any) => {
     )
 }
 
-export default ViewCourse
+export default ViewCourseUnPurchased

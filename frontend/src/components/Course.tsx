@@ -33,7 +33,7 @@ const Course: React.FC<props> = ({ courseName, coursePrice, courseDescription, c
   return (
     <Card sx={{ minWidth: 350, maxWidth: 350, minHeight: 480, maxHeight: 480 }}>
       <CardActionArea sx={{ minWidth: 350, maxWidth: 350, minHeight: 480, maxHeight: 480 }} onClick={() => {
-        navigate('../viewCourse',
+        navigate('../viewCourse1',
           {
             state: {
               data: course
