@@ -34,24 +34,24 @@ export default function NestedList(props: any) {
 
 
   return (
-    <Stack marginTop= {'8%'} direction={'row'} style={{ height: '750px' }}>
-        <ReactPlayer style={{
-          minHeight: '95%',
-          minWidth: '68%', borderRadius: '5px', border: 'solid rgb(170,170,170) 3px', marginLeft: '1%'
-        }} url={courseVideo} />
+    <Stack marginTop={'3%'} direction={'row'} style={{ height: '730px' }}>
+      <ReactPlayer style={{
+        boxShadow: '2px 2px',
+        minHeight: '100%',
+        minWidth: '68%', borderRadius: '5px', border: 'solid rgb(170,170,170) 3px', marginLeft: '1%'
+      }} url={courseVideo} />
       <div
         style={{
           width: '50%',
           maxWidth: '50%',
         }}
-
       >
         <List
-          sx={{borderRadius: '5px', border: 'solid rgb(170,170,170) 3px', marginLeft: 'auto', width: '75%', bgcolor: 'background.paper' }}
+          sx={{opacity:'80%', boxShadow: '2px 2px', borderRadius: '5px', border: 'solid rgb(170,170,170) 3px', marginRight: '1%', marginLeft: 'auto', width: '98%', bgcolor: 'rgb(230, 230, 230)' }}
           component="nav"
           aria-labelledby="nested-list-subheader"
           subheader={
-            <ListSubheader component="div" id="nested-list-subheader">
+            <ListSubheader sx={{opacity:'80%', bgcolor: 'rgb(230, 230, 230)'}} component="div" id="nested-list-subheader">
               <Typography fontSize={27}> Course Content </Typography>
             </ListSubheader>
           }
