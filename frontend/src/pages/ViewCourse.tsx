@@ -6,7 +6,7 @@ import { Dialog, DialogTitle, FormControl, OutlinedInput, Rating, Stack, TextFie
 //var Blur = require('react-blur');
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ResponsiveNavBar from "../components/ResponsiveNavBar";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import CourseContent from '../components/CourseContent';
 import Footer from '../components/Footer';
 import DownloadIcon from '@mui/icons-material/Download';
