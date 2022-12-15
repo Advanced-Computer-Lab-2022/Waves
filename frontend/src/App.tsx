@@ -28,6 +28,8 @@ import ResetPassword from './pages/ResetPassword';
 import EditPassword from './pages/EditPassword';
 import Profile from './pages/Profile';
 import Homepage from './pages/Homepage';
+import PurchaseCourse from "./pages/PurchaseCourse";
+import PaymentInfo from "./pages/PaymentInfo";
 
 function App() {
 
@@ -52,6 +54,8 @@ function App() {
         <Route path="/coporateTrainee" element={<CorporateTrainee />} />
         <Route path="/individualTrainee" element={<IndividualTrainee />} />
         <Route path="/viewcourse" element={<ViewCourse />} />
+        <Route path="/payment-information" element={<PaymentInfo />} />
+        <Route path="/purchase-course" element={<PurchaseCourse />} />
         <Route path="/view-rating" element={<ViewRating />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/instructor-terms" element={<InstructorTerms />} />

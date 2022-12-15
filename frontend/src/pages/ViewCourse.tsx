@@ -9,7 +9,7 @@ import { Rating, Stack } from '@mui/material';
 //var Blur = require('react-blur');
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ResponsiveNavBar from "../components/ResponsiveNavBar";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import CourseContent from '../components/CourseContent';
 
 const pages = ['Courses', 'Instructors', 'Add User', 'About Us'];
@@ -66,12 +66,10 @@ const ViewCourse = (props: any) => {
                         </Typography>
                         <Stack marginTop={1.5} direction="row" spacing={2}>
                             <Button variant="contained">Add To Cart</Button>
-                            <Button variant="contained"
-                                onClick={() => {
-                                alert('clicked');
-                            }}
-                            >
-                            Buy Course
+                            <Button variant="contained">
+                                <Link to="/payment-information" style={{textDecoration: 'none', color: 'white'}} state={{ data: [course.courseName, course.coursePrice]}} className="link">
+                                    Purchase Course
+                                </Link>
                             </Button>
                         </Stack>
 
