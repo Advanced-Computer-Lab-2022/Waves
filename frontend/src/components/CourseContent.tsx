@@ -10,11 +10,11 @@ import { Stack, Typography } from '@mui/material';
 import ReactPlayer from 'react-player';
 
 export default function NestedList(props: any) {
-  
+
   const course = props.course;
 
   const [open, setOpen] = React.useState<boolean[]>([]);
-  
+
   const [courseVideo, setCourseVideo] = React.useState(course.courseVideoPreview);
 
 
@@ -34,14 +34,11 @@ export default function NestedList(props: any) {
 
 
   return (
-    <Stack direction={'row'} style={{ height: 500 }}>
-      <div style={{
-        width: '50%',
-        maxWidth: '50%',
-        backgroundColor: 'rgb(25, 25, 25)'
-      }}>
-        <ReactPlayer style={{ minHeight: '100%', minWidth: '100%' }} url={courseVideo} />
-      </div>
+    <Stack marginTop= {'8%'} direction={'row'} style={{ height: '750px' }}>
+        <ReactPlayer style={{
+          minHeight: '95%',
+          minWidth: '68%', borderRadius: '5px', border: 'solid rgb(170,170,170) 3px', marginLeft: '1%'
+        }} url={courseVideo} />
       <div
         style={{
           width: '50%',
@@ -49,40 +46,40 @@ export default function NestedList(props: any) {
         }}
 
       >
-      <List
-        sx={{ width: '100%', bgcolor: 'background.paper' }}
-        component="nav"
-        aria-labelledby="nested-list-subheader"
-        subheader={
-          <ListSubheader component="div" id="nested-list-subheader">
-            <Typography fontSize={27}> Course Content </Typography>
-          </ListSubheader>
-        }
-      >
-        {subtitles && subtitles.map((subtitle, idx) => (
-          subtitle.map((element) => {
-            if (element == subtitle[0]) {
-              return <ListItemButton onClick={() => handleClick(idx)}>
-                
-                <ListItemText>
+        <List
+          sx={{borderRadius: '5px', border: 'solid rgb(170,170,170) 3px', marginLeft: 'auto', width: '75%', bgcolor: 'background.paper' }}
+          component="nav"
+          aria-labelledby="nested-list-subheader"
+          subheader={
+            <ListSubheader component="div" id="nested-list-subheader">
+              <Typography fontSize={27}> Course Content </Typography>
+            </ListSubheader>
+          }
+        >
+          {subtitles && subtitles.map((subtitle, idx) => (
+            subtitle.map((element) => {
+              if (element == subtitle[0]) {
+                return <ListItemButton onClick={() => handleClick(idx)}>
+
+                  <ListItemText>
                     <Typography fontSize={19}> {subtitle[0]}  </Typography>
-                </ListItemText>
-                {open[idx] ? <ExpandLess /> : <ExpandMore />}
-              </ListItemButton>
-            }
-            else {
-              return <Collapse in={open[idx]} timeout="auto" unmountOnExit>
-                <List component="div" disablePadding>
-                  <ListItemButton onClick={() => handleSubtitleClick(idx)} sx={{ pl: 4 }}>
-                    <ListItemText primary={element} />
-                  </ListItemButton>
-                </List>
-              </Collapse>
-            }
-          })
-        ))}
-        <></>
-      </List>
+                  </ListItemText>
+                  {open[idx] ? <ExpandLess /> : <ExpandMore />}
+                </ListItemButton>
+              }
+              else {
+                return <Collapse in={open[idx]} timeout="auto" unmountOnExit>
+                  <List component="div" disablePadding>
+                    <ListItemButton onClick={() => handleSubtitleClick(idx)} sx={{ pl: 4 }}>
+                      <ListItemText primary={element} />
+                    </ListItemButton>
+                  </List>
+                </Collapse>
+              }
+            })
+          ))}
+          <></>
+        </List>
       </div>
     </Stack>
   );

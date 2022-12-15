@@ -40,17 +40,26 @@ const theme = createTheme({
     },
 });
 
-//const pages = ['Courses', 'Instructors', 'About Us', 'Add User'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 interface props {
-    pages: string[],
+    pages?: any,
     isNotLoggedIn?: boolean
 }
 
 const ResponsiveNavBar: React.FC<props> = ({ pages, isNotLoggedIn }) => {
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+
+    const [avatar, setAvatar] = React.useState<string>('https://t4.ftcdn.net/jpg/02/15/84/43/240_F_215844325_ttX9YiIIyeaR7Ne6EaLLjMAmy4GvPC69.jpg');
+
+    console.log(isNotLoggedIn)
+
+    if(!isNotLoggedIn){
+        axios.get('http://localhost:3001/getProfilePic', {withCredentials: true}).then (response => {
+            setAvatar(response.data);
+        })
+    }
 
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElNav(event.currentTarget);
@@ -87,7 +96,7 @@ const ResponsiveNavBar: React.FC<props> = ({ pages, isNotLoggedIn }) => {
 
     const handleCloseUserMenu = (key: string) => {
         if (key == 'Logout') {
-            axios.post('http://localhost:3001/logout', {withCredentials: true}).then(() => {
+            axios.get('http://localhost:3001/logout', {withCredentials: true}).then(() => {
                 navigate('../')
             })
         }
@@ -149,7 +158,7 @@ const ResponsiveNavBar: React.FC<props> = ({ pages, isNotLoggedIn }) => {
                                     display: { xs: 'block', md: 'none' },
                                 }}
                             >
-                                {pages.map((page: string) => (
+                                {pages?.map((page: string) => (
                                     <MenuItem key={page} onClick={() => { navigateToPage(page) }}>
                                         <Typography color={'black'} fontSize={45} textAlign="center">{page}</Typography>
                                     </MenuItem>
@@ -176,9 +185,9 @@ const ResponsiveNavBar: React.FC<props> = ({ pages, isNotLoggedIn }) => {
                             LOGO
                         </Typography>
                         <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-                            {pages.map((page: string) => (
+                            {pages?.map((page: string) => (
                                 <Button
-                                    style={{ fontSize: 20 }}
+                                    style={{ fontSize: 20, fontFamily: 'Cairo' }}
                                     key={page}
                                     onClick={() => { navigateToPage(page) }}
                                     sx={{ my: 2, color: 'white', display: 'block' }}
@@ -196,7 +205,7 @@ const ResponsiveNavBar: React.FC<props> = ({ pages, isNotLoggedIn }) => {
                                 </Stack> :
                                 <Tooltip title="Open settings">
                                     <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                        <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                                        <Avatar alt="Profile Pic" src={avatar} />
                                     </IconButton>
                                 </Tooltip>
                             }

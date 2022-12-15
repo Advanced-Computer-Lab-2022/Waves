@@ -27,7 +27,10 @@ const IndividualTraineeSchema = new mongoose.Schema({
     require: false
   },
   profilePic:{
-    type: String,
+    type: String
+  },
+  courses:{
+    type: Array
   },
   token: {
     type: String
