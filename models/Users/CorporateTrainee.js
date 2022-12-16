@@ -8,6 +8,9 @@ var CorporateTraineeSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  email: {
+    type: String
+  },
   inbox: {
     type: Array,
     require: false
@@ -20,6 +23,12 @@ var CorporateTraineeSchema = new mongoose.Schema({
   },
   courses:{
     type: Array
+  },
+  country: {
+    type:String
+  },
+  bio:{
+    type: String
   }
 });
 

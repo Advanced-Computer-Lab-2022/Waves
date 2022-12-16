@@ -75,7 +75,7 @@ const PaymentInfo = (props: any) => {
             multiline
         />
         <Button variant="contained" style={{marginTop: 20}}> 
-            <Link to="/purchase-course" style={{textDecoration: 'none', color: 'white'}} state={{ data: [data[0], data[1]]}} className="link">
+            <Link to="/purchase-course" style={{textDecoration: 'none', color: 'white'}} state={{ data: {courseName:data.courseName, coursePrice:data.coursePrice}}} className="link">
                 Purchase Course
             </Link>
         </Button>

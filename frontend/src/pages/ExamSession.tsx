@@ -38,8 +38,8 @@ const ExamSession = (props:any) => {
     }
     
     axios.post('http://localhost:3001/exam-session', {
-            belongsToCourse: data[0] ,
-            name: data[1] 
+            belongsToCourse: data.belongsToCourse ,
+            name: data.name 
           }, {
             headers: {
               'Content-Type': 'application/x-www-form-urlencoded'
@@ -86,7 +86,7 @@ const ExamSession = (props:any) => {
             </Stack>
             <Stack marginTop={4}></Stack>
             <Button variant="contained">
-              <Link  to="/results" style={{textDecoration: 'none', color: 'white'}} state={{ data: [score, examsQuestions.length, data[0], data[1]]}} className="link">
+              <Link  to="/results" style={{textDecoration: 'none', color: 'white'}} state={{ data: {score:score ,totalQuestions:examsQuestions.length, belongsToCourse:data.belongsToCourse, name:data.name}}} className="link">
                 Submit results
               </Link>
             </Button>

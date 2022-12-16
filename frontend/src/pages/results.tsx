@@ -26,8 +26,8 @@ const Results = (props:any) => {
     const [examsQuestions, setExamQuestions] = React.useState<any[]>([]);
 
     axios.post('http://localhost:3001/exam-session', {
-            belongsToCourse: data[2] ,
-            name: data[3] 
+            belongsToCourse: data.belongsToCourse ,
+            name: data.name 
           }, {
             headers: {
               'Content-Type': 'application/x-www-form-urlencoded'
@@ -51,7 +51,7 @@ const Results = (props:any) => {
                         Score : 
                     </Typography>
                     <Typography variant="h5" component="div" align='center'>
-                        {data[0]} / {data[1]}
+                        {data.score} / {data.totalQuestions}
                     </Typography>
                 </CardContent> 
             </Card>

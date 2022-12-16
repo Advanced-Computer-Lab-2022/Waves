@@ -23,7 +23,8 @@ interface props {
   username?: string
   courseTitles?: Array<String>
 }
-
+let currencySymbol: string;
+let changeRate: number;
 const FilterBar: (React.FC<props>) = ({ setCourses, type, username, courseTitles }) => {
   const [filterOpen, setFilterOpen] = React.useState(true);
   const [subjectOpen, setSubjectOpen] = React.useState(true);
@@ -68,6 +69,29 @@ const FilterBar: (React.FC<props>) = ({ setCourses, type, username, courseTitles
       },
     },
   });
+
+  const [country, setCountry] = React.useState<string>();
+
+  axios.get('http://localhost:3001/getCountry', { withCredentials: true }).then(response => {
+    setCountry(response.data)
+  });
+
+  if (country == 'Egypt') {
+    currencySymbol = 'ج.م'
+    changeRate = 25
+  }
+  else if (country == 'Germany') {
+    currencySymbol = '€'
+    changeRate = 0.94
+  }
+  else if (country == 'United Kingdom') {
+    currencySymbol = '£'
+    changeRate = 0.8
+  }
+  else {
+    currencySymbol = '$'
+    changeRate = 1
+  }
 
   function handleSubjectChange() {
     const arr = [];
@@ -278,8 +302,8 @@ const FilterBar: (React.FC<props>) = ({ setCourses, type, username, courseTitles
                     <InputLabel htmlFor="standard-adornment-amount">Min. Price</InputLabel>
                     <Input
                       id="standard-adornment-amount"
-                      startAdornment={<InputAdornment position="start">$</InputAdornment>}
-                      value={price[0]}
+                      startAdornment={<InputAdornment position="start">{currencySymbol}</InputAdornment>}
+                      value={(price[0]*changeRate).toFixed(0)}
                       onChange={(v) => {
                         const u = parseFloat(v.target.value);
                         isNaN(u) || setPrice(([a, b]) => ([u, b]));
@@ -291,8 +315,8 @@ const FilterBar: (React.FC<props>) = ({ setCourses, type, username, courseTitles
                     <InputLabel htmlFor="standard-adornment-amount">Max. Price</InputLabel>
                     <Input
                       id="standard-adornment-amount"
-                      startAdornment={<InputAdornment position="end">$</InputAdornment>}
-                      value={price[1]}
+                      startAdornment={<InputAdornment position="end">{currencySymbol}</InputAdornment>}
+                      value={(price[1]*changeRate).toFixed(0)}
                       onChange={(v) => {
                         const u = parseFloat(v.target.value);
                         isNaN(u) || setPrice(([a, b]) => ([a, u]));

@@ -24,6 +24,12 @@ const GuestSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  country: {
+    type:String
+  },
+  bio:{
+    type: String
+  }
 });
 const Guest = mongoose.model("Guest", GuestSchema);
 module.exports = Guest;

@@ -31,7 +31,7 @@ router.get('/getMyCourses', async (req, res) => {
     })().catch(() => null);
 
     if (!userCourses) return res.status(400).send("database exploded");
-
+    
     res.send(userCourses.courses);
 })
 
@@ -256,7 +256,7 @@ router.post("/login", async (req, res) => {
         }
 
         if (user && (await bcrypt.compare(password, user.password))) {
-            const payload = { user_id: user._id, username, type: type, rating: rating, profilePic: user.profilePic };
+            const payload = { user_id: user._id, username, type: type, rating: rating, profilePic: user.profilePic, country: user.country, email: user.email, bio: user.bio };
             req.session.user = payload;
             res.send(type);
         }
@@ -277,6 +277,15 @@ router.post("/reset-password", async (req, res) => {
     return await adminController.sendEmail(req.body.email)
 });
 
+router.put("/updateEmail", async (req, res) => {
+    const email=req.body.email
+    const user=req.body.user
+    console.log(email)
+    individualTrainee.updateEmail(user,email)
+    req.session.user.email=email
+    res.send('success!')
+});
+
 router.post("/add-user", async (req, res) => {
     var index = req.body.index
     if (index == 0) adminController.addAdmin(req.body);
@@ -289,7 +298,7 @@ router.post("/add-course", async (req, res) => {
     res.send("/instructor")
 });
 
-router.post("/add-exam", async (req, res) => {
+router.put("/add-exam", async (req, res) => {
     instructorController.addExam(req.body);
     instructorController.addQuestionToExam(req.body);
     res.send("/instructor")
@@ -307,8 +316,29 @@ router.post("/exam-session", async (req, res) => {
     res.send(ExamQuestions)
 });
 
+router.put("/purchase-course", async (req, res) => {
+    const user = req.body.username;
+    const title=req.body.title;
+    console.log(user+title);
+    return await individualTrainee.addPurchasedCourse(user,title)
+});
+
 router.get("/getUsername", async (req, res) => {
     res.send(req.session.user.username);
+})
+
+router.get("/getEmail", async (req, res) => {
+    res.send(req.session.user.email);
+})
+
+router.get("/getBio", async (req, res) => {
+    res.send(req.session.user.bio);
+})
+
+router.get("/getCountry", async (req, res) => {
+    if(req.session.user)
+        res.send(req.session.user.country);
+    else res.send('United States')
 })
 
 

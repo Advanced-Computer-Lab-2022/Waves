@@ -33,7 +33,7 @@ const Exam = (props:any) => {
         console.log(solution)
 
 
-        axios.post('http://localhost:3001/add-exam', {
+        axios.put('http://localhost:3001/add-exam', {
             belongsToCourse: belongsToCourse,
             belongsToExam: belongsToExam,
             question: question,
