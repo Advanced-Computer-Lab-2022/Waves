@@ -31,9 +31,9 @@ const Course: React.FC<props> = ({ courseName, coursePrice, courseDescription, c
   const course = { courseName: courseName, coursePrice: coursePrice, courseDescription: courseDescription, courseSubject: courseSubject, courseRating: courseRating, courseInstructor: courseInstructor, courseTotalHours: courseTotalHours, courseImg: courseImg, courseSubtitles: courseSubtitles, courseVideoLinks: courseVideoLinks, courseVideoPreview: courseVideoPreview };
 
   return (
-    <Card sx={{ minWidth: 350, maxWidth: 350, minHeight: 480, maxHeight: 480 }}>
+    <Card sx={{backgroundColor:'rgb(180,180,180)', minWidth: 350, maxWidth: 350, minHeight: 480, maxHeight: 480 }}>
       <CardActionArea sx={{ minWidth: 350, maxWidth: 350, minHeight: 480, maxHeight: 480 }} onClick={() => {
-        navigate('../viewCourse1',
+        navigate('../viewCourse',
           {
             state: {
               data: course
@@ -57,30 +57,30 @@ const Course: React.FC<props> = ({ courseName, coursePrice, courseDescription, c
               {courseDescription}
             </Typography>
             <p />
-            <Typography variant="body2" color="grey">
+            <Typography variant="body2" color="rgb(100,100,100)">
               {"• Given by " + courseInstructor}
             </Typography>
             <p />
 
-            <Typography variant="body2" color="grey">
+            <Typography variant="body2" color="rgb(100,100,100)">
               {"• Subject " + courseSubject}
             </Typography>
 
             <p />
-            <Typography variant="body2" color="grey">
+            <Typography variant="body2" color="rgb(100,100,100)">
               {" • " + courseTotalHours + " Total Hours"}
             </Typography>
 
             <p />
-            <Typography variant="body2" color="grey">
+            <Typography variant="body2" color="rgb(100,100,100)">
             </Typography>
             <Typography component="legend">Rating</Typography>
             <Stack alignItems={'end'} direction="row">
-              <Typography style={{ maxWidth: '40px' }} marginTop={0.25} color="orange" component="legend">{courseRating[0]}</Typography>
-              <Rating name="read-only" value={courseRating[0]} readOnly precision={0.1} />
-              <Typography marginLeft={1} marginTop={0.25} color="grey" variant="body2" component="legend">{"(" + courseRating[1] + ")"}</Typography>
+              <Typography style={{ maxWidth: '40px', color:"rgb(200,150,0)" }} marginTop={0.25} component="legend">{courseRating[0]}</Typography>
+              <Rating style={{color:"rgb(200,150,0)"}} name="read-only" value={courseRating[0]} readOnly precision={0.1} />
+              <Typography marginLeft={1} marginTop={0.25} color="rgb(100,100,100)" variant="body2" component="legend">{"(" + courseRating[1] + ")"}</Typography>
               {noPrice ? <></>
-                : <Typography style={{ justifySelf: 'end', alignSelf: 'end' }} variant="h6" color="green">
+                : <Typography style={{ justifySelf: 'end', alignSelf: 'end' }} variant="h6" color='rgb(150,40,40)'>
                   {coursePrice}
                 </Typography>}
             </Stack>

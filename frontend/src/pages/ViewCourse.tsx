@@ -2,7 +2,7 @@ import * as React from 'react';
 import jsPDF from "jspdf";
 import Typography from '@mui/material/Typography';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Dialog, DialogTitle, FormControl, OutlinedInput, Rating, Stack, TextField } from '@mui/material';
+import { Dialog, DialogTitle, Divider, FormControl, OutlinedInput, Rating, Stack, TextField } from '@mui/material';
 //var Blur = require('react-blur');
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ResponsiveNavBar from "../components/ResponsiveNavBar";
@@ -12,11 +12,13 @@ import Footer from '../components/Footer';
 import DownloadIcon from '@mui/icons-material/Download';
 import ReportIcon from '@mui/icons-material/Report';
 import RateReviewIcon from '@mui/icons-material/RateReview';
+import '../components/styles.css'
+import ReviewsReports from '../components/ReviewsReports';
 
 const pages = ['Courses', 'Instructors', 'Add User', 'About Us'];
 
 const background: React.CSSProperties = {
-    backgroundImage: `url('https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/0ea6dc6b-661f-483c-a9ef-eac204799228/d4ugudv-7f412932-3e06-4cd3-a2c8-b57f398f59d1.jpg/v1/fill/w_1600,h_659,q_75,strp/gray_website_background_by_maruron_d4ugudv-fullview.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NjU5IiwicGF0aCI6IlwvZlwvMGVhNmRjNmItNjYxZi00ODNjLWE5ZWYtZWFjMjA0Nzk5MjI4XC9kNHVndWR2LTdmNDEyOTMyLTNlMDYtNGNkMy1hMmM4LWI1N2YzOThmNTlkMS5qcGciLCJ3aWR0aCI6Ijw9MTYwMCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.i5u4A7oBQ756gcNRl72YJkQaA4RQdC5X9-1Wi5HGrhI')`,
+
     minWidth: '100%'
 }
 
@@ -74,7 +76,7 @@ const ViewCourse = (props: any) => {
     };
 
     return (
-        <div style={background}>
+        <div className='grad' style={background}>
             <ResponsiveNavBar pages={pages} />
             <Stack direction={'row'} marginBottom={2} marginTop={2} >
                 <Stack direction={'column'} marginLeft={'auto'} marginBottom={2} marginTop={2} >
@@ -85,7 +87,7 @@ const ViewCourse = (props: any) => {
             </Stack>
             <CourseContent course={course} />
 
-            <div style={{ opacity: '80%', padding: '1%', margin: '1%', boxShadow: '2px 2px', borderRadius: '5px', border: 'solid rgb(170,170,170) 3px', width: '98%', backgroundColor: 'rgb(230, 230, 230)' }}>
+            <div className='ratingGrad' style={{ opacity: '80%', padding: '1%', margin: '1%', boxShadow: '2px 2px', borderRadius: '5px', border: 'solid rgb(170,170,170) 3px', width: '98%', backgroundColor: 'rgb(230, 230, 230)' }}>
 
                 <Typography marginLeft={1} gutterBottom variant="h5" component="div">
                     Notes
@@ -98,7 +100,7 @@ const ViewCourse = (props: any) => {
                 </div>
 
             </div>
-            <div style={{ opacity: '100%', paddingLeft: '3%', paddingBottom: '2%', margin: '1%', boxShadow: '2px 2px', borderRadius: '5px', border: 'solid rgb(170,170,170) 3px', marginLeft: 'auto', marginRight: 'auto', maxHeight: '40%', width: '40%', backgroundColor: 'rgb(200, 200, 200)' }}>
+            <div className='ratingGrad' style={{ opacity: '100%', paddingLeft: '3%', paddingBottom: '2%', margin: '1%', boxShadow: '2px 2px', borderRadius: '5px', border: 'solid rgb(170,170,170) 3px', marginLeft: 'auto', marginRight: 'auto', maxHeight: '40%', width: '40%', backgroundColor: 'rgb(200, 200, 200)' }}>
                 <Typography marginTop={4} marginBottom={1} fontSize={35}>Instructor: {course.courseInstructor}</Typography>
                 <Typography marginBottom={1} fontSize={25} component="legend">Rate Instructor</Typography>
                 <Rating
@@ -129,6 +131,7 @@ const ViewCourse = (props: any) => {
                     />
                 </Stack>
             </div>
+            <ReviewsReports />
             <Footer />
         </div>
     )

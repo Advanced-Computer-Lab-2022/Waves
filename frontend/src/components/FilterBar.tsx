@@ -11,7 +11,7 @@ import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import MoneyIcon from '@mui/icons-material/AttachMoney';
 import StarIcon from '@mui/icons-material/Grade';
-import { Box, Checkbox, Divider, FormControl, FormControlLabel, FormGroup, Input, InputAdornment, InputLabel, ListItem, Rating, Slider, Stack, Typography } from '@mui/material';
+import { Box, Checkbox, createTheme, Divider, FormControl, FormControlLabel, FormGroup, Input, InputAdornment, InputLabel, ListItem, Rating, Slider, Stack, ThemeProvider, Typography } from '@mui/material';
 import Search from './Search';
 import './styles.css'
 import axios from 'axios';
@@ -24,7 +24,7 @@ interface props {
   courseTitles?: Array<String>
 }
 
- const FilterBar: (React.FC<props>) = ({ setCourses, type, username, courseTitles }) => {
+const FilterBar: (React.FC<props>) = ({ setCourses, type, username, courseTitles }) => {
   const [filterOpen, setFilterOpen] = React.useState(true);
   const [subjectOpen, setSubjectOpen] = React.useState(true);
   const [ratingOpen, setRatingOpen] = React.useState(true);
@@ -51,6 +51,24 @@ interface props {
 
   const [price, setPrice] = React.useState<number[]>([0, 1000]);
 
+  const customRed = 'rgb(150,40,40)'
+
+  const theme = createTheme({
+    status: {
+      danger: 'rgb(200,25,25)',
+    },
+    palette: {
+      primary: {
+        main: customRed,
+        darker: '#053e85',
+      },
+      neutral: {
+        main: '#64748B',
+        contrastText: '#fff',
+      },
+    },
+  });
+
   function handleSubjectChange() {
     const arr = [];
     if (computerScience)
@@ -65,7 +83,7 @@ interface props {
   }
 
   useEffect(() => {
-    
+
     axios.post('http://localhost:3001/filterCourses', {
       rating: rating,
       subject: handleSubjectChange(),
@@ -138,9 +156,12 @@ interface props {
   };
 
   return (
-    <div style={{ marginRight: 30, width: 400, backgroundColor: 'rgb(240, 240, 240)' }}>
+
+    <ThemeProvider theme={theme}>
       <List
-        sx={{ width: '100%', maxWidth: 360, bgcolor: 'rgb(240, 240, 240)', color: 'black' }}
+        className='filterClass'
+
+        sx={{ width: '100%', marginRight:'15px', maxWidth: 360, bgcolor: 'rgb(240, 240, 240)', color: 'black' }}
         component="nav"
         aria-labelledby="nested-list-subheader"
       >
@@ -183,7 +204,7 @@ interface props {
           </List>
         </Collapse>
 
-        <Divider color='black' orientation="horizontal" flexItem></Divider>
+        <Divider variant='fullWidth' color='black' orientation="horizontal" flexItem></Divider>
 
         <Collapse in={filterOpen} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
@@ -296,7 +317,7 @@ interface props {
           </List>
         </Collapse>
       </List>
-    </div>
+    </ThemeProvider>
   );
 }
 

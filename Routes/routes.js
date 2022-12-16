@@ -23,9 +23,9 @@ router.get('/getCourses', async (req, res) => {
 
 router.get('/getMyCourses', async (req, res) => {
     const userCourses = await (() => {
-        if (req.session.user.type == 'individualTrainee') return IndividualTrainee.findOne({ username: req.session.user.username })
+        if (req.session.user?.type == 'individualTrainee') return IndividualTrainee.findOne({ username: req.session.user.username })
 
-        if (req.session.user.type == 'corporateTrainee') return CorporateTrainee.findOne({ username: req.session.user.username })
+        if (req.session.user?.type == 'corporateTrainee') return CorporateTrainee.findOne({ username: req.session.user.username })
 
         throw "";
     })().catch(() => null);
@@ -44,11 +44,19 @@ router.get("/getType", async (req, res) => {
 });
 
 router.get('/getProfilePic', async (req, res) => {
-    res.send(req.session.user.profilePic)
+    if (req.session.user?.profilePic)
+        res.send(req.session.user.profilePic);
+    else {
+        res.send('https://t4.ftcdn.net/jpg/02/15/84/43/240_F_215844325_ttX9YiIIyeaR7Ne6EaLLjMAmy4GvPC69.jpg');
+    }
 })
 
 router.get("/getInstructorRating", async (req, res) => {
-    res.send("" + req.session.user.rating);
+    if (req.session.user?.rating)
+        res.send("" + req.session.user.rating);
+    else {
+        res.send("" + 0);
+    }
 });
 
 router.post('/filterCourses', async (req, res) => {

@@ -1,4 +1,5 @@
-import { Stack } from "@mui/material";
+import { Divider, Stack } from "@mui/material";
+import { minHeight } from "@mui/system";
 import axios from "axios";
 import React from "react";
 import { useEffect } from "react";
@@ -34,8 +35,9 @@ const Homepage = (props: any) => {
     return (
         <>
             <ResponsiveNavBar isNotLoggedIn={true} pages={pagesArr} />
-            <Stack marginTop={0.6} direction={"row"}>
+            <Stack sx={{minWidth: '100%', width: '122rem'}} className="grad" marginTop={0.3} direction={"row"}>
                 <FilterBar setCourses={setCourses} />
+                <span className="vertical-line"></span>
                 <Courses courses={courses} />
             </Stack>
             <p />

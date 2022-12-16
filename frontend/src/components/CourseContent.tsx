@@ -47,11 +47,12 @@ export default function NestedList(props: any) {
         }}
       >
         <List
-          sx={{opacity:'80%', boxShadow: '2px 2px', borderRadius: '5px', border: 'solid rgb(170,170,170) 3px', marginRight: '1%', marginLeft: 'auto', width: '98%', bgcolor: 'rgb(230, 230, 230)' }}
+          className='listGrad'
+          sx={{opacity:'80%', boxShadow: '2px 2px', borderRadius: '5px', border: 'solid rgb(170,170,170) 3px', marginRight: '1%', marginLeft: 'auto', width: '98%', bgcolor: 'rgb(200, 200, 200)' }}
           component="nav"
           aria-labelledby="nested-list-subheader"
           subheader={
-            <ListSubheader sx={{opacity:'80%', bgcolor: 'rgb(230, 230, 230)'}} component="div" id="nested-list-subheader">
+            <ListSubheader sx={{opacity:'80%', bgcolor: 'initial'}} component="div">
               <Typography fontSize={27}> Course Content </Typography>
             </ListSubheader>
           }

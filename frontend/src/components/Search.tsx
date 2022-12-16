@@ -5,9 +5,9 @@ import { alpha, Box, InputBase, styled, Toolbar } from '@mui/material';
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
     borderRadius: 200,
-    backgroundColor: 'rgb(229,229,229)',
+    backgroundColor: 'rgb(180,180,180)',
     '&:hover': {
-      backgroundColor: 'rgb(220,220,220)'
+    backgroundColor: 'rgb(190,190,190)'
     },
     marginLeft: 0,
     width: '100%',

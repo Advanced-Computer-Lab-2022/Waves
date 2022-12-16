@@ -55,8 +55,8 @@ const ResponsiveNavBar: React.FC<props> = ({ pages, isNotLoggedIn }) => {
 
     console.log(isNotLoggedIn)
 
-    if(!isNotLoggedIn){
-        axios.get('http://localhost:3001/getProfilePic', {withCredentials: true}).then (response => {
+    if (!isNotLoggedIn) {
+        axios.get('http://localhost:3001/getProfilePic', { withCredentials: true }).then(response => {
             setAvatar(response.data);
         })
     }
@@ -96,7 +96,7 @@ const ResponsiveNavBar: React.FC<props> = ({ pages, isNotLoggedIn }) => {
 
     const handleCloseUserMenu = (key: string) => {
         if (key == 'Logout') {
-            axios.get('http://localhost:3001/logout', {withCredentials: true}).then(() => {
+            axios.get('http://localhost:3001/logout', { withCredentials: true }).then(() => {
                 navigate('../')
             })
         }
@@ -105,10 +105,10 @@ const ResponsiveNavBar: React.FC<props> = ({ pages, isNotLoggedIn }) => {
 
     return (
         <ThemeProvider theme={theme}>
-            <AppBar style={{ paddingTop: 1, height: 80, width: '100%' }} position="static">
+            <AppBar style={{ paddingTop: 1, height: 80, width:'122rem', minWidth:'100%'}} position="static">
                 <Container maxWidth="xl">
                     <Toolbar disableGutters>
-                        <img style={{width: 30, height: 40, marginRight: '20px'}} src={'../AlienwareLogo.png'} alt="Alien" />
+                        <img style={{ width: 30, height: 40, marginRight: '20px' }} src={'../AlienwareLogo.png'} alt="Alien" />
                         <Typography
                             variant="h6"
                             noWrap
@@ -228,7 +228,7 @@ const ResponsiveNavBar: React.FC<props> = ({ pages, isNotLoggedIn }) => {
                                 {settings.map((setting) => (
                                     <MenuItem key={setting} onClick={() => {
                                         if (setting == 'Logout') {
-                                            axios.get('http://localhost:3001/logout', {withCredentials: true}).then(() => {
+                                            axios.get('http://localhost:3001/logout', { withCredentials: true }).then(() => {
                                                 navigate('../')
                                             })
                                         }
