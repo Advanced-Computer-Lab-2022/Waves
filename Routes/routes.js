@@ -286,6 +286,23 @@ router.put("/updateEmail", async (req, res) => {
     res.send('success!')
 });
 
+router.put("/updatePassword", async (req, res) => {
+    const password=req.body.password
+    const user=req.body.user
+    console.log(password)
+    individualTrainee.updatePassword(user,password)
+    res.send('success!')
+});
+
+router.put("/updateBio", async (req, res) => {
+    const bio=req.body.bio
+    const user=req.body.user
+    console.log(bio)
+    individualTrainee.updateBio(user,bio)
+    req.session.user.bio=bio
+    res.send('success!')
+});
+
 router.post("/add-user", async (req, res) => {
     var index = req.body.index
     if (index == 0) adminController.addAdmin(req.body);
