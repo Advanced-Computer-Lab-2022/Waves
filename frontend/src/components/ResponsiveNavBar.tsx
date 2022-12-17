@@ -105,10 +105,10 @@ const ResponsiveNavBar: React.FC<props> = ({ pages, isNotLoggedIn }) => {
 
     return (
         <ThemeProvider theme={theme}>
-            <AppBar style={{ paddingTop: 1, height: 80 }} position="static">
+            <AppBar style={{ paddingTop: 1, height: 80, width: '100%' }} position="static">
                 <Container maxWidth="xl">
                     <Toolbar disableGutters>
-                        <img style={{width: 30, height: 40, marginRight: 20, }} src={'../AlienwareLogo.png'} alt="Alien" />
+                        <img style={{width: 30, height: 40, marginRight: '20px'}} src={'../AlienwareLogo.png'} alt="Alien" />
                         <Typography
                             variant="h6"
                             noWrap

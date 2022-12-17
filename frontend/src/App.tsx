@@ -26,6 +26,7 @@ import PaymentInfo from "./pages/PaymentInfo";
 import ViewCorporateTrainees from "./pages/ViewCorporateTrainees";
 import CoursesPage from "./pages/CoursesPage";
 import MyCourses from "./pages/MyCourses";
+import ViewCourseUnPurchased from "./pages/ViewCourseUnPurchased";
 
 function App() {
 
@@ -50,6 +51,7 @@ function App() {
         <Route path="/coporateTrainee" element={<CoursesPage />} />
         <Route path="/individualTrainee" element={<CoursesPage />} />
         <Route path="/viewcourse" element={<ViewCourse />} />
+        <Route path="/viewcourse1" element={<ViewCourseUnPurchased />} />
         <Route path="/payment-information" element={<PaymentInfo />} />
         <Route path="/purchase-course" element={<PurchaseCourse />} />
         <Route path="/view-rating" element={<ViewRating />} />
