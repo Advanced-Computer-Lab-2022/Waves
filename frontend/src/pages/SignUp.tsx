@@ -198,7 +198,7 @@ const SignUp = () => {
 
     return (
         <>
-        <ResponsiveNavBar pages={pagesArr} isNotLoggedIn={false}/>
+        <ResponsiveNavBar pages={pagesArr} isNotLoggedIn={true}/>
             
         <ThemeProvider theme={theme}>
             <div style={backgroundStyle}>

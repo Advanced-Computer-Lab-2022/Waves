@@ -8,6 +8,9 @@ var AdministratorSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  email: {
+    type: String
+  },
   inbox: {
     type: Array,
     require: false
@@ -18,6 +21,12 @@ var AdministratorSchema = new mongoose.Schema({
   profilePic:{
     type: String,
   },
+  country: {
+    type:String
+  },
+  bio:{
+    type: String
+  }
 });
 
 function loadModel(modelName, modelSchema) {

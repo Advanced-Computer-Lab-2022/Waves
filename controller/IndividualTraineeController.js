@@ -2,6 +2,7 @@ var Courses=require("../models/Courses");
 var Questions=require("../models/Question"); 
 var Exams=require("../models/Exam"); 
 var ExamSolution=require("../models/ExamSolution");
+const IndividualTrainee = require("../models/users/IndividualTrainee");
 
 async function getCourses (){
     const docs=await Courses.find({},'title totalHours courseRating').exec();
@@ -55,5 +56,37 @@ async function getSpecificExam (belongsToCourse, name){
     return specificExam.questions
 }
 
-module.exports= {getCourses,getCoursesByPrice,takeExam,getMyCourses, getExams, getSpecificExam, CalculateExamResult};
+async function addPurchasedCourse (user, courseTitle){
+    await IndividualTrainee.findOneAndUpdate({username: user}, {
+        $addToSet:{
+            courses: courseTitle
+        }
+    })
+}
+
+async function updateEmail (user, email){
+    await IndividualTrainee.findOneAndUpdate({username: user}, {
+        $set:{
+            email: email 
+        }
+    })
+}
+async function updatePassword (user, password){
+    encryptedPassword = await bcrypt.hash(password, 10);
+    await IndividualTrainee.findOneAndUpdate({username: user}, {
+        $set:{
+            password: encryptedPassword 
+        }
+    })
+}
+async function updateBio (user, bio){
+    await IndividualTrainee.findOneAndUpdate({username: user}, {
+        $set:{
+            bio: bio
+        }
+    })
+}
+
+
+module.exports= {getCourses,getCoursesByPrice,takeExam,getMyCourses, getExams, getSpecificExam, CalculateExamResult, addPurchasedCourse, updateEmail, updatePassword, updateBio};
     //res.render("guest");

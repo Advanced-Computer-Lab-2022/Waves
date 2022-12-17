@@ -8,8 +8,8 @@ var InstructorSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  email:{
-    type: String,
+  email: {
+    type: String
   },
   biography:{
     type: String
@@ -26,6 +26,12 @@ var InstructorSchema = new mongoose.Schema({
   },
   //https://t4.ftcdn.net/jpg/02/15/84/43/240_F_215844325_ttX9YiIIyeaR7Ne6EaLLjMAmy4GvPC69.jpg
   token: {
+    type: String
+  },
+  country: {
+    type:String
+  },
+  bio:{
     type: String
   }
 });

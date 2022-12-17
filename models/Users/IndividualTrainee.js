@@ -14,6 +14,9 @@ const IndividualTraineeSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  email: {
+    type: String
+  },
   first_name: {
     type: String,
     required: true,
@@ -33,6 +36,12 @@ const IndividualTraineeSchema = new mongoose.Schema({
     type: Array
   },
   token: {
+    type: String
+  },
+  country: {
+    type:String
+  },
+  bio:{
     type: String
   }
 });

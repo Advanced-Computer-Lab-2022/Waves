@@ -1,38 +1,103 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
-import React, { ChangeEvent, useRef } from "react";
+import React, { ChangeEvent, useEffect, useRef } from "react";
 import { Avatar, Box, Button, Card, CardContent, Divider, Grid, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Stack, SvgIcon, TextField, Typography } from "@mui/material";
 import ResponsiveNavBar from "../components/ResponsiveNavBar";
 import Account from "../components/Account";
 import Footer from "../components/Footer";
 import CreateOutlinedIcon from '@mui/icons-material/CreateOutlined';
 import PhotoCameraBackIcon from '@mui/icons-material/PhotoCameraBack';
+import { Navigate, useNavigate } from 'react-router-dom';
+
 
 const pagesArr = ['Courses', 'Instructors', 'Add User', 'About Us'];
 
 const Info = (props: any) => {
+    const navigate=useNavigate();
     const [isPassword, setIsPassword] = React.useState(false);
     const [isEmail, setIsEmail] = React.useState(false);
     const [isBiography, setIsBiography] = React.useState(false);
-
     const [profilePic, setProfilePic] = React.useState('/static/images/avatar/2.jpg');
-
     const [profilePicHover, setProfilePicHover] = React.useState<boolean>(false);
-
     const inputRef = useRef<HTMLInputElement | null>(null);
+    const [username, setUsername] = React.useState<string>();
+    const [email, setEmail] = React.useState<string>();
+    const [bio, setBio] = React.useState<string>();
+    const [newEmail, setNewEmail] = React.useState<string>();
+    const [newPassword, setNewPassword] = React.useState<string>();
+    const [newBio, setNewBio] = React.useState<string>();
 
-    axios.get('http://localhost:3001/getProfilePic', { withCredentials: true }).then(response => {
-        setProfilePic(response.data);
-    })
+    useEffect(() => {
+        axios.get('http://localhost:3001/getUsername', { withCredentials: true }).then(response => {
+            setUsername(response.data)
+        });
 
-    function updateInfo() {
+        axios.get('http://localhost:3001/getProfilePic', { withCredentials: true }).then(response => {
+            setProfilePic(response.data);
+        })
 
-    }
+        axios.get('http://localhost:3001/getEmail', { withCredentials: true }).then(response => {
+            setEmail(response.data);
+        })
+
+        axios.get('http://localhost:3001/getBio', { withCredentials: true }).then(response => {
+            setBio(response.data);
+        })
+
+    }, []);
 
     const handleUpload = (e: any) => {
         inputRef.current?.click();
     }
 
+
+
+    function updateInfo() {
+        if (newEmail != "") {
+            setEmail(newEmail)
+            axios.put('http://localhost:3001/updateEmail', {
+                user: username,
+                email: newEmail
+            }, {
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'        
+                },
+                withCredentials: true
+            })
+                .then(response => {
+                    navigate(0)
+                               
+                });
+        }
+
+        if (newPassword != "") {
+            axios.put('http://localhost:3001/updatePassword', {
+                user: username,
+                password: newPassword
+            }, {
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            })
+                .then(response => {
+                    console.log(" XXX ")
+                });
+        }
+
+        if (newBio != "") {
+            axios.put('http://localhost:3001/updateBio', {
+                user: username,
+                bio: newBio
+            }, {
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            })
+                .then(response => {
+                    console.log(" XXX ")
+                });
+        }
+    }
     return (
         <div>
             <ResponsiveNavBar pages={pagesArr} />
@@ -50,7 +115,7 @@ const Info = (props: any) => {
                                     Profile Picture
                                 </Typography>
                                 <div style={{ width: 125, height: 125, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                                    <Avatar onClick={handleUpload} style={profilePicHover ? { transition: '.3s ease', filter: 'blur(2px)' } : {transition: '.3s ease'}} onMouseEnter={() => { setProfilePicHover(true) }} onMouseLeave={() => { setProfilePicHover(false) }} title="Profile Picture" sx={{ position: 'absolute', width: 125, height: 125 }} alt="Remy Sharp" src={profilePic} />
+                                    <Avatar onClick={handleUpload} style={profilePicHover ? { transition: '.3s ease', filter: 'blur(2px)' } : { transition: '.3s ease' }} onMouseEnter={() => { setProfilePicHover(true) }} onMouseLeave={() => { setProfilePicHover(false) }} title="Profile Picture" sx={{ position: 'absolute', width: 125, height: 125 }} alt="Remy Sharp" src={profilePic} />
                                     <input type='file' id='file' ref={inputRef} style={{ display: 'none' }} />
                                     {profilePicHover ?
                                         <div style={{ transition: '.5s ease', width: 125, height: 125, display: 'flex', justifyContent: 'center' }}>
@@ -72,7 +137,7 @@ const Info = (props: any) => {
                             </Stack>
                             <Stack direction="row" marginTop={2}>
                                 <Typography variant="h5" component="div">
-                                    admin
+                                    {username}
                                 </Typography>
                             </Stack>
                             <Stack marginTop={5} />
@@ -84,7 +149,7 @@ const Info = (props: any) => {
                             </Stack>
                             <Stack direction="row" marginTop={2}>
                                 {
-                                    isEmail ? <TextField id="outlined-basic" label="New Email" variant="outlined" name="email" /> : <Typography variant="h5" component="div">alienlearning@gmail.com</Typography>
+                                    isEmail ? <TextField id="outlined-basic" label="New Email" onChange={(e) => setNewEmail(e.target.value)} type="String" size="medium" variant="outlined" /> : <Typography variant="h5" component="div">{email}</Typography>
                                 }
                                 <Stack marginLeft={50}>
                                     <Button onClick={() => { setIsEmail(!isEmail) }}>
@@ -103,7 +168,7 @@ const Info = (props: any) => {
                             </Stack>
                             <Stack direction="row" marginTop={2}>
                                 {
-                                    isPassword ? <TextField id="outlined-basic" label="New Password" variant="outlined" name="password" /> : <Typography variant="h5" component="div">***********</Typography>
+                                    isPassword ? <TextField id="outlined-basic" label="New Password" variant="outlined" onChange={(e) => setNewPassword(e.target.value)} type="String" size="medium" /> : <Typography variant="h5" component="div">***********</Typography>
                                 }
                                 <Stack marginLeft={50}>
                                     <Button onClick={() => { setIsPassword(!isPassword) }}>
@@ -120,7 +185,7 @@ const Info = (props: any) => {
                             </Stack>
                             <Stack direction="row" marginTop={2}>
                                 {
-                                    isBiography ? <TextField id="outlined-basic" label="New Biography" variant="outlined" name="biography" /> : <Typography variant="h5" component="div">My name is Barry Allen, and I am the fastest man alive</Typography>
+                                    isBiography ? <TextField id="outlined-basic" label="New Biography" variant="outlined" onChange={(e) => setNewBio(e.target.value)} type="String" size="medium" /> : <Typography variant="h5" component="div">{bio}</Typography>
                                 }
                                 <Stack marginLeft={50}>
                                     <Button onClick={() => { setIsBiography(!isBiography) }}>
@@ -131,7 +196,7 @@ const Info = (props: any) => {
                             <Stack marginTop={5} />
                             <Divider sx={{ bgcolor: "secondary.light" }} />
                         </CardContent>
-                        <Button style={{ marginLeft: '38%', marginTop: '5vh' }} color="primary" variant="contained" onClick={() => { updateInfo() }}> Update Information</Button>
+                        <Button style={{ marginLeft: '38%', marginTop: '5vh' }} color="primary" variant="contained" onClick={() => { updateInfo() }} > Update Information</Button>
                     </Card>
                 </Stack>
             </Stack>

@@ -77,7 +77,7 @@ const ViewCourse = (props: any) => {
                         <Stack marginTop={1.5} direction="row" spacing={2}>
                             <Button variant="contained">Add To Cart</Button>
                             <Button variant="contained">
-                                <Link to="/payment-information" style={{textDecoration: 'none', color: 'white'}} state={{ data: [course.courseName, course.coursePrice]}} className="link">
+                                <Link to="/payment-information" style={{textDecoration: 'none', color: 'white'}} state={{ data: {courseName:course.courseName, coursePrice:course.coursePrice}}} className="link">
                                     Purchase Course
                                 </Link>
                             </Button>
