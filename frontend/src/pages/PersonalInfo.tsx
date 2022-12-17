@@ -53,7 +53,7 @@ const Info = (props: any) => {
 
 
     function updateInfo() {
-        if (newEmail != "") {
+        if (newEmail != "" && isEmail) {
             setEmail(newEmail)
             axios.put('http://localhost:3001/updateEmail', {
                 user: username,
@@ -65,36 +65,37 @@ const Info = (props: any) => {
                 withCredentials: true
             })
                 .then(response => {
-                    navigate(0)
-                               
+                    navigate(0)                
                 });
         }
 
-        if (newPassword != "") {
+        if (newPassword != "" && isPassword) {
             axios.put('http://localhost:3001/updatePassword', {
                 user: username,
                 password: newPassword
             }, {
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
-                }
+                },
+                withCredentials: true
             })
                 .then(response => {
-                    console.log(" XXX ")
+                    navigate(0)                
                 });
         }
 
-        if (newBio != "") {
+        if (newBio != "" && isBiography) {
             axios.put('http://localhost:3001/updateBio', {
                 user: username,
                 bio: newBio
             }, {
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
-                }
+                },
+                withCredentials: true
             })
                 .then(response => {
-                    console.log(" XXX ")
+                    navigate(0)                
                 });
         }
     }

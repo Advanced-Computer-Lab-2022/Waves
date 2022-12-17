@@ -3,6 +3,7 @@ var Questions=require("../models/Question");
 var Exams=require("../models/Exam"); 
 var ExamSolution=require("../models/ExamSolution");
 const IndividualTrainee = require("../models/users/IndividualTrainee");
+const bcrypt = require('bcrypt')
 
 async function getCourses (){
     const docs=await Courses.find({},'title totalHours courseRating').exec();

@@ -185,7 +185,7 @@ const FilterBar: (React.FC<props>) = ({ setCourses, type, username, courseTitles
       <List
         className='filterClass'
 
-        sx={{ width: '100%', marginRight:'15px', maxWidth: 360, bgcolor: 'rgb(240, 240, 240)', color: 'black' }}
+        sx={{ width: '100%', paddingRight:'15px', maxWidth: 360, bgcolor: 'rgb(240, 240, 240)', color: 'black' }}
         component="nav"
         aria-labelledby="nested-list-subheader"
       >
