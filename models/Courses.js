@@ -46,6 +46,9 @@ const CoursesSchema = new mongoose.Schema({
   },
   reviews: {
     type: Array,
+  },
+  reports: {
+    type: Array
   }
 });
 const Courses = mongoose.model("Courses", CoursesSchema);

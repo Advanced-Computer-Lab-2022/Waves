@@ -1,5 +1,4 @@
-import { Divider, Stack } from "@mui/material";
-import { minHeight } from "@mui/system";
+import { Stack } from "@mui/material";
 import axios from "axios";
 import React from "react";
 import { useEffect } from "react";
@@ -30,12 +29,12 @@ const Homepage = (props: any) => {
         })
     }, []);
 
-    const pagesArr = ['All Courses', 'About Us'];
+    const pages = ['All Courses', 'About Us'];
 
     return (
         <>
-            <ResponsiveNavBar isNotLoggedIn={true} pages={pagesArr} />
-            <Stack sx={{minWidth: '100%', width: '122rem'}} className="grad" marginTop={0.3} direction={"row"}>
+            <ResponsiveNavBar isNotLoggedIn={true} pages={pages} />
+            <Stack sx={{ minWidth: '100%', width: '122rem' }} className="grad" marginTop={0.3} direction={"row"}>
                 <FilterBar setCourses={setCourses} />
                 <span className="vertical-line"></span>
                 <Courses courses={courses} />

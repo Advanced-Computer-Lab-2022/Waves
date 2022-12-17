@@ -47,7 +47,6 @@ const FilterBar: (React.FC<props>) = ({ setCourses, type, username, courseTitles
 
   const [search, setSearch] = React.useState("");
 
-
   const [rating, setRating] = React.useState(0);
 
   const [price, setPrice] = React.useState<number[]>([0, 1000]);
@@ -121,6 +120,7 @@ const FilterBar: (React.FC<props>) = ({ setCourses, type, username, courseTitles
       .then((response: any) => {
         setCourses(response.data);
       });
+
   }, [rating, price, computerScience, math, physics, search]);
 
   useEffect(() => {
@@ -185,7 +185,7 @@ const FilterBar: (React.FC<props>) = ({ setCourses, type, username, courseTitles
       <List
         className='filterClass'
 
-        sx={{ width: '100%', marginRight:'15px', maxWidth: 360, bgcolor: 'rgb(240, 240, 240)', color: 'black' }}
+        sx={{ width: '100%', paddingRight:'15px', maxWidth: 360, bgcolor: 'rgb(240, 240, 240)', color: 'black' }}
         component="nav"
         aria-labelledby="nested-list-subheader"
       >

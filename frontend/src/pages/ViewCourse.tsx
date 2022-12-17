@@ -12,13 +12,12 @@ import Footer from '../components/Footer';
 import DownloadIcon from '@mui/icons-material/Download';
 import ReportIcon from '@mui/icons-material/Report';
 import RateReviewIcon from '@mui/icons-material/RateReview';
-import '../components/styles.css'
 import ReviewsReports from '../components/ReviewsReports';
+import '../components/styles.css'
 
 const pages = ['Courses', 'Instructors', 'Add User', 'About Us'];
 
 const background: React.CSSProperties = {
-
     minWidth: '100%'
 }
 
@@ -131,7 +130,7 @@ const ViewCourse = (props: any) => {
                     />
                 </Stack>
             </div>
-            <ReviewsReports />
+            <ReviewsReports courseReviews={course.courseReviews} courseReports={course.courseReports} />
             <Footer />
         </div>
     )

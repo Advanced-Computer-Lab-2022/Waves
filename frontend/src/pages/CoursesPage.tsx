@@ -56,8 +56,9 @@ const CoursePage = (props: any) => {
     return (
         <>
             <ResponsiveNavBar isNotLoggedIn={isNotLoggedIn} pages={pages} />
-            <Stack marginTop={0.6} direction={"row"}>
-                <FilterBar setCourses={filterCourses} />
+            <Stack sx={{ minWidth: '100%', width: '122rem' }} className="grad" marginTop={0.3} direction={"row"}>
+                <FilterBar setCourses={setCourses} />
+                <span className="vertical-line"></span>
                 <Courses courses={courses} />
             </Stack>
             <p />

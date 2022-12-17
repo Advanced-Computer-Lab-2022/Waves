@@ -32,3 +32,9 @@
     border-left: 3px solid #ccc;
     margin-right: 20px;
 }
+
+.horizontal-line {
+    display: block;
+    border-top: 3px solid rgb(131, 131, 131);
+    margin-bottom: 20px;
+}

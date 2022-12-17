@@ -3,8 +3,8 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import { Box, Button, CardActionArea, CardActions, Grid, Rating, Stack } from '@mui/material';
-import { Link, useNavigate } from 'react-router-dom';
+import { CardActionArea, Rating, Stack } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 
 interface props {
@@ -19,16 +19,18 @@ interface props {
   courseSubtitles: Array<String>;
   courseVideoLinks: Array<String>;
   courseVideoPreview: string;
+  courseReviews: Array<Object>;
+  courseReports: Array<Object>;
   noPrice?: boolean;
   children?: React.ReactNode;
   customChild?: React.ReactNode;
 }
 
-const Course: React.FC<props> = ({ courseName, coursePrice, courseDescription, courseSubject, courseRating, courseInstructor, courseTotalHours, courseImg, courseSubtitles, courseVideoLinks, courseVideoPreview, noPrice }) => {
+const Course: React.FC<props> = ({ courseName, coursePrice, courseDescription, courseSubject, courseRating, courseInstructor, courseTotalHours, courseImg, courseSubtitles, courseVideoLinks, courseVideoPreview, noPrice, courseReports, courseReviews }) => {
 
   const navigate = useNavigate();
 
-  const course = { courseName: courseName, coursePrice: coursePrice, courseDescription: courseDescription, courseSubject: courseSubject, courseRating: courseRating, courseInstructor: courseInstructor, courseTotalHours: courseTotalHours, courseImg: courseImg, courseSubtitles: courseSubtitles, courseVideoLinks: courseVideoLinks, courseVideoPreview: courseVideoPreview };
+  const course = { courseName: courseName, coursePrice: coursePrice, courseDescription: courseDescription, courseSubject: courseSubject, courseRating: courseRating, courseInstructor: courseInstructor, courseTotalHours: courseTotalHours, courseImg: courseImg, courseSubtitles: courseSubtitles, courseVideoLinks: courseVideoLinks, courseVideoPreview: courseVideoPreview, courseReports: courseReports, courseReviews: courseReviews };
 
   return (
     <Card sx={{backgroundColor:'rgb(180,180,180)', minWidth: 350, maxWidth: 350, minHeight: 480, maxHeight: 480 }}>
