@@ -35,6 +35,7 @@ const CoursesSchema = new mongoose.Schema({
   },
   rating: {
     type: Array,
+    default: []
   },
   subject: {
     type: String,
@@ -46,9 +47,11 @@ const CoursesSchema = new mongoose.Schema({
   },
   reviews: {
     type: Array,
+    default: []
   },
   reports: {
-    type: Array
+    type: Array,
+    default: []
   }
 });
 const Courses = mongoose.model("Courses", CoursesSchema);

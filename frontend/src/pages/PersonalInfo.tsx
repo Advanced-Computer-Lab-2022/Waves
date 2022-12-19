@@ -13,7 +13,7 @@ import { Navigate, useNavigate } from 'react-router-dom';
 const pagesArr = ['Courses', 'Instructors', 'Add User', 'About Us'];
 
 const Info = (props: any) => {
-    const navigate=useNavigate();
+    const navigate = useNavigate();
     const [isPassword, setIsPassword] = React.useState(false);
     const [isEmail, setIsEmail] = React.useState(false);
     const [isBiography, setIsBiography] = React.useState(false);
@@ -50,8 +50,6 @@ const Info = (props: any) => {
         inputRef.current?.click();
     }
 
-
-
     function updateInfo() {
         if (newEmail != "" && isEmail) {
             setEmail(newEmail)
@@ -60,12 +58,12 @@ const Info = (props: any) => {
                 email: newEmail
             }, {
                 headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'        
+                    'Content-Type': 'application/x-www-form-urlencoded'
                 },
                 withCredentials: true
             })
                 .then(response => {
-                    navigate(0)                
+                    navigate(0)
                 });
         }
 
@@ -80,7 +78,7 @@ const Info = (props: any) => {
                 withCredentials: true
             })
                 .then(response => {
-                    navigate(0)                
+                    navigate(0)
                 });
         }
 
@@ -95,7 +93,7 @@ const Info = (props: any) => {
                 withCredentials: true
             })
                 .then(response => {
-                    navigate(0)                
+                    navigate(0)
                 });
         }
     }
@@ -120,13 +118,14 @@ const Info = (props: any) => {
                                     <input type='file' id='file' ref={inputRef} style={{ display: 'none' }} />
                                     {profilePicHover ?
                                         <div style={{ transition: '.5s ease', width: 125, height: 125, display: 'flex', justifyContent: 'center' }}>
-                                            <Typography fontFamily={"initial"} fontSize={15} style={{ transition: '.5s ease', opacity: '1', pointerEvents: 'none', userSelect: 'none', marginTop: '45px', position: 'absolute' }}>Upload Image</Typography>
+                                            <Typography fontFamily={"initial"} fontSize={15} style={{ WebkitTextStrokeWidth: '0.4px', WebkitTextStrokeColor: 'white', transition: '.5s ease', opacity: '1', pointerEvents: 'none', userSelect: 'none', marginTop: '45px', position: 'absolute' }}>Upload Image</Typography>
                                             <PhotoCameraBackIcon style={{ transition: '.5s ease', opacity: '1', pointerEvents: 'none', marginTop: '65px', position: 'absolute' }} />
                                         </div>
                                         : <div style={{ transition: '.5s ease', width: 125, height: 125, display: 'flex', justifyContent: 'center' }}>
-                                            <Typography fontFamily={"initial"} fontSize={15} style={{ transition: '.5s ease', opacity: '0', pointerEvents: 'none', userSelect: 'none', marginTop: '45px', position: 'absolute' }}>Upload Image</Typography>
-                                            <PhotoCameraBackIcon style={{ transition: '.5s ease', opacity: '0', pointerEvents: 'none', marginTop: '65px', position: 'absolute' }} />
-                                        </div>}
+                                            <Typography fontFamily={"initial"} fontSize={15} style={{ WebkitTextStrokeWidth: '0.4px', WebkitTextStrokeColor: 'white', transition: '.5s ease', opacity: '0', pointerEvents: 'none', userSelect: 'none', marginTop: '45px', position: 'absolute' }}>Upload Image</Typography>
+                                            <PhotoCameraBackIcon style={{ WebkitTextStrokeWidth: '0.4px', WebkitTextStrokeColor: 'white', transition: '.5s ease', opacity: '0', pointerEvents: 'none', marginTop: '65px', position: 'absolute' }} />
+                                        </div>
+                                    }
                                 </div>
                             </Stack>
                             <Stack marginTop={3} />
@@ -169,7 +168,7 @@ const Info = (props: any) => {
                             </Stack>
                             <Stack direction="row" marginTop={2}>
                                 {
-                                    isPassword ? <TextField id="outlined-basic" label="New Password" variant="outlined" onChange={(e) => setNewPassword(e.target.value)} type="String" size="medium" /> : <Typography variant="h5" component="div">***********</Typography>
+                                    isPassword ? <TextField id="outlined-basic" label="New Password" type='password' variant="outlined" onChange={(e) => setNewPassword(e.target.value)} size="medium" /> : <Typography variant="h5" component="div">***********</Typography>
                                 }
                                 <Stack marginLeft={50}>
                                     <Button onClick={() => { setIsPassword(!isPassword) }}>

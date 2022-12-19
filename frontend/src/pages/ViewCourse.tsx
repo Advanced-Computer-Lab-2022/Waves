@@ -2,23 +2,23 @@ import * as React from 'react';
 import jsPDF from "jspdf";
 import Typography from '@mui/material/Typography';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Dialog, DialogTitle, Divider, FormControl, OutlinedInput, Rating, Stack, TextField } from '@mui/material';
+import { FormControl, OutlinedInput, Rating, Stack } from '@mui/material';
 //var Blur = require('react-blur');
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ResponsiveNavBar from "../components/ResponsiveNavBar";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import CourseContent from '../components/CourseContent';
 import Footer from '../components/Footer';
 import DownloadIcon from '@mui/icons-material/Download';
-import ReportIcon from '@mui/icons-material/Report';
-import RateReviewIcon from '@mui/icons-material/RateReview';
 import ReviewsReports from '../components/ReviewsReports';
 import '../components/styles.css'
+import ReviewOrReport from '../components/ReviewOrReport';
 
 const pages = ['Courses', 'Instructors', 'Add User', 'About Us'];
 
 const background: React.CSSProperties = {
-    minWidth: '100%'
+    minWidth: '100%',
+    width: '122rem'
 }
 
 export interface SimpleDialogProps {
@@ -27,51 +27,27 @@ export interface SimpleDialogProps {
     onClose: (value: string) => void;
 }
 
-function SimpleDialog(props: SimpleDialogProps) {
-    const { onClose, selectedValue, open } = props;
-
-    const handleClose = () => {
-        onClose(selectedValue);
-    };
-
-    const handleListItemClick = (value: string) => {
-        onClose(value);
-    };
-
-    return (
-        <Dialog onClose={handleClose} open={open}>
-            <DialogTitle>Write Review</DialogTitle>
-            <TextField></TextField>
-        </Dialog>
-    );
-}
-
 const ViewCourse = (props: any) => {
+
     const location = useLocation();
     const course = location.state?.data;
 
     const [instructorRating, setInstructorRating] = React.useState(0);
+
     const [courseRating, setCourseRating] = React.useState(0);
+
+    const [courseReviews, setCourseReviews] = React.useState(course.courseReviews);
+
+    const [courseReports, setCourseReports] = React.useState(course.courseReports);
 
     const [notes, setNotes] = React.useState<string>("");
 
     const [open, setOpen] = React.useState(false);
 
-    const [selectedValue, setSelectedValue] = React.useState("");
-
     const downloadPDFFile = () => {
         let doc = new jsPDF("landscape", "px", "a4", false);
         doc.text(notes, 20, 20)
         doc.save("My Notes.pdf");
-    };
-
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
-
-    const handleClose = (value: string) => {
-        setOpen(false);
-        setSelectedValue(value);
     };
 
     return (
@@ -87,7 +63,6 @@ const ViewCourse = (props: any) => {
             <CourseContent course={course} />
 
             <div className='ratingGrad' style={{ opacity: '80%', padding: '1%', margin: '1%', boxShadow: '2px 2px', borderRadius: '5px', border: 'solid rgb(170,170,170) 3px', width: '98%', backgroundColor: 'rgb(230, 230, 230)' }}>
-
                 <Typography marginLeft={1} gutterBottom variant="h5" component="div">
                     Notes
                 </Typography>
@@ -97,7 +72,6 @@ const ViewCourse = (props: any) => {
                 <div style={{ display: 'flex', paddingTop: '10px' }}>
                     <DownloadIcon fontSize='large' sx={{ marginLeft: 'auto', marginRight: '0.5%', cursor: 'pointer' }} onClick={downloadPDFFile} />
                 </div>
-
             </div>
             <div className='ratingGrad' style={{ opacity: '100%', paddingLeft: '3%', paddingBottom: '2%', margin: '1%', boxShadow: '2px 2px', borderRadius: '5px', border: 'solid rgb(170,170,170) 3px', marginLeft: 'auto', marginRight: 'auto', maxHeight: '40%', width: '40%', backgroundColor: 'rgb(200, 200, 200)' }}>
                 <Typography marginTop={4} marginBottom={1} fontSize={35}>Instructor: {course.courseInstructor}</Typography>
@@ -121,16 +95,10 @@ const ViewCourse = (props: any) => {
                     }}
                 />
                 <Stack flexDirection={'row'}>
-                    <RateReviewIcon onClick={handleClickOpen} fontSize='large' style={{ marginLeft: 'auto', marginTop: '3px', marginRight: '20px', cursor: 'pointer' }} color='primary' />
-                    <ReportIcon onClick={handleClickOpen} fontSize='large' style={{ marginRight: '20px', cursor: 'pointer' }} color='error' />
-                    <SimpleDialog
-                        selectedValue={selectedValue}
-                        open={open}
-                        onClose={handleClose}
-                    />
+                    <ReviewOrReport courseID={course.id} rating={courseRating} courseReviews={courseReviews} courseReports={courseReports} setCourseReports={setCourseReports} setCourseReviews={setCourseReviews} setOpen={setOpen} open={open} />
                 </Stack>
             </div>
-            <ReviewsReports courseReviews={course.courseReviews} courseReports={course.courseReports} />
+            <ReviewsReports courseReviews={courseReviews} courseReports={courseReports} />
             <Footer />
         </div>
     )

@@ -31,7 +31,7 @@ router.get('/getMyCourses', async (req, res) => {
     })().catch(() => null);
 
     if (!userCourses) return res.status(400).send("database exploded");
-    
+
     res.send(userCourses.courses);
 })
 
@@ -58,6 +58,8 @@ router.get("/getInstructorRating", async (req, res) => {
         res.send("" + 0);
     }
 });
+
+
 
 router.post('/filterCourses', async (req, res) => {
     const { rating, subject, minPrice, maxPrice, searchTerm, username, type, courseTitles } = req.body;
@@ -124,9 +126,10 @@ router.post('/filterCourses', async (req, res) => {
     }
 })
 
-router.get('/inbox', async (req, res) => {
-    console.log(await guestController.getInbox('admin'))
-    res.send(await guestController.getInbox('admin'))
+router.get('/getReports', async (req, res) => {
+    const coursesReports = await Courses.find({reports: { $exists: true, $type: 'array'}} , {reports: 1, _id:1}).exec();
+    console.log(coursesReports);
+    res.send(coursesReports);
 })
 
 router.post("/register", async (req, res) => {
@@ -277,29 +280,65 @@ router.post("/reset-password", async (req, res) => {
     return await adminController.sendEmail(req.body.email)
 });
 
+router.put("/addReview", async (req, res) => {
+    const title = req.body.title
+    const description = req.body.description
+    const reviewer = req.body.reviewer
+    const courseID = req.body.courseID
+    const profilePic = req.body.profilePic
+    const newReview = { title: title, description: description, reviewer: reviewer, profilePic: profilePic }
+    try {
+        Courses.findByIdAndUpdate(courseID, { "$push": { reviews: newReview } }, function (error, success) {
+            if (error) {
+                console.log(error);
+            }
+        })
+    }
+    catch (e) {
+        console.log(e)
+    }
+    res.send('success')
+})
+
+router.put("/addReport", async (req, res) => {
+    console.log(req.body)
+    const type = req.body.type
+    const description = req.body.description
+    const reporter = req.body.reporter
+    const courseID = req.body.courseID
+    const profilePic = req.body.profilePic
+    const status = req.body.status
+    const newReport = { type: type, description: description, reporter: reporter, profilePic: profilePic, status: status, seen: false }
+    Courses.findByIdAndUpdate(courseID, { "$push": { reports: newReport } }, function (error, success) {
+        if (error) {
+            console.log('error');
+        } else {
+            console.log('success');
+        }
+    })
+    res.send('success')
+});
+
 router.put("/updateEmail", async (req, res) => {
-    const email=req.body.email
-    const user=req.body.user
-    console.log(email)
-    individualTrainee.updateEmail(user,email)
-    req.session.user.email=email
+    const email = req.body.email
+    const user = req.body.user
+    individualTrainee.updateEmail(user, email)
+    req.session.user.email = email
     res.send('success!')
 });
 
 router.put("/updatePassword", async (req, res) => {
-    const password=req.body.password
-    const user=req.body.user
-    console.log(password)
-    individualTrainee.updatePassword(user,password)
+    const password = req.body.password
+    const user = req.body.user
+    individualTrainee.updatePassword(user, password)
     res.send('success!')
 });
 
 router.put("/updateBio", async (req, res) => {
-    const bio=req.body.bio
-    const user=req.body.user
-    console.log(bio)
-    individualTrainee.updateBio(user,bio)
-    req.session.user.bio=bio
+    const bio = req.body.bio
+    const user = req.body.user
+    individualTrainee.updateBio(user, bio)
+    req.session.user.bio = bio
     res.send('success!')
 });
 
@@ -335,9 +374,9 @@ router.post("/exam-session", async (req, res) => {
 
 router.put("/purchase-course", async (req, res) => {
     const user = req.body.username;
-    const title=req.body.title;
-    console.log(user+title);
-    return await individualTrainee.addPurchasedCourse(user,title)
+    const title = req.body.title;
+    console.log(user + title);
+    return await individualTrainee.addPurchasedCourse(user, title)
 });
 
 router.get("/getUsername", async (req, res) => {
@@ -353,7 +392,7 @@ router.get("/getBio", async (req, res) => {
 })
 
 router.get("/getCountry", async (req, res) => {
-    if(req.session.user)
+    if (req.session.user)
         res.send(req.session.user.country);
     else res.send('United States')
 })
@@ -364,8 +403,8 @@ router.put('/changePassword/:username', async (req, res) => {
         res.send({ errors: "All fields must be filled" })
     else {
         await Users.findOne({ username: req.params.username }).then(async (user) => {
-            var errors = "";
-            var match = false;
+            let errors = "";
+            let match = false;
             match = await bcrypt.compare(req.body.oldPassword, user.password);
             if (match) {
                 if (req.body.newPassword1 != req.body.newPassword2)

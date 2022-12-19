@@ -5,9 +5,11 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea, Rating, Stack } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { ObjectId } from 'mongoose';
 
 
 interface props {
+  id: ObjectId;
   courseName: string;
   courseDescription: string;
   coursePrice: string;
@@ -26,11 +28,11 @@ interface props {
   customChild?: React.ReactNode;
 }
 
-const Course: React.FC<props> = ({ courseName, coursePrice, courseDescription, courseSubject, courseRating, courseInstructor, courseTotalHours, courseImg, courseSubtitles, courseVideoLinks, courseVideoPreview, noPrice, courseReports, courseReviews }) => {
+const Course: React.FC<props> = ({id, courseName, coursePrice, courseDescription, courseSubject, courseRating, courseInstructor, courseTotalHours, courseImg, courseSubtitles, courseVideoLinks, courseVideoPreview, noPrice, courseReports, courseReviews }) => {
 
   const navigate = useNavigate();
 
-  const course = { courseName: courseName, coursePrice: coursePrice, courseDescription: courseDescription, courseSubject: courseSubject, courseRating: courseRating, courseInstructor: courseInstructor, courseTotalHours: courseTotalHours, courseImg: courseImg, courseSubtitles: courseSubtitles, courseVideoLinks: courseVideoLinks, courseVideoPreview: courseVideoPreview, courseReports: courseReports, courseReviews: courseReviews };
+  const course = {id: id, courseName: courseName, coursePrice: coursePrice, courseDescription: courseDescription, courseSubject: courseSubject, courseRating: courseRating, courseInstructor: courseInstructor, courseTotalHours: courseTotalHours, courseImg: courseImg, courseSubtitles: courseSubtitles, courseVideoLinks: courseVideoLinks, courseVideoPreview: courseVideoPreview, courseReports: courseReports, courseReviews: courseReviews };
 
   return (
     <Card sx={{backgroundColor:'rgb(180,180,180)', minWidth: 350, maxWidth: 350, minHeight: 480, maxHeight: 480 }}>

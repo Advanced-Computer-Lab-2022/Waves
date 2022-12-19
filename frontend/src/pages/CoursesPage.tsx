@@ -12,7 +12,7 @@ const CoursePage = (props: any) => {
     const [pages, setPages] = React.useState<string[]>();
     const [isNotLoggedIn, setIsNotLoggedIn] = React.useState<boolean>(true);
 
-    const adminPages = ['All Courses', 'Instructors', 'Corporate Trainees', 'Add User', 'About Us'];
+    const adminPages = ['All Courses', 'Instructors', 'Corporate Trainees', 'Add User', 'View Reports', 'About Us'];
     const instructorPages = ['My Courses', 'All Courses', 'Add Course', 'Add Exam', 'Review Rating', 'About Us'];
     const individualPages = ['My Courses', 'All Courses', 'About Us'];
     const corporatePages = ['My Courses', 'All Courses', 'About Us'];
@@ -51,8 +51,7 @@ const CoursePage = (props: any) => {
             }
         })
     }, []);
-
-    const filterCourses = (filteredCourses: any) => { setCourses(filteredCourses) }
+    
     return (
         <>
             <ResponsiveNavBar isNotLoggedIn={isNotLoggedIn} pages={pages} />

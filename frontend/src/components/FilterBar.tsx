@@ -105,8 +105,7 @@ const FilterBar: (React.FC<props>) = ({ setCourses, type, username, courseTitles
     return arr;
   }
 
-  useEffect(() => {
-
+  const onFilterChange = () => {
     axios.post('http://localhost:3001/filterCourses', {
       rating: rating,
       subject: handleSubjectChange(),
@@ -120,24 +119,9 @@ const FilterBar: (React.FC<props>) = ({ setCourses, type, username, courseTitles
       .then((response: any) => {
         setCourses(response.data);
       });
+  }
 
-  }, [rating, price, computerScience, math, physics, search]);
-
-  useEffect(() => {
-    axios.post('http://localhost:3001/filterCourses', {
-      rating: rating,
-      subject: handleSubjectChange(),
-      minPrice: price[0],
-      maxPrice: price[1],
-      searchTerm: search,
-      username: username,
-      type: type,
-      courseTitles: courseTitles
-    }, { withCredentials: true })
-      .then((response: any) => {
-        setCourses(response.data);
-      });
-  }, []);
+  useEffect(onFilterChange, [rating, price, computerScience, math, physics, search, username, type, courseTitles]);
 
   const handleFilterClick = () => {
     setFilterOpen(!filterOpen);
@@ -185,7 +169,7 @@ const FilterBar: (React.FC<props>) = ({ setCourses, type, username, courseTitles
       <List
         className='filterClass'
 
-        sx={{ width: '100%', paddingRight:'15px', maxWidth: 360, bgcolor: 'rgb(240, 240, 240)', color: 'black' }}
+        sx={{ width: '100%', paddingRight: '15px', maxWidth: 360, bgcolor: 'rgb(240, 240, 240)', color: 'black' }}
         component="nav"
         aria-labelledby="nested-list-subheader"
       >
@@ -303,7 +287,7 @@ const FilterBar: (React.FC<props>) = ({ setCourses, type, username, courseTitles
                     <Input
                       id="standard-adornment-amount"
                       startAdornment={<InputAdornment position="start">{currencySymbol}</InputAdornment>}
-                      value={(price[0]*changeRate).toFixed(0)}
+                      value={(price[0] * changeRate).toFixed(0)}
                       onChange={(v) => {
                         const u = parseFloat(v.target.value);
                         isNaN(u) || setPrice(([a, b]) => ([u, b]));
@@ -316,7 +300,7 @@ const FilterBar: (React.FC<props>) = ({ setCourses, type, username, courseTitles
                     <Input
                       id="standard-adornment-amount"
                       startAdornment={<InputAdornment position="end">{currencySymbol}</InputAdornment>}
-                      value={(price[1]*changeRate).toFixed(0)}
+                      value={(price[1] * changeRate).toFixed(0)}
                       onChange={(v) => {
                         const u = parseFloat(v.target.value);
                         isNaN(u) || setPrice(([a, b]) => ([a, u]));
@@ -329,7 +313,6 @@ const FilterBar: (React.FC<props>) = ({ setCourses, type, username, courseTitles
                   getAriaLabel={() => 'Minimum distance shift'}
                   value={price}
                   onChange={handleChange}
-
                   valueLabelDisplay="auto"
                   disableSwap
                   min={0}
