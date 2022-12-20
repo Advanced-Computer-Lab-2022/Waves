@@ -27,6 +27,7 @@ import CoursesPage from "./pages/CoursesPage";
 import MyCourses from "./pages/MyCourses";
 import ViewCourseUnPurchased from "./pages/ViewCourseUnPurchased";
 import ViewReports from "./pages/ViewReports";
+import AddCourseTemp from "./pages/AddCourseTemp";
 
 function App() {
 
@@ -63,6 +64,7 @@ function App() {
         <Route path="/all-courses" element={<CoursesPage/>} />
         <Route path="/my-courses" element={<MyCourses/>} />
         <Route path="/view-reports" element={<ViewReports/>} />
+        <Route path="/zeyad" element={<AddCourseTemp/>} />
       </Routes>
     </Router>
   );
