@@ -47,6 +47,13 @@ const CoursesSchema = new mongoose.Schema({
   },
   reviews: {
     type: Array,
+  },
+  discountPercentage: {
+    type: Number,
+    default: 0
+  },
+  discountDuration: {
+    type: Number,
     default: []
   },
   reports: {

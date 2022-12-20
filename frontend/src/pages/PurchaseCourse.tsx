@@ -68,7 +68,7 @@ const PurchaseCourse = (props: any) => {
           <Typography sx={{ fontSize: 24, mb: 1.5 }} style={textSpace} component="div">
             {data.courseName}
           </Typography>
-          <Typography sx={{ fontSize: 24, mb: 1.5, marginLeft:37}}  component="div">
+          <Typography sx={{ fontSize: 24, mb: 1.5, marginLeft: 37 }} component="div">
             {data.coursePrice}
           </Typography>
         </Stack>
@@ -85,7 +85,7 @@ const PurchaseCourse = (props: any) => {
             Discount
           </Typography>
           <Typography sx={{ fontSize: 24, mb: 1.5 }} component="div">
-            $0.00
+            -{data.coursePrice.slice(0,data.currencySlice)+""+(((data.courseDiscount/100)*+data.coursePrice.slice(data.currencySlice).valueOf()))}
           </Typography>
         </Stack>
         <Divider sx={{ borderBottomWidth: 2 }} color='black' />
@@ -94,7 +94,7 @@ const PurchaseCourse = (props: any) => {
             Total Payment
           </Typography>
           <Typography sx={{ fontSize: 34, mb: 1.5 }} component="div">
-            {data[1]}
+            {data.coursePrice.slice(0,data.currencySlice)+" "+((((data.courseDiscount/100)*+data.coursePrice.slice(data.currencySlice).valueOf())*(-1))+(+data.coursePrice.slice(data.currencySlice)).valueOf()).toFixed(2)}
           </Typography>
         </Stack>
 

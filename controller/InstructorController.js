@@ -74,9 +74,16 @@ async function getinstructorAvgRatings(instructorename){
    
    }
 
+   async function addDiscount (courseName, amount, duration){
+    await Courses.findOneAndUpdate({title: courseName}, {
+        $set:{
+            discountPercentage: amount,
+            discountDuration: duration 
+        }
+    })
+}
 
 
 
-
-module.exports= {addCourse, getMyCourses,addExam, addQuestionToExam, getMyRating, getinstructorAvgRatings};
+module.exports= {addCourse, getMyCourses,addExam, addQuestionToExam, getMyRating, getinstructorAvgRatings, addDiscount};
     //res.render("guest");
