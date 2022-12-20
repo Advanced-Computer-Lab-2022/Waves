@@ -49,9 +49,13 @@ const FilterBar: (React.FC<props>) = ({ setCourses, type, username, courseTitles
 
   const [rating, setRating] = React.useState(0);
 
-  const [price, setPrice] = React.useState<number[]>([0, 1000]);
+  const [price, setPrice] = React.useState<number[]>([0, 1000*changeRate]);
 
   const customRed = 'rgb(150,40,40)'
+
+  useEffect(() => {
+    setPrice([0, 1000*changeRate])
+  },[changeRate])
 
   const theme = createTheme({
     status: {
@@ -109,8 +113,8 @@ const FilterBar: (React.FC<props>) = ({ setCourses, type, username, courseTitles
     axios.post('http://localhost:3001/filterCourses', {
       rating: rating,
       subject: handleSubjectChange(),
-      minPrice: price[0],
-      maxPrice: price[1],
+      minPrice: price[0] /changeRate,
+      maxPrice: price[1] /changeRate,
       searchTerm: search,
       username: username,
       type: type,
@@ -152,7 +156,7 @@ const FilterBar: (React.FC<props>) = ({ setCourses, type, username, courseTitles
 
     if (newValue[1] - newValue[0] < minDistance) {
       if (activeThumb === 0) {
-        const clamped = Math.min(newValue[0], 1000 - minDistance);
+        const clamped = Math.min(newValue[0], 1000*changeRate - minDistance);
         setPrice([clamped, clamped + minDistance]);
       } else {
         const clamped = Math.max(newValue[1], minDistance);
@@ -287,7 +291,7 @@ const FilterBar: (React.FC<props>) = ({ setCourses, type, username, courseTitles
                     <Input
                       id="standard-adornment-amount"
                       startAdornment={<InputAdornment position="start">{currencySymbol}</InputAdornment>}
-                      value={(price[0] * changeRate).toFixed(0)}
+                      value={(price[0]).toFixed(0)}
                       onChange={(v) => {
                         const u = parseFloat(v.target.value);
                         isNaN(u) || setPrice(([a, b]) => ([u, b]));
@@ -300,7 +304,7 @@ const FilterBar: (React.FC<props>) = ({ setCourses, type, username, courseTitles
                     <Input
                       id="standard-adornment-amount"
                       startAdornment={<InputAdornment position="end">{currencySymbol}</InputAdornment>}
-                      value={(price[1] * changeRate).toFixed(0)}
+                      value={(price[1]).toFixed(0)}
                       onChange={(v) => {
                         const u = parseFloat(v.target.value);
                         isNaN(u) || setPrice(([a, b]) => ([a, u]));
@@ -316,8 +320,7 @@ const FilterBar: (React.FC<props>) = ({ setCourses, type, username, courseTitles
                   valueLabelDisplay="auto"
                   disableSwap
                   min={0}
-                  max={1000}
-
+                  max={1000 * changeRate}
                 />
               </Box>
             </ListItem>

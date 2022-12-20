@@ -127,7 +127,7 @@ router.post('/filterCourses', async (req, res) => {
 })
 
 router.get('/getReports', async (req, res) => {
-    const coursesReports = await Courses.find({reports: { $exists: true, $type: 'array'}} , {reports: 1, _id:1}).exec();
+    const coursesReports = await Courses.find({reports: { $exists: true, $type: 'array'}} , {title: 1, reports: 1}).exec();
     console.log(coursesReports);
     res.send(coursesReports);
 })

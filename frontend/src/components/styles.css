@@ -33,6 +33,11 @@
     margin-right: 20px;
 }
 
+.horizontal-line-report {
+    display: block;
+    border-top: 3px solid rgb(131, 131, 131);
+}
+
 .horizontal-line {
     display: block;
     border-top: 3px solid rgb(131, 131, 131);
