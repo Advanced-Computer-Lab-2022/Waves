@@ -340,6 +340,14 @@ router.put("/purchase-course", async (req, res) => {
     return await individualTrainee.addPurchasedCourse(user,title)
 });
 
+router.put("/add-discount", async (req, res) => {
+    const courseName =req.body.courseName;
+    const percentage=req.body.discountPercentage;
+    console.log(percentage)
+    const duration=req.body.discountDuration;
+    return await instructorController.addDiscount(courseName, percentage, duration)
+});
+
 router.get("/getUsername", async (req, res) => {
     res.send(req.session.user.username);
 })

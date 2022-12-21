@@ -52,7 +52,8 @@ async function sendEmail (email){
     from: 'alienlearning8@gmail.com',
     to: email,
     subject: 'Reset Password',
-    text: 'password reset!!'
+    //text: 'Click the following link to reset your password',
+    html: 'click the following link to reset your password '+'http://localhost:3000/new-password'
     };
 
     // Step 3

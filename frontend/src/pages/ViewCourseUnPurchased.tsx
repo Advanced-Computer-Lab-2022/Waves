@@ -72,12 +72,12 @@ const ViewCourseUnPurchased = (props: any) => {
                         </Stack>
                         <Stack marginTop={1.5}></Stack>
                         <Typography variant="body2" color="text.secondary">
-                            {course.coursePrice}
+                        {course.coursePrice.slice(0,course.currencySlice)+" "+((((course.courseDiscount/100)*+course.coursePrice.slice(course.currencySlice).valueOf())*(-1))+(+course.coursePrice.slice(course.currencySlice)).valueOf()).toFixed(2)}
                         </Typography>
                         <Stack marginTop={1.5} direction="row" spacing={2}>
                             <Button variant="contained">Add To Cart</Button>
                             <Button variant="contained">
-                                <Link to="/payment-information" style={{textDecoration: 'none', color: 'white'}} state={{ data: {courseName:course.courseName, coursePrice:course.coursePrice}}} className="link">
+                                <Link to="/payment-information" style={{textDecoration: 'none', color: 'white'}} state={{ data: {courseName:course.courseName, coursePrice:course.coursePrice, courseDiscount: course.courseDiscount, currencySlice: course.currencySlice}}} className="link">
                                     Purchase Course
                                 </Link>
                             </Button>

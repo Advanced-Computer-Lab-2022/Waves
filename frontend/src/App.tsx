@@ -27,6 +27,7 @@ import ViewCorporateTrainees from "./pages/ViewCorporateTrainees";
 import CoursesPage from "./pages/CoursesPage";
 import MyCourses from "./pages/MyCourses";
 import ViewCourseUnPurchased from "./pages/ViewCourseUnPurchased";
+import NewPassword from "./pages/newResetPassword";
 
 function App() {
 
@@ -38,6 +39,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/account" element={<Account />} />
         <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/new-password" element={<NewPassword />} />
         <Route path="/personal-info" element={<Info />} />
         <Route path="/add-user" element={<NewUser />} />
         <Route path="/add-course" element={<AddCourse />} />

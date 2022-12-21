@@ -50,7 +50,7 @@ const FilterBar: (React.FC<props>) = ({ setCourses, type, username, courseTitles
 
   const [rating, setRating] = React.useState(0);
 
-  const [price, setPrice] = React.useState<number[]>([0, 1000]);
+  const [price, setPrice] = React.useState<number[]>([0, 1000*changeRate]);
 
   const customRed = 'rgb(150,40,40)'
 

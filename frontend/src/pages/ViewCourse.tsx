@@ -2,7 +2,7 @@ import * as React from 'react';
 import jsPDF from "jspdf";
 import Typography from '@mui/material/Typography';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Dialog, DialogTitle, Divider, FormControl, OutlinedInput, Rating, Stack, TextField } from '@mui/material';
+import { Button, Dialog, DialogTitle, Divider, FormControl, OutlinedInput, Rating, Stack, TextField } from '@mui/material';
 //var Blur = require('react-blur');
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ResponsiveNavBar from "../components/ResponsiveNavBar";
@@ -14,6 +14,7 @@ import ReportIcon from '@mui/icons-material/Report';
 import RateReviewIcon from '@mui/icons-material/RateReview';
 import '../components/styles.css'
 import ReviewsReports from '../components/ReviewsReports';
+import axios from 'axios';
 
 const pages = ['Courses', 'Instructors', 'Add User', 'About Us'];
 
