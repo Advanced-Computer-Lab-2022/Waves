@@ -9,6 +9,7 @@ const IndividualTrainee = require("../models/users/IndividualTrainee");
 const Instructor = require("../models/users/Instructor");
 const Courses = require("../models/Courses");
 const bcrypt = require('bcrypt')
+const mongoose = require("mongoose");
 const router = express.Router();
 
 router.get('/getCorporateTrainees', async (req, res) => {
@@ -59,7 +60,16 @@ router.get("/getInstructorRating", async (req, res) => {
     }
 });
 
+router.post("/updateReportSeen", async (req, res) => {
+    const { report } = req.body;
+    const reportID =  mongoose.Types.ObjectId(report.reportID);
 
+    await Courses.updateOne( {'reports.reportID': reportID }, {
+        $set:{
+            "reports.$.seen": true
+        }
+    })
+});
 
 router.post('/filterCourses', async (req, res) => {
     const { rating, subject, minPrice, maxPrice, searchTerm, username, type, courseTitles } = req.body;
@@ -308,7 +318,8 @@ router.put("/addReport", async (req, res) => {
     const courseID = req.body.courseID
     const profilePic = req.body.profilePic
     const status = req.body.status
-    const newReport = { type: type, description: description, reporter: reporter, profilePic: profilePic, status: status, seen: false }
+    const reportID = mongoose.Types.ObjectId();
+    const newReport = {reportID: reportID, type: type, description: description, reporter: reporter, profilePic: profilePic, status: status, seen: false }
     Courses.findByIdAndUpdate(courseID, { "$push": { reports: newReport } }, function (error, success) {
         if (error) {
             console.log('error');

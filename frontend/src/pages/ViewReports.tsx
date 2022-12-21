@@ -20,6 +20,8 @@ const ViewReports = () => {
 
   const [coursesReports, setCoursesReports] = React.useState([]);
 
+  const [selectedCourseTitle, setSelectedCourseTitle] = React.useState("");
+
   const [selectedReport, setSelectedReport] = React.useState({});
 
   React.useEffect(() => {
@@ -28,10 +30,22 @@ const ViewReports = () => {
       .then((response) => {
         setCoursesReports(response.data);
       });
-  }, []);
+  }, [selectedReport]);
 
-  function handleOnClick(report:any) {
+  function updateReportSeen(report: any) {
+    axios
+      .post("http://localhost:3001/updateReportSeen", {
+        report: report,
+      })
+      .then((response) => {
+        console.log(response.data);
+      });
+  }
+
+  function handleOnClick(report: any, courseTitle: any) {
     setSelectedReport(report);
+    setSelectedCourseTitle(courseTitle);
+    updateReportSeen(report);
   }
   return (
     <>
@@ -66,7 +80,9 @@ const ViewReports = () => {
                 reportsObj.reports &&
                 reportsObj.reports.map((report: any) => (
                   <>
-                    <ListItemButton onClick={() => handleOnClick(report)}>
+                    <ListItemButton
+                      onClick={() => handleOnClick(report, reportsObj.title)}
+                    >
                       <Stack style={{ marginTop: "10px" }} spacing={2.25}>
                         <Stack direction={"row"} spacing={3}>
                           {report.seen ? (
@@ -108,6 +124,7 @@ const ViewReports = () => {
         <span className="vertical-line"></span>
         <ViewReport
           report={selectedReport}
+          courseTitle={selectedCourseTitle}
         ></ViewReport>
       </Stack>
       <Footer />
