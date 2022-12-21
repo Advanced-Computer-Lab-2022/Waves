@@ -250,7 +250,7 @@ const SignUp = () => {
                                 <br/>
                                 <TextField style={textFields} value={email} onChange={(e) => setEmail(e.target.value)} label="Email Address" size="medium" variant="outlined" />
                                 <br/>
-                                <TextField style={textFields} value={password} onChange={(e) => setPassword(e.target.value)}  label="Password" size="medium" variant="outlined" type="password" />
+                                <TextField style={textFields} value={password} onChange={(e) => setPassword(e.target.value)}  label="Password" type='password' size="medium" variant="outlined" />
                                 <br/>
                                 <FormControl variant="outlined" sx={{marginTop:2, width: "70%" }}>
                                 <InputLabel id="demo-simple-select-filled-label">Country</InputLabel>

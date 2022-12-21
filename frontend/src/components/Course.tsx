@@ -6,8 +6,11 @@ import Typography from '@mui/material/Typography';
 import { Box, Button, CardActionArea, CardActions, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, Rating, Stack, TextField } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { ObjectId } from 'mongoose';
+
 
 interface props {
+  id: ObjectId;
   courseName: string;
   courseDescription: string;
   coursePrice: string;
@@ -21,16 +24,18 @@ interface props {
   courseVideoPreview: string;
   courseDiscount: number;
   currencySlice: number;
+  courseReviews: Array<Object>;
+  courseReports: Array<Object>;
   noPrice?: boolean;
   children?: React.ReactNode;
   customChild?: React.ReactNode;
 }
 
-const Course: React.FC<props> = ({ courseName, coursePrice, courseDescription, courseSubject, courseRating, courseInstructor, courseTotalHours, courseImg, courseSubtitles, courseVideoLinks, courseVideoPreview, courseDiscount, noPrice, currencySlice }) => {
+const Course: React.FC<props> = ({id, courseName, coursePrice, courseDescription, courseSubject, courseRating, courseInstructor, courseTotalHours, courseImg, courseSubtitles, courseVideoLinks, courseVideoPreview, courseDiscount, noPrice, currencySlice, courseReports, courseReviews  }) => {
 
   const navigate = useNavigate();
 
-  const course = { courseName: courseName, coursePrice: coursePrice, courseDescription: courseDescription, courseSubject: courseSubject, courseRating: courseRating, courseInstructor: courseInstructor, courseTotalHours: courseTotalHours, courseImg: courseImg, courseSubtitles: courseSubtitles, courseVideoLinks: courseVideoLinks, courseVideoPreview: courseVideoPreview, courseDiscount: courseDiscount, currencySlice: currencySlice };
+  const course = { id: id, courseName: courseName, coursePrice: coursePrice, courseDescription: courseDescription, courseSubject: courseSubject, courseRating: courseRating, courseInstructor: courseInstructor, courseTotalHours: courseTotalHours, courseImg: courseImg, courseSubtitles: courseSubtitles, courseVideoLinks: courseVideoLinks, courseVideoPreview: courseVideoPreview, courseDiscount: courseDiscount, currencySlice: currencySlice, courseReports: courseReports, courseReviews: courseReviews };
 
   const [type, setType] = React.useState(0);
   const [open, setOpen] = React.useState(false);

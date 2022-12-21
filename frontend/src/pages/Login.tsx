@@ -54,7 +54,7 @@ const Login = (props: any) => {
 
                             </div>
                             <div className="p-2">
-                                <TextField id="outlined-basic" label="Password" variant="outlined" name="password" />
+                                <TextField id="outlined-basic" label="Password" variant="outlined" name="password"  type='password'/>
                             </div>
                         </div>
                         <div>

@@ -47,12 +47,15 @@ const FilterBar: (React.FC<props>) = ({ setCourses, type, username, courseTitles
 
   const [search, setSearch] = React.useState("");
 
-
   const [rating, setRating] = React.useState(0);
 
   const [price, setPrice] = React.useState<number[]>([0, 1000*changeRate]);
 
   const customRed = 'rgb(150,40,40)'
+
+  useEffect(() => {
+    setPrice([0, 1000*changeRate])
+  },[changeRate])
 
   const theme = createTheme({
     status: {
@@ -106,13 +109,12 @@ const FilterBar: (React.FC<props>) = ({ setCourses, type, username, courseTitles
     return arr;
   }
 
-  useEffect(() => {
-
+  const onFilterChange = () => {
     axios.post('http://localhost:3001/filterCourses', {
       rating: rating,
       subject: handleSubjectChange(),
-      minPrice: price[0],
-      maxPrice: price[1],
+      minPrice: price[0] /changeRate,
+      maxPrice: price[1] /changeRate,
       searchTerm: search,
       username: username,
       type: type,
@@ -121,23 +123,9 @@ const FilterBar: (React.FC<props>) = ({ setCourses, type, username, courseTitles
       .then((response: any) => {
         setCourses(response.data);
       });
-  }, [rating, price, computerScience, math, physics, search]);
+  }
 
-  useEffect(() => {
-    axios.post('http://localhost:3001/filterCourses', {
-      rating: rating,
-      subject: handleSubjectChange(),
-      minPrice: price[0],
-      maxPrice: price[1],
-      searchTerm: search,
-      username: username,
-      type: type,
-      courseTitles: courseTitles
-    }, { withCredentials: true })
-      .then((response: any) => {
-        setCourses(response.data);
-      });
-  }, []);
+  useEffect(onFilterChange, [rating, price, computerScience, math, physics, search, username, type, courseTitles]);
 
   const handleFilterClick = () => {
     setFilterOpen(!filterOpen);
@@ -168,7 +156,7 @@ const FilterBar: (React.FC<props>) = ({ setCourses, type, username, courseTitles
 
     if (newValue[1] - newValue[0] < minDistance) {
       if (activeThumb === 0) {
-        const clamped = Math.min(newValue[0], 1000 - minDistance);
+        const clamped = Math.min(newValue[0], 1000*changeRate - minDistance);
         setPrice([clamped, clamped + minDistance]);
       } else {
         const clamped = Math.max(newValue[1], minDistance);
@@ -185,7 +173,7 @@ const FilterBar: (React.FC<props>) = ({ setCourses, type, username, courseTitles
       <List
         className='filterClass'
 
-        sx={{ width: '100%', paddingRight:'15px', maxWidth: 360, bgcolor: 'rgb(240, 240, 240)', color: 'black' }}
+        sx={{ width: '100%', paddingRight: '15px', maxWidth: 360, bgcolor: 'rgb(240, 240, 240)', color: 'black' }}
         component="nav"
         aria-labelledby="nested-list-subheader"
       >
@@ -303,7 +291,7 @@ const FilterBar: (React.FC<props>) = ({ setCourses, type, username, courseTitles
                     <Input
                       id="standard-adornment-amount"
                       startAdornment={<InputAdornment position="start">{currencySymbol}</InputAdornment>}
-                      value={(price[0]*changeRate).toFixed(0)}
+                      value={(price[0]).toFixed(0)}
                       onChange={(v) => {
                         const u = parseFloat(v.target.value);
                         isNaN(u) || setPrice(([a, b]) => ([u, b]));
@@ -316,7 +304,7 @@ const FilterBar: (React.FC<props>) = ({ setCourses, type, username, courseTitles
                     <Input
                       id="standard-adornment-amount"
                       startAdornment={<InputAdornment position="end">{currencySymbol}</InputAdornment>}
-                      value={(price[1]*changeRate).toFixed(0)}
+                      value={(price[1]).toFixed(0)}
                       onChange={(v) => {
                         const u = parseFloat(v.target.value);
                         isNaN(u) || setPrice(([a, b]) => ([a, u]));
@@ -329,12 +317,10 @@ const FilterBar: (React.FC<props>) = ({ setCourses, type, username, courseTitles
                   getAriaLabel={() => 'Minimum distance shift'}
                   value={price}
                   onChange={handleChange}
-
                   valueLabelDisplay="auto"
                   disableSwap
                   min={0}
-                  max={1000}
-
+                  max={1000 * changeRate}
                 />
               </Box>
             </ListItem>

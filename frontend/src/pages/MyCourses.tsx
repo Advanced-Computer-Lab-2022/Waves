@@ -6,7 +6,6 @@ import ResponsiveNavBar from "../components/ResponsiveNavBar";
 import Footer from "../components/Footer";
 import Courses from "../components/Courses";
 import FilterBar from "../components/FilterBar";
-import { type } from '@testing-library/user-event/dist/type';
 
 const MyCourses = (props: any) => {
     const [courses, setCourses] = React.useState<any[]>([]);
@@ -65,8 +64,9 @@ const MyCourses = (props: any) => {
     return (
         <>
             <ResponsiveNavBar isNotLoggedIn={isNotLoggedIn} pages={pages} />
-            <Stack marginTop={0.6} direction={"row"}>
+            <Stack sx={{ minWidth: '100%', width: '122rem' }} className="grad" marginTop={0.3} direction={"row"}>
                 <FilterBar type={type} username={username} setCourses={setCourses} courseTitles={courseTitles} />
+                <span className="vertical-line"></span>
                 <Courses noPrice={true} courses={courses} />
             </Stack>
             <p />

@@ -32,3 +32,20 @@
     border-left: 3px solid #ccc;
     margin-right: 20px;
 }
+
+.horizontal-line-report {
+    display: block;
+    border-top: 3px solid rgb(131, 131, 131);
+}
+
+.horizontal-line {
+    display: block;
+    border-top: 3px solid rgb(131, 131, 131);
+    margin-bottom: 25px;
+}
+
+.horizontal-line-thin {
+    display: block;
+    border-top: 1px solid rgb(131, 131, 131);
+    margin-bottom: 20px;
+}

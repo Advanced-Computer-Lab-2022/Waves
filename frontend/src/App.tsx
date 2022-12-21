@@ -18,7 +18,6 @@ import Info from './pages/PersonalInfo';
 import Results from './pages/results';
 import InstructorTerms from './pages/InstructorTerms';
 import ResetPassword from './pages/ResetPassword';
-import EditPassword from './pages/EditPassword';
 import Profile from './pages/Profile';
 import Homepage from './pages/Homepage';
 import PurchaseCourse from "./pages/PurchaseCourse";
@@ -28,6 +27,7 @@ import CoursesPage from "./pages/CoursesPage";
 import MyCourses from "./pages/MyCourses";
 import ViewCourseUnPurchased from "./pages/ViewCourseUnPurchased";
 import NewPassword from "./pages/newResetPassword";
+import ViewReports from "./pages/ViewReports";
 
 function App() {
 
@@ -59,12 +59,12 @@ function App() {
         <Route path="/view-rating" element={<ViewRating />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/instructor-terms" element={<InstructorTerms />} />
-        <Route path="/personal-info/edit-password" element={<EditPassword />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/corporate-trainees" element={<ViewCorporateTrainees />} />
         <Route path="/courses" element={<CoursesPage/>} />
         <Route path="/all-courses" element={<CoursesPage/>} />
         <Route path="/my-courses" element={<MyCourses/>} />
+        <Route path="/view-reports" element={<ViewReports/>} />
       </Routes>
     </Router>
   );
