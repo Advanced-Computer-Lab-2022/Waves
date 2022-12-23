@@ -7,6 +7,7 @@ import CircleIcon from "@mui/icons-material/Circle";
 import PendingIcon from "@mui/icons-material/Pending";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import ViewReport from "../components/ViewReport";
+import { useEffect } from "react";
 
 const ViewReports = () => {
   const adminPages = [
@@ -22,24 +23,39 @@ const ViewReports = () => {
 
   const [selectedCourseTitle, setSelectedCourseTitle] = React.useState("");
 
-  const [selectedReport, setSelectedReport] = React.useState({});
+  const [selectedReport, setSelectedReport] = React.useState<any>();
 
-  React.useEffect(() => {
-    axios
-      .get("http://localhost:3001/getReports", { withCredentials: true })
-      .then((response) => {
-        setCoursesReports(response.data);
-      });
-  }, [selectedReport]);
+  // useEffect(() => {
+  //   if (selectedReport) {
+  //     // setSelectedReport(
+  //     //   coursesReports.find((report: any) => report.id === selectedReport.id)
+  //     // );
+  //   }
+  // }, [coursesReports]);
+
+  // useEffect(() => {
+  //   console.log(selectedReport);
+  //   axios
+  //     .get("http://localhost:3001/getReports", { withCredentials: true })
+  //     .then((response) => {
+  //       setCoursesReports(response.data);
+  //       if (selectedReport) {
+  //         const a = response.data.find(
+  //           (report: any) => report._id === selectedReport._id
+  //         );
+  //         setSelectedReport(a);
+
+  //         console.log({ a });
+  //       }
+  //     });
+  // }, [selectedReport?._id]);
 
   function updateReportSeen(report: any) {
     axios
       .post("http://localhost:3001/updateReportSeen", {
         report: report,
       })
-      .then((response) => {
-        console.log(response.data);
-      });
+      .then((response) => {});
   }
 
   function handleOnClick(report: any, courseTitle: any) {
@@ -85,7 +101,7 @@ const ViewReports = () => {
                     >
                       <Stack style={{ marginTop: "10px" }} spacing={2.25}>
                         <Stack direction={"row"} spacing={3}>
-                          {report.seen ? (
+                          {report.seen /* || report == selectedReport */ ? (
                             <CircleIcon
                               fontSize="small"
                               color="primary"
@@ -123,7 +139,10 @@ const ViewReports = () => {
         </List>
         <span className="vertical-line"></span>
         <ViewReport
-          report={selectedReport}
+          selectedReport={selectedReport}
+          setSelectedReport={setSelectedReport}
+          // coursesReports={coursesReports}
+          setCoursesReports={setCoursesReports}
           courseTitle={selectedCourseTitle}
         ></ViewReport>
       </Stack>
