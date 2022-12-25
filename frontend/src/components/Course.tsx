@@ -178,7 +178,7 @@ const Course: React.FC<props> = ({
         <CardActionArea
           sx={{ minWidth: 350, maxWidth: 350, minHeight: 480, maxHeight: 580 }}
           onClick={() => {
-            navigate("../viewCourse", {
+            navigate("../viewCourse-Unpurchased", {
               state: {
                 data: course,
               },

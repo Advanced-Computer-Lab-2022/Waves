@@ -21,7 +21,7 @@ const ReviewsReports: React.FC<props> = ({ courseReviews, courseReports }) => {
     }
 
     return (
-        <div style={{ opacity: '100%', paddingLeft: '1%', paddingRight: '1%', paddingBottom: '2%', margin: '1%', boxShadow: '2px 2px', borderRadius: '5px', border: 'solid rgb(170,170,170) 3px', marginLeft: 'auto', marginRight: 'auto', maxHeight: '40%', width: '95%', backgroundColor: 'rgb(200, 200, 200)' }}>
+        <div style={{ opacity: '100%', paddingLeft: '1%', paddingRight: '1%', paddingBottom: '2%', margin: '0.75%', boxShadow: '2px 2px', borderRadius: '5px', border: 'solid rgb(170,170,170) 3px', marginLeft: 'auto', marginRight: 'auto', maxHeight: '40%', width: '97.5%', backgroundColor: 'rgb(200, 200, 200)' }}>
             <Tabs value={value} onChange={handleChange}>
                 <Tab sx={{ minWidth: '50%' }} icon={<RateReviewIcon fontSize='large' color='primary' />} label="Reviews" />
                 <Tab sx={{ minWidth: '50%' }} icon={<ReportIcon fontSize='large' color='error' />} label="Reports" />
