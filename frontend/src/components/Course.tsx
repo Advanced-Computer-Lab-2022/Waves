@@ -20,7 +20,7 @@ import {
   ThemeProvider,
   createTheme,
 } from "@mui/material";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ObjectId } from "mongoose";
 import LocalOfferIcon from "@mui/icons-material/LocalOffer";
@@ -133,9 +133,12 @@ const Course: React.FC<props> = ({
     axios
       .get("http://localhost:3001/getType", { withCredentials: true })
       .then((response) => {
-        if (response.data == "admin" || response.data == "instructor") {
-          setType(1);
-        }
+        setType(response.data);
+        axios
+        .get("http://localhost:3001/getMyCourse", { withCredentials: true })
+        .then((response2) => {
+          //Was Busy, Didn't have time to finish this part
+        });
       });
   }, []);
 
