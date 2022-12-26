@@ -132,9 +132,12 @@ const Course: React.FC<props> = ({
     axios
       .get("http://localhost:3001/getType", { withCredentials: true })
       .then((response) => {
-        if (response.data == "admin" || response.data == "instructor") {
-          setType(1);
-        }
+        setType(response.data);
+        axios
+        .get("http://localhost:3001/getMyCourse", { withCredentials: true })
+        .then((response2) => {
+          //Was Busy, Didn't have time to finish this part
+        });
       });
     axios
       .post(
