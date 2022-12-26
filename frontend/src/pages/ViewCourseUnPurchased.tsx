@@ -1,25 +1,20 @@
 import * as React from "react";
-import jsPDF from "jspdf";
 import Typography from "@mui/material/Typography";
 import "bootstrap/dist/css/bootstrap.min.css";
 import {
-  Button,
-  FormControl,
-  OutlinedInput,
   Rating,
   Stack,
   ThemeProvider,
   createTheme,
+  Button,
 } from "@mui/material";
 import "bootstrap/dist/css/bootstrap.min.css";
 import ResponsiveNavBar from "../components/ResponsiveNavBar";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import CourseContent from "../components/CourseContent";
 import Footer from "../components/Footer";
-import DownloadIcon from "@mui/icons-material/Download";
 import ReviewsReports from "../components/ReviewsReports";
 import "../components/styles.css";
-import ReviewOrReport from "../components/ReviewOrReport";
 import { useNavigate } from "react-router-dom";
 
 const pages = ["Courses", "Instructors", "Add User", "About Us"];
@@ -57,8 +52,6 @@ const ViewCourseUnpurchased = (props: any) => {
   const location = useLocation();
   const course = location.state?.data;
 
-  const [instructorRating, setInstructorRating] = React.useState(0);
-
   const [courseRating, setCourseRating] = React.useState(course.courseRating);
 
   const [courseReviews, setCourseReviews] = React.useState(
@@ -68,10 +61,6 @@ const ViewCourseUnpurchased = (props: any) => {
   const [courseReports, setCourseReports] = React.useState(
     course.courseReports
   );
-
-  const [notes, setNotes] = React.useState<string>("");
-
-  const [open, setOpen] = React.useState(false);
 
   const navigate = useNavigate();
 

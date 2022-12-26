@@ -146,6 +146,7 @@ const Login = (props: any) => {
                 ></TextField>
                 <TextField
                   label="Password"
+                  type= "password"
                   value={password}
                   onChange={(event) => setPassword(event.target.value)}
                 ></TextField>

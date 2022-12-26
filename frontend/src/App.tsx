@@ -29,6 +29,7 @@ import ViewCourseUnPurchased from "./pages/ViewCourseUnPurchased";
 import NewPassword from "./pages/newResetPassword";
 import ViewReports from "./pages/ViewReports";
 import AddCourseTemp from "./pages/AddCourseTemp";
+import CircularProgressChildren from "./components/CircularProgression";
 
 function App() {
 
@@ -67,6 +68,7 @@ function App() {
         <Route path="/my-courses" element={<MyCourses/>} />
         <Route path="/view-reports" element={<ViewReports/>} />
         <Route path="/zeyad" element={<AddCourseTemp/>} />
+        <Route path="/Circular" element={<CircularProgressChildren/>} />
       </Routes>
     </Router>
   );
