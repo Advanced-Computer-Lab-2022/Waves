@@ -14,26 +14,23 @@ const router = express.Router();
 
 router.post("/checkPurchasedCourse", async (req, res) => {
   const { courseTitle } = req.body;
-  if(!req.session.user)
-    return res.status(400).send("not logged in");
+  if (!req.session.user || req.session.user?.type == "admin") res.send(false);
+
   const user = await (() => {
     if (req.session.user?.type == "individualTrainee")
-      return IndividualTrainee.findOne({ username: req.session.user.username });
+      return IndividualTrainee.findOne({
+        username: req.session.user.username,
+      });
 
     if (req.session.user?.type == "corporateTrainee")
-      return CorporateTrainee.findOne({ username: req.session.user.username });
+      return CorporateTrainee.findOne({
+        username: req.session.user.username,
+      });
 
-    if(req.session.user?.type == "instructor")
+    if (req.session.user?.type == "instructor")
       return Instructor.findOne({ username: req.session.user.username });
-
-    throw "";
-  })().catch(() => null);
-
-  if (!user) return res.status(400).send("database exploded");
-  
-  const isPurchased = user.courses.includes(courseTitle);
-
-  res.send(isPurchased);
+  })();
+  if (user) res.send(user.courses.includes(courseTitle));
 });
 
 router.get("/getCorporateTrainees", async (req, res) => {

@@ -28,7 +28,7 @@ const CourseRating = (props:any) => {
     }, []);
     return (
         <>  
-            <ResponsiveNavBar pages={pagesArr}/>
+            <ResponsiveNavBar />
             
             <Container>
                 <Stack spacing ={5} divider={<Divider orientation="vertical" flexItem />}>

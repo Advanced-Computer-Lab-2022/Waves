@@ -30,7 +30,7 @@ const Homepage = (props: any) => {
 
   return (
     <>
-      <ResponsiveNavBar isNotLoggedIn={true} pages={pages} />
+      <ResponsiveNavBar />
       <Stack
         sx={{ minWidth: "100%", width: "122rem" }}
         className="grad"

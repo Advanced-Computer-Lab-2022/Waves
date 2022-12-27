@@ -125,20 +125,12 @@ const Course: React.FC<props> = ({
           },
         }
       )
-      .then((response) => {});
+      .then((response) => {
+        alert("Discount Added Successfully!");
+      });
   };
 
   React.useEffect(() => {
-    axios
-      .get("http://localhost:3001/getType", { withCredentials: true })
-      .then((response) => {
-        setType(response.data);
-        axios
-        .get("http://localhost:3001/getMyCourse", { withCredentials: true })
-        .then((response2) => {
-          //Was Busy, Didn't have time to finish this part
-        });
-      });
     axios
       .post(
         "http://localhost:3001/checkPurchasedCourse",
@@ -146,8 +138,7 @@ const Course: React.FC<props> = ({
         { withCredentials: true }
       )
       .then((response) => {
-        if(response.data)
-          setIsMyCourse(true);
+        if (response.data) setIsMyCourse(true);
       });
   }, []);
 
@@ -233,7 +224,7 @@ const Course: React.FC<props> = ({
                 </Typography>
 
                 <Box style={{ marginLeft: "auto" }}>
-                  {isMyCourse ?<Progress progress={50} /> : <></>}
+                  {isMyCourse ? <Progress progress={50} /> : <></>}
                 </Box>
               </Stack>
               <Typography variant="body2" color="rgb(100,100,100)"></Typography>

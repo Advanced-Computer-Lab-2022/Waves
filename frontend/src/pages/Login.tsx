@@ -65,10 +65,7 @@ const Login = (props: any) => {
 
   return (
     <ThemeProvider theme={theme}>
-      <ResponsiveNavBar
-        pages={["All Course", "About Us"]}
-        isNotLoggedIn={true}
-      />
+      <ResponsiveNavBar />
       <div>
         <div
           className="grad"
@@ -146,7 +143,7 @@ const Login = (props: any) => {
                 ></TextField>
                 <TextField
                   label="Password"
-                  type= "password"
+                  type="password"
                   value={password}
                   onChange={(event) => setPassword(event.target.value)}
                 ></TextField>

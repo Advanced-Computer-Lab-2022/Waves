@@ -67,7 +67,7 @@ const ViewCourseUnpurchased = (props: any) => {
   return (
     <ThemeProvider theme={theme}>
       <div className="grad" style={background}>
-        <ResponsiveNavBar pages={pages} />
+        <ResponsiveNavBar />
         <Stack direction={"row"} marginBottom={2} marginTop={2}>
           <Stack
             direction={"column"}

@@ -25,9 +25,7 @@ import {
   Checkbox,
   FormGroup,
 } from "@mui/material";
-import {
-  Link,
-} from "@mui/material";
+import { Link } from "@mui/material";
 import {
   Radio,
   RadioGroup,
@@ -155,10 +153,7 @@ const SignUp = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <ResponsiveNavBar
-        pages={["All Course", "About Us"]}
-        isNotLoggedIn={true}
-      />
+      <ResponsiveNavBar />
       <div>
         <div
           className="grad"
@@ -266,9 +261,7 @@ const SignUp = () => {
                   variant="outlined"
                 />
 
-                <FormControl
-                  variant="outlined"
-                >
+                <FormControl variant="outlined">
                   <InputLabel id="demo-simple-select-filled-label">
                     Country
                   </InputLabel>
@@ -607,8 +600,8 @@ const SignUp = () => {
                   <Stack spacing={3} direction={"row"}>
                     <FormLabel
                       style={{
-                        marginTop: 'auto',
-                        marginBottom: 'auto',
+                        marginTop: "auto",
+                        marginBottom: "auto",
                         fontSize: "20px",
                         color: customRed,
                       }}

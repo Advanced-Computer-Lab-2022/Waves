@@ -10,45 +10,11 @@ import ViewReport from "../components/ViewReport";
 import { useEffect } from "react";
 
 const ViewReports = () => {
-  const adminPages = [
-    "All Courses",
-    "Instructors",
-    "Corporate Trainees",
-    "Add User",
-    "View Reports",
-    "About Us",
-  ];
-
   const [coursesReports, setCoursesReports] = React.useState([]);
 
   const [selectedCourseTitle, setSelectedCourseTitle] = React.useState("");
 
   const [selectedReport, setSelectedReport] = React.useState<any>();
-
-  // useEffect(() => {
-  //   if (selectedReport) {
-  //     // setSelectedReport(
-  //     //   coursesReports.find((report: any) => report.id === selectedReport.id)
-  //     // );
-  //   }
-  // }, [coursesReports]);
-
-  // useEffect(() => {
-  //   console.log(selectedReport);
-  //   axios
-  //     .get("http://localhost:3001/getReports", { withCredentials: true })
-  //     .then((response) => {
-  //       setCoursesReports(response.data);
-  //       if (selectedReport) {
-  //         const a = response.data.find(
-  //           (report: any) => report._id === selectedReport._id
-  //         );
-  //         setSelectedReport(a);
-
-  //         console.log({ a });
-  //       }
-  //     });
-  // }, [selectedReport?._id]);
 
   function updateReportSeen(report: any) {
     axios
@@ -65,7 +31,7 @@ const ViewReports = () => {
   }
   return (
     <>
-      <ResponsiveNavBar pages={adminPages} />
+      <ResponsiveNavBar />
       <Stack direction={"row"} className="grad" marginTop={0.3}>
         <List
           className="listGrad"
