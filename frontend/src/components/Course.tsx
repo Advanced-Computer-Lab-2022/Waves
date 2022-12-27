@@ -184,7 +184,7 @@ const Course: React.FC<props> = ({
     <ThemeProvider theme={theme}>
       <Card
         sx={{
-          backgroundColor: "rgb(180,180,180)",
+          backgroundColor: "rgb(205,205,205)",
           minWidth: 350,
           maxWidth: 350,
           maxHeight: 570,
