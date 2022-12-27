@@ -7,7 +7,7 @@ const CoursesSchema = new mongoose.Schema({
   },
   description: {
     type: String,
-    required: true,
+    //required: true,
   },
   img: {
     type: String,
@@ -15,15 +15,15 @@ const CoursesSchema = new mongoose.Schema({
   },
   videoPreview: {
     type: String,
-    required: true,
+    //required: true,
   },
   subtitles: {
     type: Array,
-    required: true,
+   // required: true,
   },
   videoLinks: {
     type: Array,
-    required: true,
+    //required: true,
   },
   price: {
     type: Number,
@@ -53,10 +53,13 @@ const CoursesSchema = new mongoose.Schema({
     default: 0
   },
   discountDuration: {
-    type: Number,
-    default: []
+    type: Number
   },
   reports: {
+    type: Array,
+    default: []
+  },
+  chapters: {
     type: Array,
     default: []
   }

@@ -6,8 +6,9 @@ import ListItemText from '@mui/material/ListItemText';
 import Collapse from '@mui/material/Collapse';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
-import { Stack, Typography } from '@mui/material';
+import { Button, Stack, Typography } from '@mui/material';
 import ReactPlayer from 'react-player';
+import { Link } from 'react-router-dom';
 
 export default function NestedList(props: any) {
 
@@ -18,7 +19,7 @@ export default function NestedList(props: any) {
   const [courseVideo, setCourseVideo] = React.useState(course.courseVideoPreview);
 
 
-  const subtitles: string[][] = course.courseSubtitles;
+  const subtitles: Chapter[] = course.courseSubtitles;
 
   React.useEffect(() => {
     setOpen(new Array(subtitles?.length ?? 0).fill(false));
@@ -32,7 +33,8 @@ export default function NestedList(props: any) {
     setCourseVideo(course.courseVideoLinks[idx]);
   };
 
-
+  interface Chapter { name: String, exercise: Object, videoLink: String, description: String }
+  console.log(subtitles[0].name+" - "+JSON.stringify(subtitles[2].exercise))
   return (
     <Stack marginTop={'3%'} direction={'row'} style={{ height: '730px' }}>
       <ReactPlayer style={{
@@ -58,26 +60,29 @@ export default function NestedList(props: any) {
           }
         >
           {subtitles && subtitles.map((subtitle, idx) => (
-            subtitle.map((element) => {
-              if (element == subtitle[0]) {
-                return <ListItemButton onClick={() => handleClick(idx)}>
+            <>
+              <ListItemButton onClick={() => handleClick(idx)}>
 
-                  <ListItemText>
-                    <Typography fontSize={19}> {subtitle[0]}  </Typography>
-                  </ListItemText>
-                  {open[idx] ? <ExpandLess /> : <ExpandMore />}
-                </ListItemButton>
-              }
-              else {
-                return <Collapse in={open[idx]} timeout="auto" unmountOnExit>
-                  <List component="div" disablePadding>
-                    <ListItemButton onClick={() => handleSubtitleClick(idx)} sx={{ pl: 4 }}>
-                      <ListItemText primary={element} />
-                    </ListItemButton>
-                  </List>
-                </Collapse>
-              }
-            })
+                <ListItemText>
+                  <Typography fontSize={19}> {subtitle.name}  </Typography>
+                </ListItemText>
+                {open[idx] ? <ExpandLess /> : <ExpandMore />}
+              </ListItemButton>
+
+              <Collapse in={open[idx]} timeout="auto" unmountOnExit>
+                <List component="div" disablePadding>
+                  <ListItemButton onClick={() => handleSubtitleClick(idx)} sx={{ pl: 4 }}>
+                    <ListItemText primary={subtitle.description} />
+                  </ListItemButton>
+                  <Button variant="contained" style={{ marginTop: 20 }}>
+                    <Link to="/exercise-session" style={{ textDecoration: 'none', color: 'white' }} state={{ data: { exercise: subtitle.exercise} }} className="link">
+                      Take Exercise
+                    </Link>
+                  </Button>
+                </List>
+              </Collapse>
+            </>
+
           ))}
           <></>
         </List>

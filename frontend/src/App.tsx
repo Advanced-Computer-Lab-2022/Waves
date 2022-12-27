@@ -6,7 +6,7 @@ import {
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 import Inbox from './pages/Inbox';
-import Exam from './pages/Exam';
+//import Exam from './pages/Exam';
 import ViewCourse from './pages/ViewCourse';
 import ExamsPage from './pages/ExamsPage';
 import ExamSession from './pages/ExamSession';
@@ -29,6 +29,8 @@ import ViewCourseUnPurchased from "./pages/ViewCourseUnPurchased";
 import NewPassword from "./pages/newResetPassword";
 import ViewReports from "./pages/ViewReports";
 import AddCourseTemp from "./pages/AddCourseTemp";
+import ExerciseSession from "./components/ExerciseSession";
+import ExerciseResults from "./pages/ExerciseResults";
 
 function App() {
 
@@ -44,9 +46,9 @@ function App() {
         <Route path="/personal-info" element={<Info />} />
         <Route path="/add-user" element={<NewUser />} />
         <Route path="/add-course" element={<AddCourse />} />
-        <Route path="/add-exam" element={<Exam />} />
         <Route path="/exams" element={<ExamsPage />} />
         <Route path="/exam-session" element={<ExamSession />} />
+        <Route path="/exercise-session" element={<ExerciseSession />} />
         <Route path="/results" element={<Results />} />
         <Route path="/inbox" element={<Inbox />} />
         <Route path="/admin" element={<CoursesPage />} />
@@ -66,7 +68,8 @@ function App() {
         <Route path="/all-courses" element={<CoursesPage/>} />
         <Route path="/my-courses" element={<MyCourses/>} />
         <Route path="/view-reports" element={<ViewReports/>} />
-        <Route path="/zeyad" element={<AddCourseTemp/>} />
+        <Route path="/addCourse" element={<AddCourseTemp/>} />
+        <Route path="/exercise-results" element={<ExerciseResults/>} />
       </Routes>
     </Router>
   );

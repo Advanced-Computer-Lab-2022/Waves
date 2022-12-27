@@ -7,7 +7,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import axios from 'axios';
 import React, { useEffect } from "react";
-import Question from "../components/Question";
+//import Question from "../components/Question";
 import { Button, Link, Checkbox, FormControlLabel, FormGroup, Stack, TextField } from "@mui/material";
 import LoggedInNavbar from "../components/LoggedInNavbar";
 import ResponsiveNavBar from "../components/ResponsiveNavBar";

@@ -416,8 +416,14 @@ router.post("/add-user", async (req, res) => {
   else if (index == 2) adminController.addCorporate(req.body);
 });
 
-router.post("/add-course", async (req, res) => {
-  instructorController.addCourse(req.body);
+// router.post("/add-course", async (req, res) => {
+//   instructorController.addCourse(req.body);
+//   res.send("/instructor");
+// });
+
+router.post("/addCourse", async (req, res) => {
+  instructorController.addCourse(req.body,req.session.user.username)
+  console.log(req.body)
   res.send("/instructor");
 });
 
