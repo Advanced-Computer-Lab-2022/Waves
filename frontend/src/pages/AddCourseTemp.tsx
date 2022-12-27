@@ -46,6 +46,7 @@ import AddExerciseDialog from './AddExerciseDialog';
 export default function AddCourse() {
   const [title, setTitle] = React.useState();
   const [price, setPrice] = React.useState();
+  const [totalHours, setTotalHours] = React.useState();
   const [summary, setsummary] = React.useState();
   const [subject, setSubject] = React.useState();
 
@@ -63,7 +64,7 @@ export default function AddCourse() {
   const [subtitleVideo2, setSubtitleVideo2] = React.useState();
   const [subtitleVideo3, setSubtitleVideo3] = React.useState();
 
-  const [questions1, setQuestions1] = React.useState([]);
+  const [questions1, setQuestions1] = React.useState([]); //should be setExercise
   const [questions2, setQuestions2] = React.useState([]);
   const [questions3, setQuestions3] = React.useState([]);
   console.log(questions1);
@@ -76,9 +77,10 @@ export default function AddCourse() {
 
 
   function handleSubmit() {
-    axios.post('http://localhost:3000/addCourse', {
+    axios.post('http://localhost:3001/addCourse', {
       courseTitle: title,
       coursePrice: price,
+      courseTotalHours: totalHours,
       courseSummary: summary,
       courseSubject: subject,
       previewLink: preview,
@@ -86,7 +88,6 @@ export default function AddCourse() {
       courseSubtitles: [subtitle1, subtitle2, subtitle3],
       subtitleDescriptions: [subtitleDescription1, subtitleDescription2, subtitleDescription3],
       subtitleVideos: [subtitleVideo1, subtitleVideo2, subtitleVideo3],
-      username: 'blah',
       examQuestions: [questions1, questions2, questions3]
     }, {
       headers: {
@@ -139,6 +140,15 @@ export default function AddCourse() {
                   label="Price"
                   name="price"
                   onChange={(e:any) => setPrice(e.target.value)}
+                />
+                <TextField
+                  required
+                  fullWidth
+                  id="totalHours"
+                  type="number"
+                  label="Total Hours"
+                  name="totalHours"
+                  onChange={(e:any) => setTotalHours(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12}>
