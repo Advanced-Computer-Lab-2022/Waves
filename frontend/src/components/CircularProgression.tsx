@@ -1,20 +1,30 @@
-import * as React from "react";
-import Box from "@mui/joy/Box";
-import CircularProgress from "@mui/joy/CircularProgress";
-import ReportIcon from "@mui/icons-material/Report";
-import WarningIcon from "@mui/icons-material/Warning";
+import CircularProgress from "@mui/material/CircularProgress";
+import Box from "@mui/material/Box";
+import { Typography } from "@mui/material";
 
-export default function CircularProgressChildren() {
+export default function CircularIndeterminate(props: any) {
+  const progress = props.progress;
   return (
-    <Box
-      sx={{ display: "flex", gap: 2, alignItems: "center", flexWrap: "wrap" }}
-    >
-      <CircularProgress color="warning">
-        <WarningIcon color="warning" />
-      </CircularProgress>
-      <CircularProgress size="lg" determinate value={66.67}>
-        2 / 3
-      </CircularProgress>
+    <Box sx={{ position: "relative", display: "inline-flex" }}>
+      <CircularProgress variant="determinate" size={70} value={progress} />
+      <Box
+        sx={{
+          top: 0,
+          left: 0,
+          bottom: 0,
+          right: 0,
+          position: "absolute",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <Typography
+          variant="subtitle1"
+          component="div"
+          color="text.secondary"
+        >{`${Math.round(progress)}%`}</Typography>
+      </Box>
     </Box>
   );
 }

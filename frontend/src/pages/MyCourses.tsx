@@ -67,7 +67,7 @@ const MyCourses = (props: any) => {
             <Stack sx={{ minWidth: '100%', width: '122rem' }} className="grad" marginTop={0.3} direction={"row"}>
                 <FilterBar type={type} username={username} setCourses={setCourses} courseTitles={courseTitles} />
                 <span className="vertical-line"></span>
-                <Courses noPrice={true} courses={courses} />
+                <Courses noPrice={true} courses={courses}/>
             </Stack>
             <p />
             <Footer />

@@ -1,29 +1,27 @@
-import React, { Component } from "react";
+import React from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import {
-  Box,
   Button,
   CardActionArea,
-  CardActions,
   Dialog,
   DialogActions,
   DialogContent,
-  DialogContentText,
   DialogTitle,
-  Grid,
   Rating,
   Stack,
   TextField,
   ThemeProvider,
   createTheme,
+  Box,
 } from "@mui/material";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ObjectId } from "mongoose";
 import LocalOfferIcon from "@mui/icons-material/LocalOffer";
+import Progress from "./CircularProgression";
 
 interface props {
   id: ObjectId;
@@ -91,6 +89,7 @@ const Course: React.FC<props> = ({
   const [open, setOpen] = React.useState(false);
   const [percent, setPercent] = React.useState("");
   const [duration, setDuration] = React.useState("");
+  const [isMyCourse, setIsMyCourse] = React.useState(false);
 
   if (courseDiscount == 0) {
     var priceStyle = {
@@ -133,14 +132,39 @@ const Course: React.FC<props> = ({
     axios
       .get("http://localhost:3001/getType", { withCredentials: true })
       .then((response) => {
-        if (response.data == "admin" || response.data == "instructor") {
-          setType(1);
-        }
+        setType(response.data);
+        axios
+        .get("http://localhost:3001/getMyCourse", { withCredentials: true })
+        .then((response2) => {
+          //Was Busy, Didn't have time to finish this part
+        });
+      });
+    axios
+      .post(
+        "http://localhost:3001/checkPurchasedCourse",
+        { courseTitle: course.courseName },
+        { withCredentials: true }
+      )
+      .then((response) => {
+        if(response.data)
+          setIsMyCourse(true);
       });
   }, []);
 
   const handleClickOpen = () => {
-    setOpen(true);
+    if (isMyCourse) {
+      navigate("../viewcourse", {
+        state: {
+          data: course,
+        },
+      });
+    } else {
+      navigate("../viewcourse-unpurchased", {
+        state: {
+          data: course,
+        },
+      });
+    }
   };
 
   const handleClose = () => {
@@ -177,13 +201,7 @@ const Course: React.FC<props> = ({
       >
         <CardActionArea
           sx={{ minWidth: 350, maxWidth: 350, minHeight: 480, maxHeight: 580 }}
-          onClick={() => {
-            navigate("../viewCourse", {
-              state: {
-                data: course,
-              },
-            });
-          }}
+          onClick={handleClickOpen}
         >
           <div>
             <CardMedia
@@ -209,11 +227,15 @@ const Course: React.FC<props> = ({
               </Typography>
 
               <p />
-              <Typography variant="body2" color="rgb(100,100,100)">
-                {" • " + courseTotalHours + " Total Hours"}
-              </Typography>
+              <Stack direction={"row"}>
+                <Typography variant="body2" color="rgb(100,100,100)">
+                  {" • " + courseTotalHours + " Total Hours"}
+                </Typography>
 
-              <p />
+                <Box style={{ marginLeft: "auto" }}>
+                  {isMyCourse ?<Progress progress={50} /> : <></>}
+                </Box>
+              </Stack>
               <Typography variant="body2" color="rgb(100,100,100)"></Typography>
               <Typography component="legend">Rating</Typography>
               <Stack direction="row">

@@ -31,6 +31,7 @@ import ViewReports from "./pages/ViewReports";
 import AddCourseTemp from "./pages/AddCourseTemp";
 import ExerciseSession from "./components/ExerciseSession";
 import ExerciseResults from "./pages/ExerciseResults";
+import CircularProgressChildren from "./components/CircularProgression";
 
 function App() {
 
@@ -56,7 +57,7 @@ function App() {
         <Route path="/coporateTrainee" element={<CoursesPage />} />
         <Route path="/individualTrainee" element={<CoursesPage />} />
         <Route path="/viewcourse" element={<ViewCourse />} />
-        <Route path="/viewcourse1" element={<ViewCourseUnPurchased />} />
+        <Route path="/viewcourse-unpurchased" element={<ViewCourseUnPurchased />} />
         <Route path="/payment-information" element={<PaymentInfo />} />
         <Route path="/purchase-course" element={<PurchaseCourse />} />
         <Route path="/view-rating" element={<ViewRating />} />
@@ -70,6 +71,7 @@ function App() {
         <Route path="/view-reports" element={<ViewReports/>} />
         <Route path="/addCourse" element={<AddCourseTemp/>} />
         <Route path="/exercise-results" element={<ExerciseResults/>} />
+        <Route path="/Circular" element={<CircularProgressChildren/>} />
       </Routes>
     </Router>
   );

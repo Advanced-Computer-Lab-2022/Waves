@@ -11,22 +11,24 @@ import ReactPlayer from 'react-player';
 import { Link } from 'react-router-dom';
 
 export default function NestedList(props: any) {
-
   const course = props.course;
 
   const [open, setOpen] = React.useState<boolean[]>([]);
 
-  const [courseVideo, setCourseVideo] = React.useState(course.courseVideoPreview);
+  const isNotPurchased = props.isNotPurchased;
 
+  const [courseVideo, setCourseVideo] = React.useState(
+    course.courseVideoPreview
+  );
 
   const subtitles: Chapter[] = course.courseSubtitles;
 
   React.useEffect(() => {
     setOpen(new Array(subtitles?.length ?? 0).fill(false));
-  }, [subtitles?.length])
+  }, [subtitles?.length]);
 
   const handleClick = (idx: number) => {
-    setOpen((o) => o.map((v, i) => i == idx ? !v : v));
+    setOpen((o) => o.map((v, i) => (i == idx ? !v : v)));
   };
 
   const handleSubtitleClick = (idx: number) => {
@@ -36,25 +38,43 @@ export default function NestedList(props: any) {
   interface Chapter { name: String, exercise: Object, videoLink: String, description: String }
   console.log(subtitles[0].name+" - "+JSON.stringify(subtitles[2].exercise))
   return (
-    <Stack marginTop={'3%'} direction={'row'} style={{ height: '730px' }}>
-      <ReactPlayer style={{
-        boxShadow: '2px 2px',
-        minHeight: '100%',
-        minWidth: '68%', borderRadius: '5px', border: 'solid rgb(170,170,170) 3px', marginLeft: '1%'
-      }} url={courseVideo} />
+    <Stack marginTop={"3%"} direction={"row"} style={{ height: "730px" }}>
+      <ReactPlayer
+        style={{
+          boxShadow: "2px 2px",
+          minHeight: "100%",
+          minWidth: "68%",
+          borderRadius: "5px",
+          border: "solid rgb(170,170,170) 3px",
+          marginLeft: "1%",
+        }}
+        url={courseVideo}
+      />
       <div
         style={{
-          width: '50%',
-          maxWidth: '50%',
+          width: "50%",
+          maxWidth: "50%",
         }}
       >
         <List
-          className='listGrad'
-          sx={{ opacity: '80%', boxShadow: '2px 2px', borderRadius: '5px', border: 'solid rgb(170,170,170) 3px', marginRight: '1%', marginLeft: 'auto', width: '98%', bgcolor: 'rgb(200, 200, 200)' }}
+          className="listGrad"
+          sx={{
+            opacity: "80%",
+            boxShadow: "2px 2px",
+            borderRadius: "5px",
+            border: "solid rgb(170,170,170) 3px",
+            marginRight: "1%",
+            marginLeft: "auto",
+            width: "98%",
+            bgcolor: "rgb(200, 200, 200)",
+          }}
           component="nav"
           aria-labelledby="nested-list-subheader"
           subheader={
-            <ListSubheader sx={{ opacity: '80%', bgcolor: 'initial' }} component="div">
+            <ListSubheader
+              sx={{ opacity: "80%", bgcolor: "initial" }}
+              component="div"
+            >
               <Typography fontSize={27}> Course Content </Typography>
             </ListSubheader>
           }

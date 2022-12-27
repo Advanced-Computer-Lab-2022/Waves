@@ -12,6 +12,30 @@ const bcrypt = require("bcrypt");
 const mongoose = require("mongoose");
 const router = express.Router();
 
+router.post("/checkPurchasedCourse", async (req, res) => {
+  const { courseTitle } = req.body;
+  if(!req.session.user)
+    return res.status(400).send("not logged in");
+  const user = await (() => {
+    if (req.session.user?.type == "individualTrainee")
+      return IndividualTrainee.findOne({ username: req.session.user.username });
+
+    if (req.session.user?.type == "corporateTrainee")
+      return CorporateTrainee.findOne({ username: req.session.user.username });
+
+    if(req.session.user?.type == "instructor")
+      return Instructor.findOne({ username: req.session.user.username });
+
+    throw "";
+  })().catch(() => null);
+
+  if (!user) return res.status(400).send("database exploded");
+  
+  const isPurchased = user.courses.includes(courseTitle);
+
+  res.send(isPurchased);
+});
+
 router.get("/getCorporateTrainees", async (req, res) => {
   const corporateTrainees = await CorporateTrainee.find({}).exec();
   res.send(corporateTrainees);

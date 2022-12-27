@@ -1,5 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Navbar from './navbar';
+import ResponsiveNavBar from './ResponsiveNavBar';
 import axios from 'axios';
 import {
     BrowserRouter as Router,
