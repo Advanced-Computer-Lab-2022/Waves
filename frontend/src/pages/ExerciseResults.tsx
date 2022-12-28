@@ -1,15 +1,9 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-//import { Link } from '@mui/material';
-import { Link, useLocation } from 'react-router-dom';
-import ResponsiveNavBar from '../components/ResponsiveNavBar';
-import { Grid, List, ListItemButton, ListItemText, Stack } from '@mui/material';
-import axios from 'axios';
+import { useLocation } from 'react-router-dom';
 
 const bull = (
     <Box
@@ -24,7 +18,6 @@ const ExerciseResults = (props: any) => {
     const location = useLocation();
     const data = location.state?.data;
 
-    const pagesArr = ['Courses', 'Instructors', 'Add User', 'About Us'];
     return (
         <>
             <Card sx={{ minWidth: 275 }}>

@@ -29,7 +29,7 @@ import ViewCourseUnPurchased from "./pages/ViewCourseUnPurchased";
 import NewPassword from "./pages/newResetPassword";
 import ViewReports from "./pages/ViewReports";
 import AddCourseTemp from "./pages/AddCourseTemp";
-import ExerciseSession from "./components/ExerciseSession";
+import ExerciseSession from "./pages/ExerciseSession";
 import ExerciseResults from "./pages/ExerciseResults";
 import CircularProgressChildren from "./components/CircularProgression";
 
