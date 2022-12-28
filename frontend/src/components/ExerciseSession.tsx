@@ -7,7 +7,7 @@ import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { ReactNode } from 'react';
-import { Stack } from '@mui/material';
+import { FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Stack } from '@mui/material';
 
 const bull = (
     <Box
@@ -21,12 +21,26 @@ const bull = (
 const ExerciseSession: React.FC = () => {
     const location = useLocation();
     const data = location.state?.data;
-    let [score, setScore] = React.useState(0);
+    const [score, setScore] = React.useState(0);
+
+    const [choices, setChoices] = React.useState([]);
+
+    const calcScore = () => {
+
+    }
 
     const check = (choice: Number, answer: String) => {
-        if(choice+""==answer) setScore(score+1);
-        console.log("choice: "+choice+" -answer: "+answer+ "-score: "+score)
-      };
+        if (choice + "" == answer) setScore(score + 1);
+        console.log("choice: " + choice + " -answer: " + answer + "-score: " + score)
+    };
+
+    function handleChange(choice: String, idx: number) {
+        let choicesTemp: any = [
+            ...choices];
+        choicesTemp[idx] = choice;
+        setChoices(choicesTemp);
+
+    }
 
     console.log((data.exercise[0].choices.length) + " ***")
     return (
@@ -38,24 +52,41 @@ const ExerciseSession: React.FC = () => {
                 <Card sx={{ minWidth: 275 }}>
                     <CardContent>
                         <Typography sx={{ fontSize: 30 }} gutterBottom>
-                            {"Question : "+exercise.question}
+                            {"Question : " + exercise.question}
                         </Typography>
                         <Typography sx={{ fontSize: 24 }} gutterBottom>
-                            {"Choices : "+exercise.choices + " "}
+                            {"Choices : " + exercise.choices + " "}
                         </Typography>
                         <Stack direction="column" spacing={2}>
-                            {(exercise.choices).map((choice) => (
-                                <Button onClick={() => check(exercise.choices.indexOf(choice),exercise.correctAnswerIndex)} variant="contained">{choice}</Button>
-                            ))}
+                            <FormControl>
+                                <FormLabel id="demo-radio-buttons-group-label">Gender</FormLabel>
+                                <RadioGroup
+                                    aria-labelledby="demo-radio-buttons-group-label"
+                                    defaultValue="female"
+                                    name="radio-buttons-group"
+                                    //value= {}
+                                    //onChange={(e) => { handleChange(e.target.value.choice, e.target.value.idx) }}
+                                >
+
+                                    {(exercise.choices).map((choice: String, idx) => (
+                                        <>
+                                            <FormControlLabel value={{choice: choice, idx: idx}} control={<Radio />} label={choice} />
+                                            <Button onClick={() => check(exercise.choices.indexOf(choice), exercise.correctAnswerIndex)} variant="contained">{choice}</Button>
+                                        </>
+                                    ))}
+
+                                </RadioGroup>
+                            </FormControl>
+
                         </Stack>
                     </CardContent>
                 </Card>
             ))}
-            <Button variant="contained" style={{marginTop: 20}}> 
-            <Link to="/exercise-results" style={{textDecoration: 'none', color: 'white'}} state={{ data: {score: score, total: data.exercise.length, exercise: data.exercise}}} className="link">
+            <Button variant="contained" style={{ marginTop: 20 }} onClick={() => { console.log(choices) }}>
+                <Link to="/exercise-results" style={{ textDecoration: 'none', color: 'white' }} state={{ data: { score: score, total: data.exercise.length, exercise: data.exercise } }} className="link">
                 Submit Answers
             </Link>
-        </Button>
+            </Button>
         </>
     );
 }

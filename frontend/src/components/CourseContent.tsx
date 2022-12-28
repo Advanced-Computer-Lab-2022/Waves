@@ -6,7 +6,7 @@ import ListItemText from '@mui/material/ListItemText';
 import Collapse from '@mui/material/Collapse';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
-import { Button, Stack, Typography } from '@mui/material';
+import { Button, ListItem, Stack, Typography } from '@mui/material';
 import ReactPlayer from 'react-player';
 import { Link } from 'react-router-dom';
 
@@ -36,7 +36,7 @@ export default function NestedList(props: any) {
   };
 
   interface Chapter { name: String, exercise: Object, videoLink: String, description: String }
-  console.log(subtitles[0].name+" - "+JSON.stringify(subtitles[2].exercise))
+  console.log(subtitles[0].name + " - " + JSON.stringify(subtitles[2].exercise))
   return (
     <Stack marginTop={"3%"} direction={"row"} style={{ height: "730px" }}>
       <ReactPlayer
@@ -91,14 +91,20 @@ export default function NestedList(props: any) {
 
               <Collapse in={open[idx]} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
-                  <ListItemButton onClick={() => handleSubtitleClick(idx)} sx={{ pl: 4 }}>
-                    <ListItemText primary={subtitle.description} />
-                  </ListItemButton>
-                  <Button variant="contained" style={{ marginTop: 20 }}>
-                    <Link to="/exercise-session" style={{ textDecoration: 'none', color: 'white' }} state={{ data: { exercise: subtitle.exercise} }} className="link">
-                      Take Exercise
-                    </Link>
-                  </Button>
+
+                  {isNotPurchased ?
+                    <ListItemText sx={{ pl: 4 }} primary={subtitle.description} /> :
+                    <Stack direction={'row'}>
+                      <ListItemButton onClick={() => handleSubtitleClick(idx)} sx={{ pl: 4 }}>
+                        <ListItemText primary={subtitle.description} />
+                      </ListItemButton>
+                        <Button variant="contained" sx={{marginRight: '5%'}}>
+                          <Link to="/exercise-session" style={{ textDecoration: 'none', color: 'white' }} state={{ data: { exercise: subtitle.exercise } }} className="link">
+                            Take Exercise
+                          </Link>
+                        </Button>
+                    </Stack>
+                  }
                 </List>
               </Collapse>
             </>
