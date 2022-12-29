@@ -57,10 +57,10 @@ async function getSpecificExam (belongsToCourse, name){
     return specificExam.questions
 }
 
-async function addPurchasedCourse (user, courseTitle){
+async function addPurchasedCourse (user, courseTitle, chapters){
     await IndividualTrainee.findOneAndUpdate({username: user}, {
         $addToSet:{
-            courses: courseTitle
+            courses: {courseTitle, chapters}
         }
     })
 }

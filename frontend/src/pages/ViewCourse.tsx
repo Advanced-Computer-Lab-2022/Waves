@@ -21,11 +21,8 @@ import CourseContent from "../components/CourseContent";
 import Footer from "../components/Footer";
 import DownloadIcon from "@mui/icons-material/Download";
 import ReviewsReports from "../components/ReviewsReports";
-import axios from "axios";
 import "../components/styles.css";
 import ReviewOrReport from "../components/ReviewOrReport";
-
-const pages = ["Courses", "Instructors", "Add User", "About Us"];
 
 const background: React.CSSProperties = {
   minWidth: "100%",

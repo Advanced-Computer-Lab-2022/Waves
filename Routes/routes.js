@@ -443,8 +443,8 @@ router.post("/add-user", async (req, res) => {
 // });
 
 router.post("/addCourse", async (req, res) => {
-  instructorController.addCourse(req.body,req.session.user.username)
-  console.log(req.body)
+  instructorController.addCourse(req.body, req.session.user.username);
+  console.log(req.body);
   res.send("/instructor");
 });
 
@@ -472,8 +472,12 @@ router.post("/exam-session", async (req, res) => {
 router.put("/purchase-course", async (req, res) => {
   const user = req.body.username;
   const title = req.body.title;
-  console.log(user + title);
-  return await individualTrainee.addPurchasedCourse(user, title);
+  const courseSubtitles = req.body.courseSubtitles;
+  const chapters = [];
+  courseSubtitles.forEach((chapter) => {
+    chapters.push({ chapterName: chapter.chapterName, done: false });
+  });
+  return await individualTrainee.addPurchasedCourse(user, title, chapters);
 });
 
 router.put("/add-discount", async (req, res) => {

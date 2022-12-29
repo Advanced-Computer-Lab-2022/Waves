@@ -195,6 +195,7 @@ const ViewCourseUnpurchased = (props: any) => {
                       coursePrice: course.coursePrice,
                       courseDiscount: course.courseDiscount,
                       currencySlice: course.currencySlice,
+                      courseSubtitles: course.courseSubtitles,
                     },
                   },
                 })

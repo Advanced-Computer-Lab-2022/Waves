@@ -7,7 +7,6 @@ const app = express();
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const session = require("express-session");
-//const { Mongoose } = require("mongoose/lib");
 
 console.log(process.env.ATLAS_URI);
 mongoose.connect(process.env.ATLAS_URI);
@@ -23,10 +22,6 @@ app.use(express.urlencoded());
 app.use(
   session({
     secret: "keyboard cat",
-    // resave: false,
-    // saveUninitialized: true,
-    // cookie: { maxAge: 24 * 60 * 60 * 1000 }
-    // cookie: { secure: false }
   })
 );
 

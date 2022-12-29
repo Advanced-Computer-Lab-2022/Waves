@@ -9,11 +9,14 @@ import ExpandMore from '@mui/icons-material/ExpandMore';
 import { Button, ListItem, Stack, Typography } from '@mui/material';
 import ReactPlayer from 'react-player';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 export default function NestedList(props: any) {
   const course = props.course;
 
   const [open, setOpen] = React.useState<boolean[]>([]);
+
+  const [currentChapter, setCurrentChapter] = React.useState(course);
 
   const isNotPurchased = props.isNotPurchased;
 
@@ -36,7 +39,11 @@ export default function NestedList(props: any) {
   };
 
   interface Chapter { name: String, exercise: Object, videoLink: String, description: String }
-  console.log(subtitles[0].name + " - " + JSON.stringify(subtitles[2].exercise))
+
+  function handleVideoEnded(): void {
+    axios.post('/addProgress', {})
+  }
+
   return (
     <Stack marginTop={"3%"} direction={"row"} style={{ height: "730px" }}>
       <ReactPlayer
@@ -48,6 +55,7 @@ export default function NestedList(props: any) {
           border: "solid rgb(170,170,170) 3px",
           marginLeft: "1%",
         }}
+        onEnded={handleVideoEnded}
         url={courseVideo}
       />
       <div
@@ -108,7 +116,6 @@ export default function NestedList(props: any) {
                 </List>
               </Collapse>
             </>
-
           ))}
           <></>
         </List>

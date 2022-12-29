@@ -19,7 +19,7 @@ const bull = (
   </Box>
 );
 
-var user: any;
+var user: any;45
 const PurchaseCourse = (props: any) => {
   const location = useLocation();
   const data = location.state?.data;
@@ -31,7 +31,8 @@ const PurchaseCourse = (props: any) => {
   const add = () => {
     axios.put('http://localhost:3001/purchase-course', {
       username: username,
-      title: data.courseName
+      title: data.courseName,
+      courseSubtitles: data.courseSubtitles,
     }, {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
