@@ -13,15 +13,14 @@ import ExamSession from './pages/ExamSession';
 import ViewRating from './pages/ViewRating';
 import NewUser from './pages/NewUser';
 import AddCourse from './pages/AddCourse';
-import Account from './components/Account';
-import Info from './pages/PersonalInfo';
+import Info from './pages/Account';
 import Results from './pages/results';
 import InstructorTerms from './pages/InstructorTerms';
 import ResetPassword from './pages/ResetPassword';
 import Profile from './pages/Profile';
 import Homepage from './pages/Homepage';
 import PurchaseCourse from "./pages/PurchaseCourse";
-import PaymentInfo from "./pages/PaymentInfo";
+import Account from "./pages/Account";
 import ViewCorporateTrainees from "./pages/ViewCorporateTrainees";
 import CoursesPage from "./pages/CoursesPage";
 import MyCourses from "./pages/MyCourses";
@@ -32,6 +31,7 @@ import AddCourseTemp from "./pages/AddCourseTemp";
 import ExerciseSession from "./pages/ExerciseSession";
 import ExerciseResults from "./pages/ExerciseResults";
 import CircularProgressChildren from "./components/CircularProgression";
+import PaymentInfo from "./pages/PaymentInfo";
 
 function App() {
 
@@ -44,7 +44,7 @@ function App() {
         <Route path="/account" element={<Account />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/new-password" element={<NewPassword />} />
-        <Route path="/personal-info" element={<Info />} />
+        <Route path="/account" element={<Account />} />
         <Route path="/add-user" element={<NewUser />} />
         <Route path="/add-course" element={<AddCourse />} />
         <Route path="/exams" element={<ExamsPage />} />

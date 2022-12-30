@@ -20,8 +20,11 @@ const CoursePage = (props: any) => {
     <>
       <ResponsiveNavBar />
       <Stack
-        sx={{ minWidth: "100%", width: "122rem" }}
-        className="grad"
+        sx={{
+          minWidth: "100%",
+          width: "122rem",
+          bgcolor: "rgb(225, 225, 225)",
+        }}
         marginTop={0.3}
         direction={"row"}
       >

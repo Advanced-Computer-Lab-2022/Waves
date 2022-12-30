@@ -1,13 +1,10 @@
-import * as React from 'react';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { Link, useLocation } from 'react-router-dom';
 import { Divider, Stack, TextField } from '@mui/material';
-import { color } from '@mui/system';
 
 const bull = (
     <Box
@@ -75,7 +72,7 @@ const PaymentInfo = (props: any) => {
             multiline
         />
         <Button variant="contained" style={{marginTop: 20}}> 
-            <Link to="/purchase-course" style={{textDecoration: 'none', color: 'white'}} state={{ data: {courseName:data.courseName, coursePrice:data.coursePrice, courseDiscount: data.courseDiscount, currencySlice: data.currencySlice}}} className="link">
+            <Link to="/purchase-course" style={{textDecoration: 'none', color: 'white'}} state={{ data: {courseName:data.courseName, coursePrice:data.coursePrice, courseDiscount: data.courseDiscount, currencySlice: data.currencySlice, courseSubtitles: data.courseSubtitles}}} className="link">
                 Purchase Course
             </Link>
         </Button>

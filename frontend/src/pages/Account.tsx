@@ -1,6 +1,6 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
-import React, { ChangeEvent, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import {
   Avatar,
   Box,
@@ -8,23 +8,15 @@ import {
   Card,
   CardContent,
   Divider,
-  Grid,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
   Stack,
-  SvgIcon,
   TextField,
   Typography,
 } from "@mui/material";
 import ResponsiveNavBar from "../components/ResponsiveNavBar";
-import Account from "../components/Account";
 import Footer from "../components/Footer";
 import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
 import PhotoCameraBackIcon from "@mui/icons-material/PhotoCameraBack";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const pagesArr = ["Courses", "Instructors", "Add User", "About Us"];
 
@@ -141,13 +133,13 @@ const Info = (props: any) => {
     <div>
       <ResponsiveNavBar />
       <Stack direction="row">
-        <Account />
-        <Stack marginLeft={20}>
+        <Stack marginLeft={'auto'} marginRight={'auto'}>
           <Card
             style={{
               marginBottom: "3vw",
-              width: "50vw",
-              height: "45vw",
+              width: "80rem",
+              minHeight: "100%",
+              height: "57.5rem"
             }}
           >
             <CardContent>

@@ -32,14 +32,12 @@ const ViewReports = () => {
   return (
     <>
       <ResponsiveNavBar />
-      <Stack direction={"row"} className="grad" marginTop={0.3}>
+      <Stack direction={"row"} marginTop={0.5} style={{backgroundColor: "rgb(225, 225, 225)"}}>
         <List
-          className="listGrad"
           sx={{
             minHeight: "60rem",
-            marginRight: "auto%",
             width: "20%",
-            bgcolor: "rgb(200, 200, 200)",
+            bgcolor: "rgb(205, 205, 205)",
           }}
           component="nav"
           aria-labelledby="nested-list-subheader"

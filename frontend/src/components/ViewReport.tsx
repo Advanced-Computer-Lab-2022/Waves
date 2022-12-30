@@ -75,12 +75,24 @@ const ViewReport: React.FC<{
   return (
     <ThemeProvider theme={theme}>
       {report ? (
-        <div style={{ marginLeft: "auto", marginRight: "auto", width: "30%" }}>
-          <Typography variant="h1">{courseTitle}</Typography>
-          <div style={{ display: "flex", flexDirection: "column" }}>
+        <div
+          style={{
+            marginLeft: "auto",
+            marginRight: "auto",
+            width: "30%",
+            marginTop: "1%",
+          }}
+        >
+          <Stack spacing={4} direction={"column"}>
+            <Typography
+              variant="h1"
+              fontSize={75}
+              style={{ marginLeft: "auto", marginRight: "auto" }}
+            >
+              {courseTitle}
+            </Typography>
             <Stack
-              marginLeft={"auto"}
-              marginRight={"auto"}
+              style={{ marginLeft: "auto", marginRight: "auto" }}
               direction={"row"}
               spacing={1}
             >
@@ -100,9 +112,8 @@ const ViewReport: React.FC<{
               </div>
             </Stack>
             <Typography
+              style={{ marginLeft: "auto", marginRight: "auto" }}
               marginTop={2}
-              marginLeft={"auto"}
-              marginRight={"auto"}
               variant="h5"
             >
               {report.description}
@@ -110,8 +121,7 @@ const ViewReport: React.FC<{
 
             <Stack
               marginTop={1}
-              marginLeft={"auto"}
-              marginRight={"auto"}
+              style={{ marginLeft: "auto", marginRight: "auto" }}
               direction={"row"}
               spacing={1}
             >
@@ -132,8 +142,7 @@ const ViewReport: React.FC<{
             </Stack>
             <Stack
               marginTop={3}
-              marginLeft={"auto"}
-              marginRight={"auto"}
+              style={{ marginLeft: "auto", marginRight: "auto" }}
               spacing={5}
               direction="row"
             >
@@ -148,7 +157,7 @@ const ViewReport: React.FC<{
                 Mark As Pending
               </Button>
             </Stack>
-          </div>
+          </Stack>
         </div>
       ) : (
         <></>

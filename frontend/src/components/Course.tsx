@@ -140,6 +140,16 @@ const Course: React.FC<props> = ({
       .then((response) => {
         if (response.data) setIsMyCourse(true);
       });
+
+    axios
+      .get("http://localhost:3001/getType", { withCredentials: true })
+      .then((response) => {
+        if (response.data) {
+          if (response.data == "admin") {
+            setType(1);
+          }
+        }
+      });
   }, []);
 
   const handleClickOpen = () => {
@@ -187,21 +197,23 @@ const Course: React.FC<props> = ({
           backgroundColor: "rgb(205,205,205)",
           minWidth: 350,
           maxWidth: 350,
-          maxHeight: 570,
+          minHeight: 520,
+          maxHeight: 610,
+          marginBottom: "auto",
         }}
       >
+        <CardMedia
+          component="img"
+          image={courseImg}
+          alt={courseName}
+          style={{ minHeight: "170px", marginBottom: "auto" }}
+        />
         <CardActionArea
-          sx={{ minWidth: 350, maxWidth: 350, minHeight: 480, maxHeight: 580 }}
+          sx={{ minWidth: 350, maxWidth: 550, height: 320 }}
+          style={{ marginBottom: "auto" }}
           onClick={handleClickOpen}
         >
-          <div>
-            <CardMedia
-              component="img"
-              height="170"
-              image={courseImg}
-              alt={courseName}
-              style={{ alignSelf: "start", justifySelf: "start" }}
-            />
+          <div style={{ marginBottom: "auto" }}>
             <CardContent>
               <Typography gutterBottom variant="h5" component="div">
                 {courseName}
@@ -216,18 +228,13 @@ const Course: React.FC<props> = ({
               <Typography variant="body2" color="rgb(100,100,100)">
                 {"• Subject " + courseSubject}
               </Typography>
-
               <p />
-              <Stack direction={"row"}>
-                <Typography variant="body2" color="rgb(100,100,100)">
-                  {" • " + courseTotalHours + " Total Hours"}
-                </Typography>
 
-                <Box style={{ marginLeft: "auto" }}>
-                  {isMyCourse ? <Progress progress={50} /> : <></>}
-                </Box>
-              </Stack>
-              <Typography variant="body2" color="rgb(100,100,100)"></Typography>
+              <Typography variant="body2" color="rgb(100,100,100)">
+                {" • " + courseTotalHours + " Total Hours"}
+              </Typography>
+
+              <Typography variant="body2" color="rgb(100,100,100)" marginTop={1}></Typography>
               <Typography component="legend">Rating</Typography>
               <Stack direction="row">
                 <Typography
@@ -254,37 +261,41 @@ const Course: React.FC<props> = ({
                   {"(" + courseRating[1] + ")"}
                 </Typography>
                 <Stack alignItems={"end"} direction="column">
-                  {noPrice ? (
-                    <></>
+                  {isMyCourse ? (
+                    <Box style={{ marginLeft: "auto" }}>
+                      <Progress progress={50} />
+                    </Box>
                   ) : (
-                    <Typography
-                      style={priceStyle}
-                      variant="h6"
-                      color="rgb(150,40,40)"
-                    >
-                      {coursePrice}
-                    </Typography>
+                    <>
+                      <Typography
+                        style={priceStyle}
+                        variant="h6"
+                        color="rgb(150,40,40)"
+                      >
+                        {coursePrice}
+                      </Typography>
+                      <Typography
+                        style={regPriceStyle}
+                        variant="h6"
+                        color="rgb(150,40,40)"
+                      >
+                        {courseDiscount > 0 ? (
+                          <>
+                            {coursePrice.slice(0, currencySlice) +
+                              "" +
+                              (
+                                (courseDiscount / 100) *
+                                  +coursePrice.slice(currencySlice).valueOf() *
+                                  -1 +
+                                (+coursePrice.slice(currencySlice)).valueOf()
+                              ).toFixed(2)}
+                          </>
+                        ) : (
+                          <></>
+                        )}
+                      </Typography>
+                    </>
                   )}
-                  <Typography
-                    style={regPriceStyle}
-                    variant="h6"
-                    color="rgb(150,40,40)"
-                  >
-                    {courseDiscount > 0 ? (
-                      <>
-                        {coursePrice.slice(0, currencySlice) +
-                          "" +
-                          (
-                            (courseDiscount / 100) *
-                              +coursePrice.slice(currencySlice).valueOf() *
-                              -1 +
-                            (+coursePrice.slice(currencySlice)).valueOf()
-                          ).toFixed(2)}
-                      </>
-                    ) : (
-                      <></>
-                    )}
-                  </Typography>
                 </Stack>
               </Stack>
             </CardContent>

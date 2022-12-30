@@ -30,7 +30,8 @@ router.post("/checkPurchasedCourse", async (req, res) => {
     if (req.session.user?.type == "instructor")
       return Instructor.findOne({ username: req.session.user.username });
   })();
-  if (user) res.send(user.courses.includes(courseTitle));
+  if (user)
+    res.send(user.courses.some((course) => course.courseTitle === courseTitle));
 });
 
 router.get("/getCorporateTrainees", async (req, res) => {
@@ -475,7 +476,7 @@ router.put("/purchase-course", async (req, res) => {
   const courseSubtitles = req.body.courseSubtitles;
   const chapters = [];
   courseSubtitles.forEach((chapter) => {
-    chapters.push({ chapterName: chapter.chapterName, done: false });
+    chapters.push({ sectionName: chapter.description, done: false });
   });
   return await individualTrainee.addPurchasedCourse(user, title, chapters);
 });

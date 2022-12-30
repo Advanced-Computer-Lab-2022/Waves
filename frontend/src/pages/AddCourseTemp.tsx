@@ -20,29 +20,6 @@ import axios from 'axios'
 import ResponsiveNavBar from '../components/ResponsiveNavBar';
 import AddExerciseDialog from './AddExerciseDialog';
 
-/*<Copyright sx={{ mt: 5 }} />  return to line 122      <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-           
-          </Avatar>53 and 55 <LockOutlinedIcon /> line 54*/
-/*function Copyright(props) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}*/
-/*<Link href="#" variant="body2">
-                  Already have an account? Sign in
-                </Link>*/
-
-//    InstructorController.addCourse(req.body.courseTitle, req.body.courseSubject, req.body.username, req.body.courseSummary, req.body.courseSubtitles, req.body.coursePrice, req.body.previewLink);
-
-// {choices: [], correctAnswerIndex:number}[]
-
 export default function AddCourse() {
   const [title, setTitle] = React.useState();
   const [price, setPrice] = React.useState();
