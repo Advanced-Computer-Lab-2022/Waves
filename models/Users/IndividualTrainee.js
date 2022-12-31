@@ -3,19 +3,19 @@ const IndividualTraineeSchema = new mongoose.Schema({
   username: {
     type: String,
     required: true,
-    unique:true
+    unique: true,
   },
   email: {
     type: String,
     required: true,
-    unique:true
+    unique: true,
   },
   password: {
     type: String,
     required: true,
   },
   email: {
-    type: String
+    type: String,
   },
   first_name: {
     type: String,
@@ -27,23 +27,30 @@ const IndividualTraineeSchema = new mongoose.Schema({
   },
   inbox: {
     type: Array,
-    require: false
+    require: false,
   },
-  profilePic:{
-    type: String
+  profilePic: {
+    type: String,
   },
-  courses:{
-    type: Array
-  },
+  courses: [
+    {
+      courseTitle: String,
+      chapters: [{ done: Boolean, sectionName: String }],
+      progress: Number,
+    },
+  ],
   token: {
-    type: String
+    type: String,
   },
   country: {
-    type:String
+    type: String,
   },
-  bio:{
-    type: String
-  }
+  bio: {
+    type: String,
+  },
 });
-const IndividualTrainee = mongoose.model("Individual Trainees", IndividualTraineeSchema);
+const IndividualTrainee = mongoose.model(
+  "Individual Trainees",
+  IndividualTraineeSchema
+);
 module.exports = IndividualTrainee;

@@ -9,33 +9,37 @@ var CorporateTraineeSchema = new mongoose.Schema({
     required: true,
   },
   email: {
-    type: String
+    type: String,
   },
   inbox: {
     type: Array,
-    require: false
+    require: false,
   },
   token: {
-    type: String
-  },
-  profilePic:{
     type: String,
   },
-  courses:{
-    type: Array
+  profilePic: {
+    type: String,
   },
+  courses: [
+    {
+      courseTitle: String,
+      chapters: [{ done: Boolean, sectionName: String }],
+      progress: Number,
+    },
+  ],
   country: {
-    type:String
+    type: String,
   },
-  bio:{
-    type: String
-  }
+  bio: {
+    type: String,
+  },
 });
 
 function loadModel(modelName, modelSchema) {
-    return mongoose.models[modelName] // Check if the model exists
-      ? mongoose.model(modelName) // If true, only retrieve it
-      : mongoose.model(modelName, modelSchema) // If false, define it
+  return mongoose.models[modelName] // Check if the model exists
+    ? mongoose.model(modelName) // If true, only retrieve it
+    : mongoose.model(modelName, modelSchema); // If false, define it
 }
 var CorporateTrainee = loadModel("Corporate Trainees", CorporateTraineeSchema);
-module.exports = CorporateTrainee
+module.exports = CorporateTrainee;

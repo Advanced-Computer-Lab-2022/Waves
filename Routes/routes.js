@@ -133,34 +133,98 @@ router.post("/getProgresses", async (req, res) => {
   }
 });
 
-router.post("/addProgress", async (req, res) => {
-  console.log("fired");
-  if (req.session.user?.type == "individualTrainee")
-    await IndividualTrainee.updateOne(
-      {
-        "courses.courseTitle": req.body.courseTitle,
-        "courses.chapters.sectionName": req.body.section,
-      },
-      {
-        $set: {
-          "courses.$.done": true,
-        },
-      }
-    );
+async function getCourseProgress(username, type, courseTitle) {
+  let done = 0;
 
-  if (req.session.user?.type == "corporateTrainee")
-    await CorporateTrainee.updateOne(
-      {
-        "courses.courseTitle": req.body.courseTitle,
-        "courses.chapters.sectionName": req.body.section,
-      },
-      {
-        $set: {
-          "courses.$.done": true,
-        },
-      }
+  let course = null;
+
+  if (type == "individualTrainee") {
+    course = await IndividualTrainee.findOne(
+      { username, courses: { $elemMatch: { courseTitle: courseTitle } } },
+      { _id: 0, courses: 1 }
     );
-  res.send("done");
+  } else if (type == "corporateTrainee") {
+    course = await CorporateTrainee.findOne(
+      { username, courses: { $elemMatch: { courseTitle: courseTitle } } },
+      { _id: 0, courses: 1 }
+    );
+  }
+  course.courses[0].chapters.forEach((chapter) => {
+    if (chapter.done) done++;
+  });
+
+  return (done / course.courses[0].chapters.length) * 100;
+}
+
+router.post("/addProgress", async (req, res) => {
+  const section = req.body.section;
+  const courseTitle = req.body.courseTitle;
+
+  getCourseProgress(
+    req.session.user.username,
+    req.session.user?.type,
+    courseTitle
+  );
+
+  let updated = null;
+
+  const username = req.session.user.username;
+
+  const filter = {
+    username,
+  };
+  const update = {
+    $set: {
+      "courses.$[c].chapters.$[s].done": true,
+    },
+  };
+  const options = {
+    arrayFilters: [
+      { "c.courseTitle": courseTitle },
+      { "s.sectionName": section },
+    ],
+  };
+
+  if (req.session.user?.type == "individualTrainee") {
+    updated = await IndividualTrainee.updateOne(filter, update, options);
+    if (updated) {
+      const courseProgress = await getCourseProgress(
+        req.session.user.username,
+        req.session.user?.type,
+        courseTitle
+      );
+      if (courseProgress) {
+        await IndividualTrainee.updateOne(
+          { username, "courses.courseTitle": courseTitle },
+          {
+            $set: {
+              "courses.$.progress": courseProgress,
+            },
+          }
+        );
+      }
+    }
+  }
+  if (req.session.user?.type == "corporateTrainee")
+    updated = await CorporateTrainee.updateOne(filter, update, options);
+
+  if (updated) {
+    const courseProgress = await getCourseProgress(
+      req.session.user.username,
+      req.session.user?.type,
+      courseTitle
+    );
+    if (courseProgress) {
+      await CorporateTrainee.updateOne(
+        { username, "courses.courseTitle": courseTitle },
+        {
+          $set: {
+            "courses.$.progress": courseProgress,
+          },
+        }
+      );
+    }
+  }
 });
 
 router.post("/updateReportSeen", async (req, res) => {

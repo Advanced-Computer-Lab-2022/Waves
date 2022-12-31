@@ -23,8 +23,6 @@ export default function NestedList(props: any) {
     course.courseVideoPreview
   );
 
-  const [videoStart, setVideoStart] = React.useState(false)
-
   const [sectionProgressess, setSectionProgressess] = React.useState<any[]>([]);
 
   const isNotPurchased = props.isNotPurchased;
@@ -36,7 +34,6 @@ export default function NestedList(props: any) {
   }, [chapters?.length]);
 
   React.useEffect(() => {
-    console.log("progress: ", sectionProgressess);
 
     axios
       .post(
@@ -45,42 +42,19 @@ export default function NestedList(props: any) {
           courseTitle: course.courseName,
         },
         {
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-          },
           withCredentials: true,
         }
       )
       .then((response) => {
         setSectionProgressess(response.data);
       });
-  }, [currentSection]);
-
-  React.useEffect(() => {
-
-    axios
-      .post(
-        "http://localhost:3001/getProgresses",
-        {
-          courseTitle: course.courseName,
-        },
-        {
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-          },
-          withCredentials: true,
-        }
-      )
-      .then((response) => {
-        setSectionProgressess(response.data);
-      });
-  }, [videoStart]);
+  }, []);
 
   const handleClick = (idx: number) => {
     setOpen((o) => o.map((v, i) => (i == idx ? !v : v)));
   };
 
-  const handleSubtitleClick = ( subtitle: any) => {
+  const handleSubtitleClick = (subtitle: any) => {
     setCourseVideo(subtitle.videoLink);
     setCurrentSection(subtitle.description);
   };
@@ -99,7 +73,21 @@ export default function NestedList(props: any) {
         { section: currentSection, courseTitle: course.courseName },
         { withCredentials: true }
       )
-      .then((res) => {setVideoStart(true)});
+      .then((res) => {
+        axios
+          .post(
+            "http://localhost:3001/getProgresses",
+            {
+              courseTitle: course.courseName,
+            },
+            {
+              withCredentials: true,
+            }
+          )
+          .then((response) => {
+            setSectionProgressess(response.data);
+          });
+      });
   }
 
   return (
