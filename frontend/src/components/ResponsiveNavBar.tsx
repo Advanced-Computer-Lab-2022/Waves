@@ -73,24 +73,27 @@ const ResponsiveNavBar = () => {
   const corporatePages = ["My Courses", "All Courses", "About Us"];
   const guestPages = ["All Courses", "About Us"];
 
-  axios
-    .get("http://localhost:3001/getType", { withCredentials: true })
-    .then((response) => {
-      if (response.data == "admin") setPages(adminPages);
-      else if (response.data == "instructor") setPages(instructorPages);
-      else if (response.data == "individualTrainee") setPages(individualPages);
-      else if (response.data == "corporateTrainee") setPages(corporatePages);
-      else {
-        setPages(guestPages);
-        setIsNotLoggedIn(true);
-      }
-    });
+  React.useEffect(() => {
+    axios
+      .get("http://localhost:3001/getType", { withCredentials: true })
+      .then((response) => {
+        if (response.data == "admin") setPages(adminPages);
+        else if (response.data == "instructor") setPages(instructorPages);
+        else if (response.data == "individualTrainee")
+          setPages(individualPages);
+        else if (response.data == "corporateTrainee") setPages(corporatePages);
+        else {
+          setPages(guestPages);
+          setIsNotLoggedIn(true);
+        }
+      });
 
-  axios
-    .get("http://localhost:3001/getProfilePic", { withCredentials: true })
-    .then((response) => {
-      setAvatar(response.data);
-    });
+    axios
+      .get("http://localhost:3001/getProfilePic", { withCredentials: true })
+      .then((response) => {
+        setAvatar(response.data);
+      });
+  }, []);
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -136,7 +139,12 @@ const ResponsiveNavBar = () => {
   return (
     <ThemeProvider theme={theme}>
       <AppBar
-        style={{ paddingTop: 1, height: 80, width: "122rem", minWidth: "100%" }}
+        style={{
+          paddingTop: 1,
+          height: 80,
+          width: "122rem",
+          minWidth: "100.9%",
+        }}
         position="static"
       >
         <Container maxWidth="xl">

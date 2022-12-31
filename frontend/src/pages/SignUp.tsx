@@ -160,6 +160,8 @@ const SignUp = () => {
           style={{
             minHeight: "122vh",
             display: "flex",
+            minWidth: "100.9%",
+            width: "122rem",
           }}
         >
           <Stack

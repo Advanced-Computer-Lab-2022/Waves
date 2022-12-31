@@ -1,47 +1,105 @@
-import * as React from 'react';
-import ListSubheader from '@mui/material/ListSubheader';
-import List from '@mui/material/List';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemText from '@mui/material/ListItemText';
-import Collapse from '@mui/material/Collapse';
-import ExpandLess from '@mui/icons-material/ExpandLess';
-import ExpandMore from '@mui/icons-material/ExpandMore';
-import { Button, ListItem, Stack, Typography } from '@mui/material';
-import ReactPlayer from 'react-player';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
+import * as React from "react";
+import ListSubheader from "@mui/material/ListSubheader";
+import List from "@mui/material/List";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemText from "@mui/material/ListItemText";
+import Collapse from "@mui/material/Collapse";
+import ExpandLess from "@mui/icons-material/ExpandLess";
+import ExpandMore from "@mui/icons-material/ExpandMore";
+import { Button, Stack, Typography } from "@mui/material";
+import ReactPlayer from "react-player";
+import { Link } from "react-router-dom";
+import axios from "axios";
+import CheckIcon from "@mui/icons-material/Check";
 
 export default function NestedList(props: any) {
   const course = props.course;
 
   const [open, setOpen] = React.useState<boolean[]>([]);
 
-  const [currentChapter, setCurrentChapter] = React.useState(course);
-
-  const isNotPurchased = props.isNotPurchased;
+  const [currentSection, setCurrentSection] = React.useState();
 
   const [courseVideo, setCourseVideo] = React.useState(
     course.courseVideoPreview
   );
 
-  const subtitles: Chapter[] = course.courseSubtitles;
+  const [videoStart, setVideoStart] = React.useState(false)
+
+  const [sectionProgressess, setSectionProgressess] = React.useState<any[]>([]);
+
+  const isNotPurchased = props.isNotPurchased;
+
+  const chapters: Chapter[] = course.courseChapters;
 
   React.useEffect(() => {
-    setOpen(new Array(subtitles?.length ?? 0).fill(false));
-  }, [subtitles?.length]);
+    setOpen(new Array(chapters?.length ?? 0).fill(false));
+  }, [chapters?.length]);
+
+  React.useEffect(() => {
+    console.log("progress: ", sectionProgressess);
+
+    axios
+      .post(
+        "http://localhost:3001/getProgresses",
+        {
+          courseTitle: course.courseName,
+        },
+        {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          withCredentials: true,
+        }
+      )
+      .then((response) => {
+        setSectionProgressess(response.data);
+      });
+  }, [currentSection]);
+
+  React.useEffect(() => {
+
+    axios
+      .post(
+        "http://localhost:3001/getProgresses",
+        {
+          courseTitle: course.courseName,
+        },
+        {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          withCredentials: true,
+        }
+      )
+      .then((response) => {
+        setSectionProgressess(response.data);
+      });
+  }, [videoStart]);
 
   const handleClick = (idx: number) => {
     setOpen((o) => o.map((v, i) => (i == idx ? !v : v)));
   };
 
-  const handleSubtitleClick = (idx: number) => {
-    setCourseVideo(course.courseVideoLinks[idx]);
+  const handleSubtitleClick = ( subtitle: any) => {
+    setCourseVideo(subtitle.videoLink);
+    setCurrentSection(subtitle.description);
   };
 
-  interface Chapter { name: String, exercise: Object, videoLink: String, description: String }
+  interface Chapter {
+    name: String;
+    exercise: Object;
+    videoLink: String;
+    description: String;
+  }
 
-  function handleVideoEnded(): void {
-    axios.post('/addProgress', {})
+  function handleVideoStarted(): void {
+    axios
+      .post(
+        "http://localhost:3001/addProgress",
+        { section: currentSection, courseTitle: course.courseName },
+        { withCredentials: true }
+      )
+      .then((res) => {setVideoStart(true)});
   }
 
   return (
@@ -55,7 +113,7 @@ export default function NestedList(props: any) {
           border: "solid rgb(170,170,170) 3px",
           marginLeft: "1%",
         }}
-        onEnded={handleVideoEnded}
+        onStart={handleVideoStarted}
         url={courseVideo}
       />
       <div
@@ -87,36 +145,53 @@ export default function NestedList(props: any) {
             </ListSubheader>
           }
         >
-          {subtitles && subtitles.map((subtitle, idx) => (
-            <>
-              <ListItemButton onClick={() => handleClick(idx)}>
+          {chapters &&
+            chapters.map((chapter, idx) => (
+              <>
+                <ListItemButton onClick={() => handleClick(idx)}>
+                  <ListItemText>
+                    <Typography fontSize={19}> {chapter.name} </Typography>
+                  </ListItemText>
+                  {open[idx] ? <ExpandLess /> : <ExpandMore />}
+                </ListItemButton>
 
-                <ListItemText>
-                  <Typography fontSize={19}> {subtitle.name}  </Typography>
-                </ListItemText>
-                {open[idx] ? <ExpandLess /> : <ExpandMore />}
-              </ListItemButton>
+                <Collapse in={open[idx]} timeout="auto" unmountOnExit>
+                  <List component="div" disablePadding>
+                    {isNotPurchased ? (
+                      <ListItemText
+                        sx={{ pl: 4 }}
+                        primary={chapter.description}
+                      />
+                    ) : (
+                      <Stack direction={"row"}>
+                        <ListItemButton
+                          onClick={() => handleSubtitleClick(chapter)}
+                          sx={{ pl: 4 }}
+                        >
+                          {sectionProgressess[idx] ? <CheckIcon /> : <></>}
+                          <ListItemText primary={chapter.description} />
 
-              <Collapse in={open[idx]} timeout="auto" unmountOnExit>
-                <List component="div" disablePadding>
-
-                  {isNotPurchased ?
-                    <ListItemText sx={{ pl: 4 }} primary={subtitle.description} /> :
-                    <Stack direction={'row'}>
-                      <ListItemButton onClick={() => handleSubtitleClick(idx)} sx={{ pl: 4 }}>
-                        <ListItemText primary={subtitle.description} />
-                      </ListItemButton>
-                        <Button variant="contained" sx={{marginRight: '5%'}}>
-                          <Link to="/exercise-session" style={{ textDecoration: 'none', color: 'white' }} state={{ data: { exercise: subtitle.exercise } }} className="link">
-                            Take Exercise
-                          </Link>
-                        </Button>
-                    </Stack>
-                  }
-                </List>
-              </Collapse>
-            </>
-          ))}
+                          <Button
+                            variant="contained"
+                            sx={{ margin: "5%" }}
+                            size={"small"}
+                          >
+                            <Link
+                              to="/exercise-session"
+                              style={{ textDecoration: "none", color: "white" }}
+                              state={{ data: { exercise: chapter.exercise } }}
+                              className="link"
+                            >
+                              Take Exercise
+                            </Link>
+                          </Button>
+                        </ListItemButton>
+                      </Stack>
+                    )}
+                  </List>
+                </Collapse>
+              </>
+            ))}
           <></>
         </List>
       </div>

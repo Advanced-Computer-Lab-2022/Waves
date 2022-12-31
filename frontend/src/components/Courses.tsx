@@ -38,7 +38,7 @@ const Courses = (props: any) => {
         <Grid style={{ paddingBottom: '30px' }} container columnSpacing={{ xs: 2, sm: 5, md: 45, lg: 45 }} rowSpacing={{ xs: 2, md: 2 }} columns={{ sm: 7, md: 14, lg: 24 }}>
             {props.courses && props.courses.map((course: any) => (
                 <Grid marginTop={2} item xs={2} sm={4} md={5} key={course._id}>
-                    <Course id={course._id} noPrice={props.noPrice} courseName={course.title} courseDescription={course.description} courseSubject={course.subject} courseRating={course.rating} courseImg={course.img} courseInstructor={course.givenBy} courseTotalHours={course.totalHours} courseSubtitles={course.subtitles} coursePrice={currencySymbol+""+(course.price*changeRate).toFixed(2)} courseVideoLinks={course.videoLinks} courseVideoPreview={course.videoPreview} courseDiscount={course.discountPercentage} currencySlice={currencySlice} courseReviews={course.reviews} courseReports={course.reports}/>
+                    <Course id={course._id} noPrice={props.noPrice} courseName={course.title} courseDescription={course.description} courseSubject={course.subject} courseRating={course.rating} courseImg={course.img} courseInstructor={course.givenBy} courseTotalHours={course.totalHours} courseChapters={course.chapters} coursePrice={currencySymbol+""+(course.price*changeRate).toFixed(2)} courseVideoLinks={course.videoLinks} courseVideoPreview={course.videoPreview} courseDiscount={course.discountPercentage} currencySlice={currencySlice} courseReviews={course.reviews} courseReports={course.reports}/>
                 </Grid>
             ))}
         </Grid>

@@ -33,7 +33,7 @@ interface props {
   courseSubject: string;
   courseTotalHours: string;
   courseImg: string;
-  courseSubtitles: Array<String>;
+  courseChapters: Array<any>;
   courseVideoLinks: Array<String>;
   courseVideoPreview: string;
   courseDiscount: number;
@@ -55,11 +55,10 @@ const Course: React.FC<props> = ({
   courseInstructor,
   courseTotalHours,
   courseImg,
-  courseSubtitles,
+  courseChapters,
   courseVideoLinks,
   courseVideoPreview,
   courseDiscount,
-  noPrice,
   currencySlice,
   courseReports,
   courseReviews,
@@ -76,7 +75,7 @@ const Course: React.FC<props> = ({
     courseInstructor: courseInstructor,
     courseTotalHours: courseTotalHours,
     courseImg: courseImg,
-    courseSubtitles: courseSubtitles,
+    courseChapters: courseChapters,
     courseVideoLinks: courseVideoLinks,
     courseVideoPreview: courseVideoPreview,
     courseDiscount: courseDiscount,
@@ -234,7 +233,11 @@ const Course: React.FC<props> = ({
                 {" • " + courseTotalHours + " Total Hours"}
               </Typography>
 
-              <Typography variant="body2" color="rgb(100,100,100)" marginTop={1}></Typography>
+              <Typography
+                variant="body2"
+                color="rgb(100,100,100)"
+                marginTop={1}
+              ></Typography>
               <Typography component="legend">Rating</Typography>
               <Stack direction="row">
                 <Typography

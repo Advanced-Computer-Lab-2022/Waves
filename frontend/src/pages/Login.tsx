@@ -71,6 +71,8 @@ const Login = (props: any) => {
           className="grad"
           style={{
             minHeight: "100vh",
+            minWidth: "100vw",
+            width: '122rem',
             display: "flex",
           }}
         >

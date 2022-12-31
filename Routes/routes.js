@@ -100,6 +100,69 @@ router.post("/updateReportStatus", async (req, res) => {
     .send("Pandemic is over, we are back to work, thank you for your patience");
 });
 
+router.post("/getProgresses", async (req, res) => {
+  const { courseTitle } = req.body;
+  const user = await (() => {
+    if (req.session.user?.type == "individualTrainee")
+      return IndividualTrainee.findOne({
+        username: req.session.user.username,
+      });
+
+    if (req.session.user?.type == "corporateTrainee")
+      return CorporateTrainee.findOne({
+        username: req.session.user.username,
+      });
+  })();
+
+  if (user) {
+    const userProgresses = [];
+    const course = user.courses.find(
+      (course) => course.courseTitle == courseTitle
+    );
+
+    course.chapters.forEach((chapter) => {
+      userProgresses.push(chapter.done);
+    });
+    if (course) {
+      res.send(userProgresses);
+    } else {
+      res.send(false);
+    }
+  } else {
+    res.send(false);
+  }
+});
+
+router.post("/addProgress", async (req, res) => {
+  console.log("fired");
+  if (req.session.user?.type == "individualTrainee")
+    await IndividualTrainee.updateOne(
+      {
+        "courses.courseTitle": req.body.courseTitle,
+        "courses.chapters.sectionName": req.body.section,
+      },
+      {
+        $set: {
+          "courses.$.done": true,
+        },
+      }
+    );
+
+  if (req.session.user?.type == "corporateTrainee")
+    await CorporateTrainee.updateOne(
+      {
+        "courses.courseTitle": req.body.courseTitle,
+        "courses.chapters.sectionName": req.body.section,
+      },
+      {
+        $set: {
+          "courses.$.done": true,
+        },
+      }
+    );
+  res.send("done");
+});
+
 router.post("/updateReportSeen", async (req, res) => {
   const { report } = req.body;
   const reportID = mongoose.Types.ObjectId(report.reportID);
