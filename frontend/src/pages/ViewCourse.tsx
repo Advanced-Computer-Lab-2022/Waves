@@ -3,15 +3,12 @@ import jsPDF from "jspdf";
 import Typography from "@mui/material/Typography";
 import "bootstrap/dist/css/bootstrap.min.css";
 import {
-  Button,
-  Dialog,
-  DialogTitle,
-  Divider,
   FormControl,
   OutlinedInput,
   Rating,
   Stack,
-  TextField,
+  ThemeProvider,
+  createTheme,
 } from "@mui/material";
 //var Blur = require('react-blur');
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -23,6 +20,30 @@ import DownloadIcon from "@mui/icons-material/Download";
 import ReviewsReports from "../components/ReviewsReports";
 import "../components/styles.css";
 import ReviewOrReport from "../components/ReviewOrReport";
+import axios from "axios";
+import Progress from "../components/CourseProgress";
+
+const customRed = "rgb(180,40,40)";
+
+const theme = createTheme({
+  status: {
+    danger: "rgb(200,25,25)",
+  },
+  palette: {
+    primary: {
+      main: customRed,
+      darker: "#053e85",
+    },
+    secondary: {
+      main: "rgb(255,255,255)",
+      darker: "rgb(255,255,255)",
+    },
+    neutral: {
+      main: "#64748B",
+      contrastText: "#fff",
+    },
+  },
+});
 
 const background: React.CSSProperties = {
   minWidth: "100%",
@@ -51,6 +72,8 @@ const ViewCourse = (props: any) => {
     course.courseReports
   );
 
+  const [courseProgress, setCourseProgress] = React.useState(0);
+
   const [notes, setNotes] = React.useState<string>("");
 
   const [open, setOpen] = React.useState(false);
@@ -61,16 +84,24 @@ const ViewCourse = (props: any) => {
     doc.save("My Notes.pdf");
   };
 
+  React.useEffect(() => {
+    axios
+      .post(
+        "http://localhost:3001/getProgress",
+        { courseName: course.courseName },
+        { withCredentials: true }
+      )
+      .then((response) => {
+        console.log(response.data)
+        setCourseProgress(response.data);
+      });
+  }, []);
+
   return (
     <div className="grad" style={background}>
       <ResponsiveNavBar />
-      <Stack direction={"row"} marginBottom={2} marginTop={2}>
-        <Stack
-          direction={"column"}
-          marginLeft={"auto"}
-          marginBottom={2}
-          marginTop={2}
-        >
+      <Stack direction={"row"} marginTop={2}>
+        <Stack direction={"column"} marginLeft={"auto"}>
           <Typography
             sx={{ textShadow: "2px 2px black" }}
             marginTop={"auto"}
@@ -92,6 +123,7 @@ const ViewCourse = (props: any) => {
             {"Instructor " + course.courseInstructor}
           </Typography>
         </Stack>
+
         <img
           src={course.courseImg}
           style={{
@@ -105,6 +137,19 @@ const ViewCourse = (props: any) => {
           }}
         />
       </Stack>
+      <div style={{ display: "flex" }}>
+        <ThemeProvider theme={theme}>
+          <div style={{ marginLeft: "auto", marginRight: "auto" }}>
+            <div style={{ marginRight: "50rem" }}>
+              <Progress
+                progress={courseProgress}
+                size={150}
+                fontVariant={"h4"}
+              />
+            </div>
+          </div>
+        </ThemeProvider>
+      </div>
       <CourseContent course={course} />
 
       <div
@@ -138,7 +183,11 @@ const ViewCourse = (props: any) => {
         <div style={{ display: "flex", paddingTop: "10px" }}>
           <DownloadIcon
             fontSize="large"
-            sx={{ marginLeft: "auto", marginRight: "0.5%", cursor: "pointer" }}
+            sx={{
+              marginLeft: "auto",
+              marginRight: "0.5%",
+              cursor: "pointer",
+            }}
             onClick={downloadPDFFile}
           />
         </div>

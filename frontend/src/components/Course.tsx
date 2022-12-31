@@ -21,7 +21,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ObjectId } from "mongoose";
 import LocalOfferIcon from "@mui/icons-material/LocalOffer";
-import Progress from "./CircularProgression";
+import Progress from "./CourseProgress";
 
 interface props {
   id: ObjectId;
@@ -90,6 +90,8 @@ const Course: React.FC<props> = ({
   const [duration, setDuration] = React.useState("");
   const [isMyCourse, setIsMyCourse] = React.useState(false);
 
+  const [progress, setProgress] = React.useState(0);
+
   if (courseDiscount == 0) {
     var priceStyle = {
       justifySelf: "end",
@@ -118,11 +120,6 @@ const Course: React.FC<props> = ({
           discountPercentage: percent,
           discountDuration: duration,
         },
-        {
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-          },
-        }
       )
       .then((response) => {
         alert("Discount Added Successfully!");
@@ -147,6 +144,18 @@ const Course: React.FC<props> = ({
           if (response.data == "admin") {
             setType(1);
           }
+        }
+      });
+
+    axios
+      .post(
+        "http://localhost:3001/getProgress",
+        { courseName: course.courseName },
+        { withCredentials: true }
+      )
+      .then((response) => {
+        if (response.status) {
+          setProgress(response.status);
         }
       });
   }, []);
@@ -266,7 +275,11 @@ const Course: React.FC<props> = ({
                 <Stack alignItems={"end"} direction="column">
                   {isMyCourse ? (
                     <Box style={{ marginLeft: "auto" }}>
-                      <Progress progress={50} />
+                      <Progress
+                        progress={progress}
+                        size={70}
+                        fontVariant={"subtitle1"}
+                      />
                     </Box>
                   ) : (
                     <>

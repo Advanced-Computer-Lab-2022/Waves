@@ -149,22 +149,33 @@ async function getCourseProgress(username, type, courseTitle) {
       { _id: 0, courses: 1 }
     );
   }
-  course.courses[0].chapters.forEach((chapter) => {
-    if (chapter.done) done++;
-  });
+  if (course){
+    console.log(course)
+    course.courses[0].chapters.forEach((chapter) => {
+      if (chapter.done) done++;
 
-  return (done / course.courses[0].chapters.length) * 100;
+      return (done / course.courses[0].chapters.length) * 100;
+    });
+  }
+  else return 0;
 }
+
+router.post("/getProgress", async (req, res) => {
+  const { courseName } = req.body;
+  const username = req.session.user?.username;
+  const type = req.session.user?.type;
+  console.log(req.body);
+  const progress = await getCourseProgress(
+    username,
+    type,
+    courseName
+  );
+  res.send(progress + "");
+});
 
 router.post("/addProgress", async (req, res) => {
   const section = req.body.section;
   const courseTitle = req.body.courseTitle;
-
-  getCourseProgress(
-    req.session.user.username,
-    req.session.user?.type,
-    courseTitle
-  );
 
   let updated = null;
 
@@ -621,15 +632,15 @@ router.put("/add-discount", async (req, res) => {
 });
 
 router.get("/getUsername", async (req, res) => {
-  res.send(req.session.user.username);
+  res.send(req.session.user?.username);
 });
 
 router.get("/getEmail", async (req, res) => {
-  res.send(req.session.user.email);
+  res.send(req.session.user?.email);
 });
 
 router.get("/getBio", async (req, res) => {
-  res.send(req.session.user.bio);
+  res.send(req.session.user?.bio);
 });
 
 router.get("/getCountry", async (req, res) => {

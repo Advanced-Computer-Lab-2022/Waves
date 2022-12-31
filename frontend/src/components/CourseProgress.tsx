@@ -2,11 +2,13 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import { Typography } from "@mui/material";
 
-export default function CircularIndeterminate(props: any) {
+export default function CourseProgress(props: any) {
   const progress = props.progress;
+  const size = props.size;
+  const fontVariant = props.fontVariant;
   return (
     <Box sx={{ position: "relative", display: "inline-flex" }}>
-      <CircularProgress variant="determinate" size={70} value={progress} />
+      <CircularProgress variant="determinate" size={size} value={progress} />
       <Box
         sx={{
           top: 0,
@@ -20,10 +22,10 @@ export default function CircularIndeterminate(props: any) {
         }}
       >
         <Typography
-          variant="subtitle1"
+          variant={fontVariant}
           component="div"
           color="text.secondary"
-        >{`${Math.round(progress)}%`}</Typography>
+        >{`${Math.round(+progress)}%`}</Typography>
       </Box>
     </Box>
   );

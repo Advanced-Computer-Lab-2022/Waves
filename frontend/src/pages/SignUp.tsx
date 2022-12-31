@@ -1,13 +1,6 @@
 //React Imports
 
-import React, {
-  CSSProperties,
-  useCallback,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
-import { Routes, useNavigate } from "react-router-dom";
+import React, { useState } from "react";
 
 //File Imports
 

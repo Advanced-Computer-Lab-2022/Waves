@@ -13,7 +13,6 @@ import ExamSession from './pages/ExamSession';
 import ViewRating from './pages/ViewRating';
 import NewUser from './pages/NewUser';
 import AddCourse from './pages/AddCourse';
-import Info from './pages/Account';
 import Results from './pages/results';
 import InstructorTerms from './pages/InstructorTerms';
 import ResetPassword from './pages/ResetPassword';
@@ -30,7 +29,6 @@ import ViewReports from "./pages/ViewReports";
 import AddCourseTemp from "./pages/AddCourseTemp";
 import ExerciseSession from "./pages/ExerciseSession";
 import ExerciseResults from "./pages/ExerciseResults";
-import CircularProgressChildren from "./components/CircularProgression";
 import PaymentInfo from "./pages/PaymentInfo";
 
 function App() {
@@ -71,7 +69,6 @@ function App() {
         <Route path="/view-reports" element={<ViewReports/>} />
         <Route path="/addCourse" element={<AddCourseTemp/>} />
         <Route path="/exercise-results" element={<ExerciseResults/>} />
-        <Route path="/Circular" element={<CircularProgressChildren/>} />
       </Routes>
     </Router>
   );
