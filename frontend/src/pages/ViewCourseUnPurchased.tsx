@@ -16,6 +16,7 @@ import Footer from "../components/Footer";
 import ReviewsReports from "../components/ReviewsReports";
 import "../components/styles.css";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const background: React.CSSProperties = {
   minWidth: "100%",
@@ -50,15 +51,29 @@ const ViewCourseUnpurchased = (props: any) => {
   const location = useLocation();
   const course = location.state?.data;
 
-  const [courseRating, setCourseRating] = React.useState(course.courseRating);
+  const courseRating = course.courseRating;
+  const courseReviews = course.courseReviews;
+  const courseReports = course.courseReports;
 
-  const [courseReviews, setCourseReviews] = React.useState(
-    course.courseReviews
-  );
+  const [type, setType] = React.useState("");
 
-  const [courseReports, setCourseReports] = React.useState(
-    course.courseReports
-  );
+  React.useEffect(() => {
+    axios
+      .get("http://localhost:3001/getType", { withCredentials: true })
+      .then((res) => {
+        setType(res.data);
+      });
+  }, []);
+
+  function requestAccess() {
+    axios
+      .post("http://localhost:3001/requestAccess", {
+        courseID: course.courseID,
+      })
+      .then((res) => {
+        console.log(res.data);
+      });
+  }
 
   const navigate = useNavigate();
 
@@ -181,6 +196,7 @@ const ViewCourseUnpurchased = (props: any) => {
             >
               {"(" + courseRating[1] + ")"}
             </Typography>
+            {type === "corporateTrainee" ? <Button onClick={requestAccess}>Request Access</Button> : <></>}
             <Button
               variant="contained"
               color="secondary"

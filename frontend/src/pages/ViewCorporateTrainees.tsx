@@ -24,7 +24,6 @@ const ViewCorporateTrainees = (props: any) => {
       <ResponsiveNavBar />
       <Search setSearch={setSearch} />
       <Users users={users} />
-      <p />
       <Footer />
     </>
   );

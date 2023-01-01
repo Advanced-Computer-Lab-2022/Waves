@@ -11,6 +11,57 @@ const Courses = require("../models/Courses");
 const bcrypt = require("bcrypt");
 const mongoose = require("mongoose");
 const router = express.Router();
+const nodemailer = require("nodemailer");
+const RefundRequest = require("../models/RefundRequest");
+
+router.post("/acceptRefundRequest", async (req, res) => {
+  const { refundRequest } = req.body;
+  const courseTitle = refundRequest.courseTitle;
+  const username = refundRequest.username;
+  const course = await Courses.findOne(
+    { title: courseTitle },
+    { price: 1, _id: 0 }
+  ).exec();
+  console.log(course);
+  const price = course.price;
+  const user = await IndividualTrainee.findOne({ username }).exec();
+  if (user) {
+    const newWallet = user.wallet + price;
+    IndividualTrainee.updateOne({ username }, { wallet: newWallet }).exec();
+  } else {
+    const user = await CorporateTrainee.findOne({ username }).exec();
+    if (user) {
+      const newWallet = user.wallet + price;
+      CorporateTrainee.updateOne({ username }, { wallet: newWallet }).exec();
+    }
+  }
+  RefundRequest.deleteOne({ username: username, courseTitle: courseTitle });
+});
+
+router.post("/rejectRefundRequest", async (req, res) => {
+  const { refundRequest } = req.body;
+  const courseTitle = refundRequest.courseTitle;
+  const username = refundRequest.username;
+  RefundRequest.deleteOne({ username: username, courseTitle: courseTitle });
+});
+
+router.get("/getRefundRequests", async (req, res) => {
+  const refundRequests = await RefundRequest.find({}).exec();
+  res.send(refundRequests);
+});
+
+router.post("/refundRequest", async (req, res) => {
+  const { courseTitle } = req.body;
+  const username = req.session.user.username;
+  const userProfilePic = req.session.user.profilePic;
+  const refundRequest = new RefundRequest({
+    courseTitle,
+    username,
+    userProfilePic,
+  });
+  await refundRequest.save();
+  res.send("Refund Request Sent");
+});
 
 router.post("/checkPurchasedCourse", async (req, res) => {
   const { courseTitle } = req.body;
@@ -163,6 +214,98 @@ async function getCourseProgress(username, type, courseTitle) {
 
   return "0";
 }
+
+async function sendEmail(email, courseName, username) {
+  // Step 1
+  let transporter = nodemailer.createTransport({
+    service: "gmail",
+    user: "smtp.gmail.com",
+    port: 465,
+    secure: true,
+    auth: {
+      type: "login",
+      user: "alienlearning8@gmail.com",
+      pass: "gzwqfqhlcodrldze",
+    },
+    tls: {
+      // do not fail on invalid certs
+      rejectUnauthorized: false,
+    },
+  });
+  // Step 2
+  let mailOptions = {
+    from: "alienlearning8@gmail.com",
+    to: email,
+    subject: "Course Completion",
+    //text: 'Click the following link to reset your password',
+    html:
+      "Congratulations " +
+      username +
+      "! You have completed the course " +
+      courseName +
+      " and your certificate is attached to this email.",
+  };
+
+  // Step 3
+  transporter.sendMail(mailOptions, function (err, data) {
+    if (err) {
+      console.log("ErrorOccurs: ", err);
+    } else {
+      console.log("Email sent!!!!");
+    }
+  });
+}
+
+router.post("/sendMail", async (req, res) => {
+  const { courseName } = req.body;
+  const username = req.session.user?.username;
+  const type = req.session.user?.type;
+  let course;
+  if (type == "individualTrainee") {
+    course = await IndividualTrainee.findOne(
+      { username, "courses.courseTitle": courseName },
+      { _id: 0, "courses.certificateSent": 1, "courses.courseTitle": 1 }
+    );
+  } else if (type == "corporateTrainee") {
+    course = await CorporateTrainee.findOne(
+      { username, "courses.courseTitle": courseName },
+      { _id: 0, "courses.certificateSent": 1, "courses.courseTitle": 1 }
+    );
+  }
+  console.log(
+    course.courses.find((course) => course.courseTitle == courseName)
+      .certificateSent
+  );
+  if (
+    !course.courses.find((course) => course.courseTitle == courseName)
+      .certificateSent
+  ) {
+    if (type == "individualTrainee") {
+      sendEmail(req.session.user.email, courseName, username);
+      await IndividualTrainee.updateOne(
+        { username, "courses.courseTitle": courseName },
+        {
+          $set: {
+            "courses.$.certificateSent": true,
+          },
+        }
+      );
+    } else if (type == "corporateTrainee") {
+      sendEmail(req.session.user.email, courseName, username);
+      await IndividualTrainee.updateOne(
+        { username, "courses.courseTitle": courseName },
+        {
+          $set: {
+            "courses.$.certificateSent": true,
+          },
+        }
+      );
+    } else {
+      res.send("already sent");
+    }
+  }
+  console.log(course);
+});
 
 router.post("/getProgress", async (req, res) => {
   const { courseName } = req.body;

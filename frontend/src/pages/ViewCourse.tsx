@@ -79,6 +79,30 @@ const ViewCourse = (props: any) => {
 
   const [open, setOpen] = React.useState(false);
 
+  function handleCertificateClick() {
+    let doc = new jsPDF("landscape", "px", "a4", false);
+    doc.text(
+      "Congratulations on completing " +
+        course.courseName +
+        "!\n This is your certificate for completion!",
+      20,
+      20
+    );
+    doc.save("My Certificate.pdf");
+  }
+
+  function handleRefundClick() {
+    axios
+      .post(
+        "http://localhost:3001/requestRefund",
+        { courseTitle: course.courseName },
+        { withCredentials: true }
+      )
+      .then((response) => {
+        alert("Refund Requested!");
+      });
+  }
+
   const downloadPDFFile = () => {
     let doc = new jsPDF("landscape", "px", "a4", false);
     doc.text(notes, 20, 20);
@@ -97,6 +121,18 @@ const ViewCourse = (props: any) => {
         setCourseProgress(response.data);
       });
   }, []);
+
+  React.useEffect(() => {
+    if (courseProgress === 100) {
+      axios
+        .post(
+          "http://localhost:3001/sendMail",
+          { courseName: course.courseName },
+          { withCredentials: true }
+        )
+        .then((response) => {});
+    }
+  }, [courseProgress]);
 
   return (
     <div className="grad" style={background}>
@@ -148,10 +184,29 @@ const ViewCourse = (props: any) => {
                 fontVariant={"h4"}
               />
             </div>
-
-            <Button style={{ marginTop: "1rem", marginRight:'2rem' }} variant="contained">
-              Download Certificate
-            </Button>
+            {courseProgress === 100 ? (
+              <Button
+                onClick={handleCertificateClick}
+                variant="contained"
+                style={{ marginTop: "2rem" }}
+              >
+                Download Certificate
+              </Button>
+            ) : (
+              <>
+                {courseProgress < 50 ? (
+                  <Button
+                    onClick={handleRefundClick}
+                    variant="contained"
+                    style={{ marginTop: "2rem" }}
+                  >
+                    Request Refund
+                  </Button>
+                ) : (
+                  <></>
+                )}
+              </>
+            )}
           </div>
         </ThemeProvider>
       </Stack>

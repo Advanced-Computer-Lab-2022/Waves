@@ -113,14 +113,11 @@ const Course: React.FC<props> = ({
 
   const add = () => {
     axios
-      .put(
-        "http://localhost:3001/add-discount",
-        {
-          courseName: course.courseName,
-          discountPercentage: percent,
-          discountDuration: duration,
-        },
-      )
+      .put("http://localhost:3001/add-discount", {
+        courseName: course.courseName,
+        discountPercentage: percent,
+        discountDuration: duration,
+      })
       .then((response) => {
         alert("Discount Added Successfully!");
       });
@@ -214,7 +211,11 @@ const Course: React.FC<props> = ({
           component="img"
           image={courseImg}
           alt={courseName}
-          style={{ minHeight: "170px", marginBottom: "auto" }}
+          style={{
+            minHeight: "200px",
+            maxHeight: "200px",
+            marginBottom: "auto",
+          }}
         />
         <CardActionArea
           sx={{ minWidth: 350, maxWidth: 550, height: 320 }}

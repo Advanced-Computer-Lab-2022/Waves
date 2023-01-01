@@ -26,6 +26,7 @@ var CorporateTraineeSchema = new mongoose.Schema({
       courseTitle: String,
       chapters: [{ done: Boolean, sectionName: String }],
       progress: Number,
+      certificateSent: { type: Boolean, default: false },
     },
   ],
   country: {
@@ -33,6 +34,9 @@ var CorporateTraineeSchema = new mongoose.Schema({
   },
   bio: {
     type: String,
+  },
+  wallet: {
+    type: Number,
   },
 });
 

@@ -87,46 +87,45 @@ const User: React.FC<props> = ({
                 <p />
               </Typography>
             ))}
-          <CoursesAutocomplete />
-          <Stack
-            marginLeft={"15px"}
-            marginTop={"20px"}
-            spacing={"20px"}
-            direction={"row"}
-          >
-            <Button
-              onClick={grantCourseAccess}
-              variant="outlined"
-              color="success"
+          <div style={{ marginTop: "10px" }}>
+            <CoursesAutocomplete />
+            <Stack
+              marginLeft={"15px"}
+              marginTop={"20px"}
+              spacing={"20px"}
+              direction={"row"}
             >
-              Grant Access
-            </Button>
-            <Button variant="outlined" color="error">
-              Ban User
-            </Button>
-          </Stack>
-          <div style={{ display: "flex" }}>
-            <Button
-              variant="outlined"
-              color="primary"
-              sx={{
-                marginTop: "20px",
-                marginLeft: "auto",
-                marginRight: "auto",
-              }}
-              onClick={() => {
-                handleClickOpen();
-              }}
-            >
-              View Requests
-            </Button>
+              <Button
+                onClick={grantCourseAccess}
+                variant="outlined"
+                color="success"
+              >
+                Grant Access
+              </Button>
+              <Button variant="outlined" color="error">
+                Ban User
+              </Button>
+            </Stack>
+            <div style={{ display: "flex" }}>
+              <Button
+                variant="outlined"
+                color="primary"
+                sx={{
+                  marginTop: "20px",
+                  marginLeft: "auto",
+                  marginRight: "auto",
+                }}
+                onClick={() => {
+                  handleClickOpen();
+                }}
+              >
+                View Requests
+              </Button>
+            </div>
           </div>
         </CardContent>
       </div>
       <div>
-        <Button variant="outlined" onClick={handleClickOpen}>
-          Open responsive dialog
-        </Button>
         <Dialog
           open={open}
           onClose={handleClose}
