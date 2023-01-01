@@ -95,7 +95,7 @@ const ViewCourse = (props: any) => {
     axios
       .post(
         "http://localhost:3001/requestRefund",
-        { courseTitle: course.courseName },
+        { courseTitle: course.courseName, courseImg: course.courseImg },
         { withCredentials: true }
       )
       .then((response) => {

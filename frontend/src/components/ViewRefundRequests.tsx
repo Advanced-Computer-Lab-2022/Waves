@@ -1,9 +1,9 @@
 import {
+  Avatar,
   Button,
   Dialog,
   DialogActions,
   DialogContent,
-  DialogContentText,
   DialogTitle,
   Stack,
   Typography,
@@ -63,42 +63,64 @@ const ViewRefundRequests = (props: any) => {
         aria-labelledby="responsive-dialog-title"
         PaperProps={{
           sx: {
-            width: "50%",
-            height: "50%",
+            height: "50rem",
           },
         }}
       >
-        <DialogTitle id="responsive-dialog-title">
+        <DialogTitle fontSize={30} id="responsive-dialog-title">
           {"View Refund Requests"}
         </DialogTitle>
         <DialogContent>
-          <Stack>
+          <Stack spacing={2}>
+            <Stack direction="row" spacing={16} marginLeft={"5%"}>
+              <Typography variant="h5">User</Typography>
+              <Typography variant="h5">Course</Typography>
+            </Stack>
+
             {refundRequests &&
               refundRequests.map((refundRequest) => (
-                <Stack direction="row">
-                  <img
-                    src={refundRequest.userProfilePic}
-                    alt="profilePic"
-                    width="50"
-                    height="50"
-                  />
-                  <Typography>{refundRequest.username}</Typography>
-                  <Typography>{refundRequest.courseTitle}</Typography>
-                  <div style={{ display: "flex" }}>
-                    <Button
-                      onClick={() => acceptHandle(refundRequest)}
-                      color="success"
-                    >
-                      Accept
-                    </Button>
-                    <Button
-                      onClick={() => rejectHandle(refundRequest)}
-                      color="error"
-                    >
-                      Reject
-                    </Button>
-                  </div>
-                </Stack>
+                <>
+                  <span className="horizontal-line-thin"></span>
+                  <Stack
+                    direction="row"
+                    spacing={7}
+                    style={{ marginLeft: "6%" }}
+                  >
+                    <Typography variant="h6" marginTop={"2%"}>
+                      {refundRequest.username}
+                    </Typography>
+
+                    <Stack direction={"row"} spacing={2}>
+                      <img
+                        src={refundRequest.courseImg}
+                        style={{
+                          boxShadow: "1px 1px",
+                          borderRadius: "10px",
+                          border: "solid rgb(170,170,170) 1px",
+                          width: "40%",
+                          height: "100%",
+                        }}
+                      />
+                      <Typography variant="h6" marginTop={"2%"}>
+                        {refundRequest.courseTitle}
+                      </Typography>
+                    </Stack>
+                    <div style={{ display: "flex", marginLeft: "auto" }}>
+                      <Button
+                        onClick={() => acceptHandle(refundRequest)}
+                        color="success"
+                      >
+                        Accept
+                      </Button>
+                      <Button
+                        onClick={() => rejectHandle(refundRequest)}
+                        color="error"
+                      >
+                        Reject
+                      </Button>
+                    </div>
+                  </Stack>
+                </>
               ))}
           </Stack>
         </DialogContent>

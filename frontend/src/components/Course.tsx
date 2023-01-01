@@ -273,15 +273,13 @@ const Course: React.FC<props> = ({
                 >
                   {"(" + courseRating[1] + ")"}
                 </Typography>
-                <Stack alignItems={"end"} direction="column">
+                <Stack direction="column">
                   {isMyCourse ? (
-                    <Box style={{ marginLeft: "auto" }}>
-                      <Progress
-                        progress={progress}
-                        size={70}
-                        fontVariant={"subtitle1"}
-                      />
-                    </Box>
+                    <Progress
+                      progress={progress}
+                      size={50}
+                      fontVariant={"subtitle2"}
+                    />
                   ) : (
                     <>
                       <Typography

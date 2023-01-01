@@ -29,25 +29,56 @@ router.post("/acceptRefundRequest", async (req, res) => {
   if (user) {
     if (user.wallet) {
       const newWallet = user.wallet + price;
-      IndividualTrainee.updateOne({ username }, { wallet: newWallet }).exec();
+      await IndividualTrainee.updateOne(
+        { username },
+        { wallet: newWallet }
+      ).exec();
     } else {
-      IndividualTrainee.updateOne({ username }, { wallet: price }).exec();
+      await IndividualTrainee.updateOne({ username }, { wallet: price }).exec();
     }
+    await IndividualTrainee.updateOne(
+      { username },
+      { $pull: { courses: { courseTitle: courseTitle } } }
+    );
   } else {
     const user = await CorporateTrainee.findOne({ username }).exec();
     if (user) {
-      const newWallet = user.wallet + price;
-      CorporateTrainee.updateOne({ username }, { wallet: newWallet }).exec();
+      if (user.wallet) {
+        const newWallet = user.wallet + price;
+        await CorporateTrainee.updateOne(
+          { username },
+          { wallet: newWallet }
+        ).exec();
+      } else {
+        await CorporateTrainee.updateOne(
+          { username },
+          { wallet: price }
+        ).exec();
+      }
+      await CorporateTrainee.updateOne(
+        { username },
+        { $pull: { courses: { courseTitle: courseTitle } } }
+      );
     }
   }
-  RefundRequest.deleteOne({ username: username, courseTitle: courseTitle });
+  await RefundRequest.deleteOne({
+    username: username,
+    courseTitle: courseTitle,
+  });
+  res.send("Refund Accepted!");
 });
 
 router.post("/rejectRefundRequest", async (req, res) => {
   const { refundRequest } = req.body;
   const courseTitle = refundRequest.courseTitle;
   const username = refundRequest.username;
-  RefundRequest.deleteOne({ username: username, courseTitle: courseTitle });
+  console.log(username);
+  console.log(courseTitle);
+  await RefundRequest.deleteOne({
+    username: username,
+    courseTitle: courseTitle,
+  });
+  res.send("Refund Rejected!");
 });
 
 router.get("/getRefundRequests", async (req, res) => {
@@ -56,13 +87,12 @@ router.get("/getRefundRequests", async (req, res) => {
 });
 
 router.post("/requestRefund", async (req, res) => {
-  const { courseTitle } = req.body;
+  const { courseTitle, courseImg } = req.body;
   const username = req.session.user.username;
-  const userProfilePic = req.session.user.profilePic;
   const refundRequest = new RefundRequest({
     courseTitle,
     username,
-    userProfilePic,
+    courseImg,
   });
   await refundRequest.save();
   res.send("Refund Request Sent");
