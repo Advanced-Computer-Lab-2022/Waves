@@ -149,15 +149,13 @@ async function getCourseProgress(username, type, courseTitle) {
       { _id: 0, courses: 1 }
     );
   }
-  if (course){
-    console.log(course)
+  if (course) {
     course.courses[0].chapters.forEach((chapter) => {
       if (chapter.done) done++;
-
+      console.log('in function: ' + (done / course.courses[0].chapters.length) * 100)
       return (done / course.courses[0].chapters.length) * 100;
     });
-  }
-  else return 0;
+  } else return 0;
 }
 
 router.post("/getProgress", async (req, res) => {
@@ -165,11 +163,8 @@ router.post("/getProgress", async (req, res) => {
   const username = req.session.user?.username;
   const type = req.session.user?.type;
   console.log(req.body);
-  const progress = await getCourseProgress(
-    username,
-    type,
-    courseName
-  );
+  const progress = await getCourseProgress(username, type, courseName);
+  console.log(progress);
   res.send(progress + "");
 });
 

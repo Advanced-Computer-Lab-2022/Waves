@@ -83,7 +83,7 @@ const User: React.FC<props> = ({
           {user.courses &&
             user.courses.map((course: any) => (
               <Typography variant="body2" color="grey">
-                {course}
+                {course.courseTitle}
                 <p />
               </Typography>
             ))}

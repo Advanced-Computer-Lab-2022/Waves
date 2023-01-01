@@ -1,6 +1,4 @@
 import {Grid } from "@mui/material";
-import axios from "axios";
-import Course from "./Course";
 import User from "./UserCard";
 
 const Users = (props:any) => {

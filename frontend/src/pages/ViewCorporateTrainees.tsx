@@ -19,14 +19,6 @@ const ViewCorporateTrainees = (props: any) => {
     });
   }, [search]);
 
-  const pagesArr = [
-    "Courses",
-    "Instructors",
-    "Corporate Trainees",
-    "Add User",
-    "About Us",
-  ];
-
   return (
     <>
       <ResponsiveNavBar />
