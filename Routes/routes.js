@@ -136,7 +136,7 @@ router.post("/getProgresses", async (req, res) => {
 async function getCourseProgress(username, type, courseTitle) {
   let done = 0;
 
-  let course = null;
+  let course;
 
   if (type == "individualTrainee") {
     course = await IndividualTrainee.findOne(
@@ -148,31 +148,37 @@ async function getCourseProgress(username, type, courseTitle) {
       { username, courses: { $elemMatch: { courseTitle: courseTitle } } },
       { _id: 0, courses: 1 }
     );
+  } else {
+    return "0";
   }
   if (course) {
-    course.courses[0].chapters.forEach((chapter) => {
+    const correctCourse = course.courses.find(
+      (course) => course.courseTitle == courseTitle
+    );
+    correctCourse.chapters.forEach((chapter) => {
       if (chapter.done) done++;
-      console.log('in function: ' + (done / course.courses[0].chapters.length) * 100)
-      return (done / course.courses[0].chapters.length) * 100;
     });
-  } else return 0;
+    return (done / course.courses[0].chapters.length) * 100;
+  }
+
+  return "0";
 }
 
 router.post("/getProgress", async (req, res) => {
   const { courseName } = req.body;
   const username = req.session.user?.username;
   const type = req.session.user?.type;
-  console.log(req.body);
   const progress = await getCourseProgress(username, type, courseName);
-  console.log(progress);
-  res.send(progress + "");
+  if (progress) {
+    res.send(progress + "");
+  }
 });
 
 router.post("/addProgress", async (req, res) => {
   const section = req.body.section;
   const courseTitle = req.body.courseTitle;
 
-  let updated = null;
+  let updated;
 
   const username = req.session.user.username;
 
@@ -209,27 +215,35 @@ router.post("/addProgress", async (req, res) => {
           }
         );
       }
+
+      res.send(courseProgress + "");
+    } else {
+      res.send(false);
     }
-  }
-  if (req.session.user?.type == "corporateTrainee")
+  } else if (req.session.user?.type == "corporateTrainee") {
     updated = await CorporateTrainee.updateOne(filter, update, options);
 
-  if (updated) {
-    const courseProgress = await getCourseProgress(
-      req.session.user.username,
-      req.session.user?.type,
-      courseTitle
-    );
-    if (courseProgress) {
-      await CorporateTrainee.updateOne(
-        { username, "courses.courseTitle": courseTitle },
-        {
-          $set: {
-            "courses.$.progress": courseProgress,
-          },
-        }
+    if (updated) {
+      const courseProgress = await getCourseProgress(
+        req.session.user.username,
+        req.session.user?.type,
+        courseTitle
       );
+      if (courseProgress) {
+        await CorporateTrainee.updateOne(
+          { username, "courses.courseTitle": courseTitle },
+          {
+            $set: {
+              "courses.$.progress": courseProgress,
+            },
+          }
+        );
+      }
+    } else {
+      res.send(false);
     }
+  } else {
+    res.send(false);
   }
 });
 
@@ -330,7 +344,6 @@ router.get("/getReports", async (req, res) => {
     { reports: { $exists: true, $type: "array" } },
     { title: 1, reports: 1 }
   ).exec();
-  console.log(coursesReports);
   res.send(coursesReports);
 });
 
@@ -510,7 +523,6 @@ router.put("/addReview", async (req, res) => {
 });
 
 router.put("/addReport", async (req, res) => {
-  console.log(req.body);
   const type = req.body.type;
   const description = req.body.description;
   const reporter = req.body.reporter;
@@ -578,7 +590,6 @@ router.post("/add-user", async (req, res) => {
 
 router.post("/addCourse", async (req, res) => {
   instructorController.addCourse(req.body, req.session.user.username);
-  console.log(req.body);
   res.send("/instructor");
 });
 
@@ -606,9 +617,9 @@ router.post("/exam-session", async (req, res) => {
 router.put("/purchase-course", async (req, res) => {
   const user = req.body.username;
   const title = req.body.title;
-  const courseSubtitles = req.body.courseSubtitles;
+  const courseChapters = req.body.courseChapters;
   const chapters = [];
-  courseSubtitles.forEach((chapter) => {
+  courseChapters.forEach((chapter) => {
     chapters.push({ sectionName: chapter.description, done: false });
   });
   return await individualTrainee.addPurchasedCourse(user, title, chapters);
