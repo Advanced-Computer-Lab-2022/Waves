@@ -14,6 +14,40 @@ const mongoose = require("mongoose");
 const router = express.Router();
 const nodemailer = require("nodemailer");
 const RefundRequest = require("../models/RefundRequest");
+const AccessRequest = require("../models/AccessRequest");
+
+router.get("/getWallet", async (req, res) => {
+  const username = req.session.user?.username;
+  const type = req.session.user?.type;
+
+  let user = { wallet: 0 };
+
+  if (type == "individualTrainee") {
+    user = await IndividualTrainee.findOne(
+      { username },
+      { _id: 0, wallet: 1 }
+    ).exec();
+  } else if (type == "corporateTrainee") {
+    user = await CorporateTrainee.findOne(
+      { username },
+      { _id: 0, wallet: 1 }
+    ).exec();
+  } else if (type == "instructor") {
+    user = await Instructor.findOne({ username }, { _id: 0, wallet: 1 }).exec();
+  }
+  res.send(user?.wallet + "");
+});
+
+router.post("/requestAccess", async (req, res) => {
+  const { courseTitle } = req.body;
+  const username = req.session.user?.username;
+  const accessRequest = new AccessRequest({
+    courseTitle,
+    username,
+  });
+  await accessRequest.save();
+  res.send("Access Request Sent");
+});
 
 router.post("/acceptRefundRequest", async (req, res) => {
   const { refundRequest } = req.body;
@@ -774,13 +808,13 @@ router.post("/add-user", async (req, res) => {
 });
 
 router.post("/addAdmin", async (req, res) => {
-  adminController.addAdmin(req.body);
+  await adminController.addAdmin(req.body);
 });
 router.post("/addInstructor", async (req, res) => {
-  adminController.addInstructor(req.body);
+  await adminController.addInstructor(req.body);
 });
 router.post("/addCopTrainee", async (req, res) => {
-  adminController.addCorporate(req.body);
+  await adminController.addCorporate(req.body);
 });
 
 router.put("/addCourseToCopTrainee", async (req, res) => {
@@ -833,6 +867,22 @@ router.put("/purchase-course", async (req, res) => {
   courseChapters.forEach((chapter) => {
     chapters.push({ sectionName: chapter.description, done: false });
   });
+  const instructor = req.body.courseInstructor;
+  const coursePrice = req.body.coursePrice;
+
+  const userInstructor = await Instructor.findOne(
+    { instructor },
+    { _id: 0, wallet: 1 }
+  ).exec();
+
+  let wallet = 0;
+  if (userInstructor.wallet) wallet = userInstructor.wallet;
+
+  await Instructor.updateOne(
+    { instructor },
+    { wallet: wallet + +coursePrice.slice(1, coursePrice.length - 1) }
+  ).exec();
+
   return await individualTrainee.addPurchasedCourse(user, title, chapters);
 });
 

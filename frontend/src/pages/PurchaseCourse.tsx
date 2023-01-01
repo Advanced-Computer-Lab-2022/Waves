@@ -36,6 +36,8 @@ const PurchaseCourse = (props: any) => {
           username: username,
           title: data.courseName,
           courseChapters: data.courseChapters,
+          courseInstructor: data.courseInstructor,
+          coursePrice: data.coursePrice,
         },
       )
       .then((response) => {});

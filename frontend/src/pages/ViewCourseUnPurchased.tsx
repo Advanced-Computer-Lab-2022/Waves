@@ -68,7 +68,7 @@ const ViewCourseUnpurchased = (props: any) => {
   function requestAccess() {
     axios
       .post("http://localhost:3001/requestAccess", {
-        courseID: course.courseID,
+        courseTitle: course.courseName,
       })
       .then((res) => {
         console.log(res.data);
@@ -196,27 +196,39 @@ const ViewCourseUnpurchased = (props: any) => {
             >
               {"(" + courseRating[1] + ")"}
             </Typography>
-            {type === "corporateTrainee" ? <Button onClick={requestAccess}>Request Access</Button> : <></>}
-            <Button
-              variant="contained"
-              color="secondary"
-              style={{ marginRight: "2%" }}
-              onClick={() =>
-                navigate("/payment-information", {
-                  state: {
-                    data: {
-                      courseName: course.courseName,
-                      coursePrice: course.coursePrice,
-                      courseDiscount: course.courseDiscount,
-                      currencySlice: course.currencySlice,
-                      courseChapters: course.courseChapters,
+            <Stack direction="row" spacing={3} marginRight={2}>
+              {type === "corporateTrainee" ? (
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  onClick={requestAccess}
+                >
+                  Request Access
+                </Button>
+              ) : (
+                <></>
+              )}
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={() =>
+                  navigate("/payment-information", {
+                    state: {
+                      data: {
+                        courseName: course.courseName,
+                        coursePrice: course.coursePrice,
+                        courseDiscount: course.courseDiscount,
+                        currencySlice: course.currencySlice,
+                        courseChapters: course.courseChapters,
+                        courseInstructor: course.courseInstructor,
+                      },
                     },
-                  },
-                })
-              }
-            >
-              Purchase Course
-            </Button>
+                  })
+                }
+              >
+                Purchase Course
+              </Button>
+            </Stack>
           </Stack>
         </div>
         <ReviewsReports

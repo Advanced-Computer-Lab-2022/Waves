@@ -54,6 +54,7 @@ function App() {
         <Route path="/results" element={<Results />} />
         <Route path="/inbox" element={<Inbox />} />
         <Route path="/admin" element={<CoursesPage />} />
+        <Route path="/corporateTrainee" element={<CoursesPage />} />
         <Route path="/instructor" element={<CoursesPage />} />
         <Route path="/coporateTrainee" element={<CoursesPage />} />
         <Route path="/individualTrainee" element={<CoursesPage />} />

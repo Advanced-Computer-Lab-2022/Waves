@@ -51,6 +51,7 @@ const IndividualTraineeSchema = new mongoose.Schema({
   },
   wallet: {
     type: Number,
+    default: 0,
   }
 });
 const IndividualTrainee = mongoose.model(
