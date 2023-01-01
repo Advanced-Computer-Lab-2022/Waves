@@ -14,6 +14,7 @@ import {
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import CoursesAutocomplete from "./CoursesAutocomplete";
+import axios from "axios";
 
 interface props {
   profilePic?: string;
@@ -41,7 +42,27 @@ const User: React.FC<props> = ({
     courses: courses,
   };
 
-  function grantCourseAccess() {}
+  function grantCourseAccess() {
+    axios
+      .put(
+        "http://localhost:3001/addCourseToCopTrainee",
+        {
+         username: user.username,
+         title: selectedCourse,
+        // courseSubtitles:
+          
+        },
+      )
+      .then((response) => {
+        
+      });
+  }
+
+  const [selectedCourse, setSelectedCourse] = React.useState(null);
+
+const handleCourseSelection = (course: React.SetStateAction<null>) => {
+  setSelectedCourse(course);
+}
 
   const [open, setOpen] = React.useState(false);
 
@@ -87,7 +108,7 @@ const User: React.FC<props> = ({
                 <p />
               </Typography>
             ))}
-          <CoursesAutocomplete />
+          <CoursesAutocomplete setSelectedCourse={setSelectedCourse} selectedCourse={selectedCourse}/>
           <Stack
             marginLeft={"15px"}
             marginTop={"20px"}

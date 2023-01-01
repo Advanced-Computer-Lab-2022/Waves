@@ -7,6 +7,7 @@ const Administrator = require("../models/Users/Administrator");
 const CorporateTrainee = require("../models/users/CorporateTrainee");
 const IndividualTrainee = require("../models/users/IndividualTrainee");
 const Instructor = require("../models/users/Instructor");
+const Admin = require("../models/users/Administrator");
 const Courses = require("../models/Courses");
 const bcrypt = require("bcrypt");
 const mongoose = require("mongoose");
@@ -37,6 +38,14 @@ router.post("/checkPurchasedCourse", async (req, res) => {
 router.get("/getCorporateTrainees", async (req, res) => {
   const corporateTrainees = await CorporateTrainee.find({}).exec();
   res.send(corporateTrainees);
+});
+router.get("/getInstructors", async (req, res) => {
+  const Instructors = await Instructor.find({}).exec();
+  res.send(Instructors);
+});
+router.get("/getAdmins", async (req, res) => {
+  const Admins = await Admin.find({}).exec();
+  res.send(Admins);
 });
 
 router.get("/getCourses", async (req, res) => {
@@ -569,6 +578,27 @@ router.post("/add-user", async (req, res) => {
   if (index == 0) adminController.addAdmin(req.body);
   else if (index == 1) adminController.addInstructor(req.body);
   else if (index == 2) adminController.addCorporate(req.body);
+});
+
+router.post("/addAdmin", async (req, res) => {
+  adminController.addAdmin(req.body);
+});
+router.post("/addInstructor", async (req, res) => {
+  adminController.addInstructor(req.body);
+});
+router.post("/addCopTrainee", async (req, res) => {
+  adminController.addCorporate(req.body);
+});
+
+router.put("/addCourseToCopTrainee", async (req, res) => {
+  const user = req.body.username;
+  const title = req.body.title;
+  const courseSubtitles = req.body.courseSubtitles;
+  const chapters = [];
+  courseSubtitles.forEach((chapter) => {
+    chapters.push({ sectionName: chapter.description, done: false });
+  });
+  return await adminController.addCourseToCopTrainee(user, title, chapters);
 });
 
 // router.post("/add-course", async (req, res) => {

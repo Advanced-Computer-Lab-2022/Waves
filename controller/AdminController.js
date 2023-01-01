@@ -66,6 +66,21 @@ async function sendEmail (email){
     });        
 }
 
+async function addCourseToCopTrainee (user, courseTitle, chapters){
+    await CorporateTrainee.findOneAndUpdate({username: user}, {
+        $addToSet:{
+            courses: {courseTitle, chapters}
+        }
+    })
+}
+
+async function getChapters (course){
+    await CorporateTrainee.findOneAndUpdate({username: user}, {
+        $addToSet:{
+            courses: {courseTitle, chapters}
+        }
+    })
+}
 
 
-module.exports = {addAdmin, addCorporate, addInstructor, sendEmail};
+module.exports = {addAdmin, addCorporate, addInstructor, sendEmail, addCourseToCopTrainee};
