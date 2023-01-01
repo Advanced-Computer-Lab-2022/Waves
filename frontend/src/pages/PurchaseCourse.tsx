@@ -21,6 +21,7 @@ const PurchaseCourse = (props: any) => {
   const location = useLocation();
   const data = location.state?.data;
   const [username, setUsername] = React.useState<string>();
+  console.log(data)
 
   axios
     .get("http://localhost:3001/getUsername", { withCredentials: true })
@@ -34,13 +35,8 @@ const PurchaseCourse = (props: any) => {
         {
           username: username,
           title: data.courseName,
-          courseSubtitles: data.courseSubtitles,
+          courseChapters: data.courseChapters,
         },
-        {
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-          },
-        }
       )
       .then((response) => {});
   };

@@ -34,20 +34,21 @@ export default function NestedList(props: any) {
   }, [chapters?.length]);
 
   React.useEffect(() => {
-
-    axios
-      .post(
-        "http://localhost:3001/getProgresses",
-        {
-          courseTitle: course.courseName,
-        },
-        {
-          withCredentials: true,
-        }
-      )
-      .then((response) => {
-        setSectionProgressess(response.data);
-      });
+    if (!isNotPurchased) {
+      axios
+        .post(
+          "http://localhost:3001/getProgresses",
+          {
+            courseTitle: course.courseName,
+          },
+          {
+            withCredentials: true,
+          }
+        )
+        .then((response) => {
+          setSectionProgressess(response.data);
+        });
+    }
   }, []);
 
   const handleClick = (idx: number) => {
@@ -67,27 +68,30 @@ export default function NestedList(props: any) {
   }
 
   function handleVideoStarted(): void {
-    axios
-      .post(
-        "http://localhost:3001/addProgress",
-        { section: currentSection, courseTitle: course.courseName },
-        { withCredentials: true }
-      )
-      .then((res) => {
-        axios
-          .post(
-            "http://localhost:3001/getProgresses",
-            {
-              courseTitle: course.courseName,
-            },
-            {
-              withCredentials: true,
-            }
-          )
-          .then((response) => {
-            setSectionProgressess(response.data);
-          });
-      });
+    if (!isNotPurchased) {
+      axios
+        .post(
+          "http://localhost:3001/addProgress",
+          { section: currentSection, courseTitle: course.courseName },
+          { withCredentials: true }
+        )
+        .then((res) => {
+          if (res.data) props.setCourseProgress(res.data);
+          axios
+            .post(
+              "http://localhost:3001/getProgresses",
+              {
+                courseTitle: course.courseName,
+              },
+              {
+                withCredentials: true,
+              }
+            )
+            .then((response) => {
+              setSectionProgressess(response.data);
+            });
+        });
+    }
   }
 
   return (

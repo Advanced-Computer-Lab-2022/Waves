@@ -17,8 +17,6 @@ import ReviewsReports from "../components/ReviewsReports";
 import "../components/styles.css";
 import { useNavigate } from "react-router-dom";
 
-const pages = ["Courses", "Instructors", "Add User", "About Us"];
-
 const background: React.CSSProperties = {
   minWidth: "100%",
   width: "122rem",
@@ -195,7 +193,7 @@ const ViewCourseUnpurchased = (props: any) => {
                       coursePrice: course.coursePrice,
                       courseDiscount: course.courseDiscount,
                       currencySlice: course.currencySlice,
-                      courseSubtitles: course.courseSubtitles,
+                      courseChapters: course.courseChapters,
                     },
                   },
                 })

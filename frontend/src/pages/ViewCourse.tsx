@@ -9,6 +9,7 @@ import {
   Stack,
   ThemeProvider,
   createTheme,
+  Button,
 } from "@mui/material";
 //var Blur = require('react-blur');
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -92,7 +93,7 @@ const ViewCourse = (props: any) => {
         { withCredentials: true }
       )
       .then((response) => {
-        console.log(response.data)
+        console.log(response.data);
         setCourseProgress(response.data);
       });
   }, []);
@@ -137,7 +138,7 @@ const ViewCourse = (props: any) => {
           }}
         />
       </Stack>
-      <div style={{ display: "flex" }}>
+      <Stack style={{ display: "flex" }}>
         <ThemeProvider theme={theme}>
           <div style={{ marginLeft: "auto", marginRight: "auto" }}>
             <div style={{ marginRight: "50rem" }}>
@@ -147,10 +148,14 @@ const ViewCourse = (props: any) => {
                 fontVariant={"h4"}
               />
             </div>
+
+            <Button style={{ marginTop: "1rem", marginRight:'2rem' }} variant="contained">
+              Download Certificate
+            </Button>
           </div>
         </ThemeProvider>
-      </div>
-      <CourseContent course={course} />
+      </Stack>
+      <CourseContent course={course} setCourseProgress={setCourseProgress} />
 
       <div
         className="ratingGrad"

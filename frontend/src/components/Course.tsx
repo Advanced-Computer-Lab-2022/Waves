@@ -154,8 +154,8 @@ const Course: React.FC<props> = ({
         { withCredentials: true }
       )
       .then((response) => {
-        if (response.status) {
-          setProgress(response.status);
+        if (response.data) {
+          setProgress(response.data);
         }
       });
   }, []);

@@ -153,7 +153,7 @@ const SignUp = () => {
           style={{
             minHeight: "122vh",
             display: "flex",
-            minWidth: "100.9%",
+            minWidth: "100%",
             width: "122rem",
           }}
         >

@@ -143,7 +143,7 @@ const ResponsiveNavBar = () => {
           paddingTop: 1,
           height: 80,
           width: "122rem",
-          minWidth: "100.9%",
+          minWidth: "100%",
         }}
         position="static"
       >
