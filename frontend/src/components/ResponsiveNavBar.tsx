@@ -57,7 +57,7 @@ const ResponsiveNavBar = () => {
     "All Courses",
     "Instructors",
     "Corporate Trainees",
-    "Add User",
+    "Admins",
     "View Reports",
     "About Us",
   ];

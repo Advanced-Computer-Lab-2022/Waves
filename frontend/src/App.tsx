@@ -30,6 +30,8 @@ import AddCourseTemp from "./pages/AddCourseTemp";
 import ExerciseSession from "./pages/ExerciseSession";
 import ExerciseResults from "./pages/ExerciseResults";
 import PaymentInfo from "./pages/PaymentInfo";
+import ViewInstructors from "./pages/ViewInstructors";
+import ViewAdmins from "./pages/ViewAdmins";
 
 function App() {
 
@@ -63,6 +65,8 @@ function App() {
         <Route path="/instructor-terms" element={<InstructorTerms />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/corporate-trainees" element={<ViewCorporateTrainees />} />
+        <Route path="/instructors" element={<ViewInstructors />} />
+        <Route path="/admins" element={<ViewAdmins />} />
         <Route path="/courses" element={<CoursesPage/>} />
         <Route path="/all-courses" element={<CoursesPage/>} />
         <Route path="/my-courses" element={<MyCourses/>} />

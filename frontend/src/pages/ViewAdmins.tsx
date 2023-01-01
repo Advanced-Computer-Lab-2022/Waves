@@ -7,17 +7,17 @@ import Footer from "../components/Footer";
 import Courses from "../components/Courses";
 import FilterBar from "../components/FilterBar";
 import Search from "../components/Search";
-import Users from "../components/Users";
+import Users from "../components/Users2";
 import DialogContentText from '@mui/material/DialogContentText';
 
-const ViewCorporateTrainees = (props: any) => {
+const ViewAdmins = (props: any) => {
   const [users, setUsers] = React.useState<any[]>([]);
   const [search, setSearch] = React.useState<any[]>([]);
   const [username, setName] = React.useState("");
   const [password, setPass] = React.useState("");
 
   useEffect(() => {
-    axios.get("http://localhost:3001/getCorporateTrainees").then((response) => {
+    axios.get("http://localhost:3001/getAdmins").then((response) => {
       setUsers(response.data);
     });
   }, [search]);
@@ -25,7 +25,7 @@ const ViewCorporateTrainees = (props: any) => {
   const add = () => {
     axios
       .post(
-        "http://localhost:3001/addCopTrainee",
+        "http://localhost:3001/addAdmin",
         {
           username: username,
           password: password,
@@ -59,13 +59,13 @@ const ViewCorporateTrainees = (props: any) => {
               }}
               variant={"outlined"}
             >
-              Add Corporate Trainee
+              Add Admin
 
             </Button>
           </div>
         <Stack alignItems={"end"} direction="column">
           <Dialog open={open} onClose={handleClose}>
-            <DialogTitle>Add New Corporate Trainee</DialogTitle>
+            <DialogTitle>Add New Admin</DialogTitle>
             <DialogContent>
               <Stack direction="column" spacing={1} marginTop={0.7}>
                 <TextField
@@ -84,15 +84,16 @@ const ViewCorporateTrainees = (props: any) => {
             </DialogContent>
             <DialogActions>
               <Button onClick={add} href="/admin">
-                Add Corporate Trainee
+                Add Admin
               </Button>
             </DialogActions>
           </Dialog>
         </Stack>
       <Users users={users} />
+      <p />
       <Footer />
     </>
   );
 }
 
-export default ViewCorporateTrainees;
+export default ViewAdmins;
