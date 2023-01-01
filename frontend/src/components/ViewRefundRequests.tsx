@@ -12,7 +12,7 @@ import axios from "axios";
 import React from "react";
 
 const ViewRefundRequests = (props: any) => {
-  const [open, setOpen] = React.useState(false);
+  const { open, setOpen } = props;
   const [refundRequests, setRefundRequests] = React.useState<any[]>([]);
   function handleClickOpen() {
     setOpen(true);
@@ -61,6 +61,12 @@ const ViewRefundRequests = (props: any) => {
         open={open}
         onClose={handleClose}
         aria-labelledby="responsive-dialog-title"
+        PaperProps={{
+          sx: {
+            width: "50%",
+            height: "50%",
+          },
+        }}
       >
         <DialogTitle id="responsive-dialog-title">
           {"View Refund Requests"}
@@ -96,14 +102,7 @@ const ViewRefundRequests = (props: any) => {
               ))}
           </Stack>
         </DialogContent>
-        <DialogActions>
-          <Button autoFocus onClick={handleClose}>
-            Disagree
-          </Button>
-          <Button onClick={handleClose} autoFocus>
-            Agree
-          </Button>
-        </DialogActions>
+        <DialogActions></DialogActions>
       </Dialog>
     </div>
   );

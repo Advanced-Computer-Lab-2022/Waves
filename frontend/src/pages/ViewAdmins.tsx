@@ -1,14 +1,10 @@
-import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
 import React, { useEffect } from "react";
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Stack, TextField } from "@mui/material";
 import ResponsiveNavBar from "../components/ResponsiveNavBar";
 import Footer from "../components/Footer";
-import Courses from "../components/Courses";
-import FilterBar from "../components/FilterBar";
 import Search from "../components/Search";
 import Users from "../components/Users2";
-import DialogContentText from '@mui/material/DialogContentText';
 
 const ViewAdmins = (props: any) => {
   const [users, setUsers] = React.useState<any[]>([]);

@@ -27,8 +27,12 @@ router.post("/acceptRefundRequest", async (req, res) => {
   const price = course.price;
   const user = await IndividualTrainee.findOne({ username }).exec();
   if (user) {
-    const newWallet = user.wallet + price;
-    IndividualTrainee.updateOne({ username }, { wallet: newWallet }).exec();
+    if (user.wallet) {
+      const newWallet = user.wallet + price;
+      IndividualTrainee.updateOne({ username }, { wallet: newWallet }).exec();
+    } else {
+      IndividualTrainee.updateOne({ username }, { wallet: price }).exec();
+    }
   } else {
     const user = await CorporateTrainee.findOne({ username }).exec();
     if (user) {
@@ -51,7 +55,7 @@ router.get("/getRefundRequests", async (req, res) => {
   res.send(refundRequests);
 });
 
-router.post("/refundRequest", async (req, res) => {
+router.post("/requestRefund", async (req, res) => {
   const { courseTitle } = req.body;
   const username = req.session.user.username;
   const userProfilePic = req.session.user.profilePic;
@@ -97,6 +101,10 @@ router.get("/getInstructors", async (req, res) => {
 router.get("/getAdmins", async (req, res) => {
   const Admins = await Admin.find({}).exec();
   res.send(Admins);
+});
+router.get("/getIndividualTrainees", async (req, res) => {
+  const trainee = await IndividualTrainee.find({}).exec();
+  res.send(trainee);
 });
 
 router.get("/getCourses", async (req, res) => {
