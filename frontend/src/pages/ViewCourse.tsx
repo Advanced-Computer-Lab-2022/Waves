@@ -283,7 +283,6 @@ const ViewCourse = (props: any) => {
         </div>
       </div>
       <div
-        className="ratingGrad"
         style={{
           opacity: "100%",
           paddingLeft: "3%",

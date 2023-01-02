@@ -115,7 +115,6 @@ export default function NestedList(props: any) {
         }}
       >
         <List
-          className="listGrad"
           sx={{
             opacity: "80%",
             boxShadow: "2px 2px",
