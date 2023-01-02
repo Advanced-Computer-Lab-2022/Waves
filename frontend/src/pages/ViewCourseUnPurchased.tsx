@@ -69,6 +69,7 @@ const ViewCourseUnpurchased = (props: any) => {
     axios
       .post("http://localhost:3001/requestAccess", {
         courseTitle: course.courseName,
+        courseImg: course.courseImg,
       })
       .then((res) => {
         console.log(res.data);

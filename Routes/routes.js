@@ -38,12 +38,85 @@ router.get("/getWallet", async (req, res) => {
   res.send(user?.wallet + "");
 });
 
+router.post("/grantRefundRequest", async (req, res) => {
+  const { refundRequest } = req.body;
+  const courseTitle = refundRequest.courseTitle;
+  const username = refundRequest.username;
+  const course = await Courses.findOne(
+    { title: courseTitle },
+    { price: 1, _id: 0 }
+  ).exec();
+  console.log(course);
+  const price = course.price;
+  const user = await IndividualTrainee.findOne({ username }).exec();
+  if (user) {
+    if (user.wallet) {
+      const newWallet = user.wallet + price;
+      await IndividualTrainee.updateOne(
+        { username },
+        { wallet: newWallet }
+      ).exec();
+    } else {
+      await IndividualTrainee.updateOne({ username }, { wallet: price }).exec();
+    }
+    await IndividualTrainee.updateOne(
+      { username },
+      { $pull: { courses: { courseTitle: courseTitle } } }
+    );
+  } else {
+    const user = await CorporateTrainee.findOne({ username }).exec();
+    if (user) {
+      if (user.wallet) {
+        const newWallet = user.wallet + price;
+        await CorporateTrainee.updateOne(
+          { username },
+          { wallet: newWallet }
+        ).exec();
+      } else {
+        await CorporateTrainee.updateOne(
+          { username },
+          { wallet: price }
+        ).exec();
+      }
+      await CorporateTrainee.updateOne(
+        { username },
+        { $pull: { courses: { courseTitle: courseTitle } } }
+      );
+    }
+  }
+  await AccessRequest.deleteOne({
+    username: username,
+    courseTitle: courseTitle,
+  });
+  res.send("Access Granted!");
+});
+
+router.post("/denyAccessRequest", async (req, res) => {
+  const { accessRequest } = req.body;
+  const courseTitle = accessRequest.courseTitle;
+  const username = accessRequest.username;
+  console.log(username);
+  console.log(courseTitle);
+  await AccessRequest.deleteOne({
+    username: username,
+    courseTitle: courseTitle,
+  });
+  res.send("Access Denied!");
+});
+
+router.get("/getAccessRequest", async (req, res) => {
+  const accessRequest = await AccessRequest.find({}).exec();
+  res.send(accessRequest);
+});
+
+
 router.post("/requestAccess", async (req, res) => {
-  const { courseTitle } = req.body;
+  const { courseTitle, courseImg } = req.body;
   const username = req.session.user?.username;
   const accessRequest = new AccessRequest({
-    courseTitle,
     username,
+    courseTitle,
+    courseImg
   });
   await accessRequest.save();
   res.send("Access Request Sent");
