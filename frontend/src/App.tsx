@@ -32,6 +32,7 @@ import ExerciseResults from "./pages/ExerciseResults";
 import PaymentInfo from "./pages/PaymentInfo";
 import ViewInstructors from "./pages/ViewInstructors";
 import ViewAdmins from "./pages/ViewAdmins";
+import ViewIndividualTrainees from "./pages/ViewIndividualTrainees";
 
 function App() {
 
@@ -53,6 +54,7 @@ function App() {
         <Route path="/results" element={<Results />} />
         <Route path="/inbox" element={<Inbox />} />
         <Route path="/admin" element={<CoursesPage />} />
+        <Route path="/corporateTrainee" element={<CoursesPage />} />
         <Route path="/instructor" element={<CoursesPage />} />
         <Route path="/coporateTrainee" element={<CoursesPage />} />
         <Route path="/individualTrainee" element={<CoursesPage />} />
@@ -73,6 +75,7 @@ function App() {
         <Route path="/view-reports" element={<ViewReports/>} />
         <Route path="/addCourse" element={<AddCourseTemp/>} />
         <Route path="/exercise-results" element={<ExerciseResults/>} />
+        <Route path="/individual-trainees" element={<ViewIndividualTrainees/>} />
       </Routes>
     </Router>
   );

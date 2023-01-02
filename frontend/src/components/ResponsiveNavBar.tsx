@@ -15,6 +15,7 @@ import AdbIcon from "@mui/icons-material/Adb";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { createTheme, Stack, ThemeProvider } from "@mui/material";
+import WalletIcon from "@mui/icons-material/Wallet";
 
 const customRed = "rgb(150,40,40)";
 
@@ -52,11 +53,14 @@ const ResponsiveNavBar = () => {
   const [avatar, setAvatar] = React.useState<string>(
     "https://t4.ftcdn.net/jpg/02/15/84/43/240_F_215844325_ttX9YiIIyeaR7Ne6EaLLjMAmy4GvPC69.jpg"
   );
+  const [wallet, setWallet] = React.useState<number>(0);
+  const [type, setType] = React.useState<string>("guest");
 
   const adminPages = [
     "All Courses",
     "Instructors",
     "Corporate Trainees",
+    "Individual Trainees",
     "Admins",
     "View Reports",
     "About Us",
@@ -73,15 +77,21 @@ const ResponsiveNavBar = () => {
   const corporatePages = ["My Courses", "All Courses", "About Us"];
   const guestPages = ["All Courses", "About Us"];
 
+  const [currencySymbol, setCurrencySymbol] = React.useState<string>("$");
+  const [changeRate, setChangeRate] = React.useState<number>(1);
+  const [currencySlice, setCurrencySlice] = React.useState<number>(1);
+  console.log("currencySymbol: ", currencySymbol);
+
   React.useEffect(() => {
     axios
       .get("http://localhost:3001/getType", { withCredentials: true })
       .then((response) => {
-        if (response.data == "admin") setPages(adminPages);
-        else if (response.data == "instructor") setPages(instructorPages);
-        else if (response.data == "individualTrainee")
-          setPages(individualPages);
-        else if (response.data == "corporateTrainee") setPages(corporatePages);
+        setType(response.data);
+        const type = response.data;
+        if (type == "admin") setPages(adminPages);
+        else if (type == "instructor") setPages(instructorPages);
+        else if (type == "individualTrainee") setPages(individualPages);
+        else if (type == "corporateTrainee") setPages(corporatePages);
         else {
           setPages(guestPages);
           setIsNotLoggedIn(true);
@@ -89,9 +99,38 @@ const ResponsiveNavBar = () => {
       });
 
     axios
+      .get("http://localhost:3001/getWallet", { withCredentials: true })
+      .then((response) => {
+        setWallet(response.data);
+      });
+
+    axios
       .get("http://localhost:3001/getProfilePic", { withCredentials: true })
       .then((response) => {
         setAvatar(response.data);
+      });
+
+    axios
+      .get("http://localhost:3001/getCountry", { withCredentials: true })
+      .then((response) => {
+        const country = response.data;
+        if (country == "Egypt") {
+          setCurrencySymbol("ج.م");
+          setChangeRate(25);
+          setCurrencySlice(3);
+        } else if (country == "Germany") {
+          setCurrencySymbol("€");
+          setChangeRate(0.94);
+          setCurrencySlice(1);
+        } else if (country == "United Kingdom") {
+          setCurrencySymbol("£");
+          setChangeRate(0.8);
+          setCurrencySlice(1);
+        } else {
+          setCurrencySymbol("$");
+          setChangeRate(1);
+          setCurrencySlice(1);
+        }
       });
   }, []);
 
@@ -278,11 +317,30 @@ const ResponsiveNavBar = () => {
                   </Button>
                 </Stack>
               ) : (
-                <Tooltip title="Open settings">
-                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                    <Avatar alt="Profile Pic" src={avatar} />
-                  </IconButton>
-                </Tooltip>
+                <Stack direction={"row"} spacing={7}>
+                  {type == "instructor" ||
+                  type == "individualTrainee" ||
+                  type == "corporateTrainee" ? (
+                    <Stack
+                      direction={"row"}
+                      spacing={2}
+                      marginTop={"auto"}
+                      marginBottom={"auto"}
+                    >
+                      <WalletIcon sx={{ mr: 1 }} />
+                      <Typography sx={{ color: "white" }}>
+                        {changeRate * wallet + " " + currencySymbol}
+                      </Typography>
+                    </Stack>
+                  ) : (
+                    <></>
+                  )}
+                  <Tooltip title="Open settings">
+                    <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                      <Avatar alt="Profile Pic" src={avatar} />
+                    </IconButton>
+                  </Tooltip>
+                </Stack>
               )}
               <Menu
                 sx={{ mt: "45px" }}

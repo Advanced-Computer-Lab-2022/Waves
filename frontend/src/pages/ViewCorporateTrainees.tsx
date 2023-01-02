@@ -90,7 +90,6 @@ const ViewCorporateTrainees = (props: any) => {
           </Dialog>
         </Stack>
       <Users users={users} />
-      <p />
       <Footer />
     </>
   );

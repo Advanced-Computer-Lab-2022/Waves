@@ -17,10 +17,6 @@ const CoursesSchema = new mongoose.Schema({
     type: String,
     //required: true,
   },
-  subtitles: {
-    type: Array,
-   // required: true,
-  },
   videoLinks: {
     type: Array,
     //required: true,

@@ -33,7 +33,10 @@ var InstructorSchema = new mongoose.Schema({
   },
   bio:{
     type: String
-  }
+  },
+  wallet:{
+    type: Number
+  },
 });
 const Instructor = mongoose.model("Instructor", InstructorSchema);
 module.exports = Instructor;

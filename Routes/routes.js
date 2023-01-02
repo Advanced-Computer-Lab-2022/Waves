@@ -12,6 +12,198 @@ const Courses = require("../models/Courses");
 const bcrypt = require("bcrypt");
 const mongoose = require("mongoose");
 const router = express.Router();
+const nodemailer = require("nodemailer");
+const RefundRequest = require("../models/RefundRequest");
+const AccessRequest = require("../models/AccessRequest");
+
+router.get("/getWallet", async (req, res) => {
+  const username = req.session.user?.username;
+  const type = req.session.user?.type;
+
+  let user = { wallet: 0 };
+
+  if (type == "individualTrainee") {
+    user = await IndividualTrainee.findOne(
+      { username },
+      { _id: 0, wallet: 1 }
+    ).exec();
+  } else if (type == "corporateTrainee") {
+    user = await CorporateTrainee.findOne(
+      { username },
+      { _id: 0, wallet: 1 }
+    ).exec();
+  } else if (type == "instructor") {
+    user = await Instructor.findOne({ username }, { _id: 0, wallet: 1 }).exec();
+  }
+  res.send(user?.wallet + "");
+});
+
+router.post("/grantRefundRequest", async (req, res) => {
+  const { refundRequest } = req.body;
+  const courseTitle = refundRequest.courseTitle;
+  const username = refundRequest.username;
+  const course = await Courses.findOne(
+    { title: courseTitle },
+    { price: 1, _id: 0 }
+  ).exec();
+  console.log(course);
+  const price = course.price;
+  const user = await IndividualTrainee.findOne({ username }).exec();
+  if (user) {
+    if (user.wallet) {
+      const newWallet = user.wallet + price;
+      await IndividualTrainee.updateOne(
+        { username },
+        { wallet: newWallet }
+      ).exec();
+    } else {
+      await IndividualTrainee.updateOne({ username }, { wallet: price }).exec();
+    }
+    await IndividualTrainee.updateOne(
+      { username },
+      { $pull: { courses: { courseTitle: courseTitle } } }
+    );
+  } else {
+    const user = await CorporateTrainee.findOne({ username }).exec();
+    if (user) {
+      if (user.wallet) {
+        const newWallet = user.wallet + price;
+        await CorporateTrainee.updateOne(
+          { username },
+          { wallet: newWallet }
+        ).exec();
+      } else {
+        await CorporateTrainee.updateOne(
+          { username },
+          { wallet: price }
+        ).exec();
+      }
+      await CorporateTrainee.updateOne(
+        { username },
+        { $pull: { courses: { courseTitle: courseTitle } } }
+      );
+    }
+  }
+  await AccessRequest.deleteOne({
+    username: username,
+    courseTitle: courseTitle,
+  });
+  res.send("Access Granted!");
+});
+
+router.post("/denyAccessRequest", async (req, res) => {
+  const { accessRequest } = req.body;
+  const courseTitle = accessRequest.courseTitle;
+  const username = accessRequest.username;
+  console.log(username);
+  console.log(courseTitle);
+  await AccessRequest.deleteOne({
+    username: username,
+    courseTitle: courseTitle,
+  });
+  res.send("Access Denied!");
+});
+
+router.get("/getAccessRequest", async (req, res) => {
+  const accessRequest = await AccessRequest.find({}).exec();
+  res.send(accessRequest);
+});
+
+
+router.post("/requestAccess", async (req, res) => {
+  const { courseTitle, courseImg } = req.body;
+  const username = req.session.user?.username;
+  const accessRequest = new AccessRequest({
+    username,
+    courseTitle,
+    courseImg
+  });
+  await accessRequest.save();
+  res.send("Access Request Sent");
+});
+
+router.post("/acceptRefundRequest", async (req, res) => {
+  const { refundRequest } = req.body;
+  const courseTitle = refundRequest.courseTitle;
+  const username = refundRequest.username;
+  const course = await Courses.findOne(
+    { title: courseTitle },
+    { price: 1, _id: 0 }
+  ).exec();
+  console.log(course);
+  const price = course.price;
+  const user = await IndividualTrainee.findOne({ username }).exec();
+  if (user) {
+    if (user.wallet) {
+      const newWallet = user.wallet + price;
+      await IndividualTrainee.updateOne(
+        { username },
+        { wallet: newWallet }
+      ).exec();
+    } else {
+      await IndividualTrainee.updateOne({ username }, { wallet: price }).exec();
+    }
+    await IndividualTrainee.updateOne(
+      { username },
+      { $pull: { courses: { courseTitle: courseTitle } } }
+    );
+  } else {
+    const user = await CorporateTrainee.findOne({ username }).exec();
+    if (user) {
+      if (user.wallet) {
+        const newWallet = user.wallet + price;
+        await CorporateTrainee.updateOne(
+          { username },
+          { wallet: newWallet }
+        ).exec();
+      } else {
+        await CorporateTrainee.updateOne(
+          { username },
+          { wallet: price }
+        ).exec();
+      }
+      await CorporateTrainee.updateOne(
+        { username },
+        { $pull: { courses: { courseTitle: courseTitle } } }
+      );
+    }
+  }
+  await RefundRequest.deleteOne({
+    username: username,
+    courseTitle: courseTitle,
+  });
+  res.send("Refund Accepted!");
+});
+
+router.post("/rejectRefundRequest", async (req, res) => {
+  const { refundRequest } = req.body;
+  const courseTitle = refundRequest.courseTitle;
+  const username = refundRequest.username;
+  console.log(username);
+  console.log(courseTitle);
+  await RefundRequest.deleteOne({
+    username: username,
+    courseTitle: courseTitle,
+  });
+  res.send("Refund Rejected!");
+});
+
+router.get("/getRefundRequests", async (req, res) => {
+  const refundRequests = await RefundRequest.find({}).exec();
+  res.send(refundRequests);
+});
+
+router.post("/requestRefund", async (req, res) => {
+  const { courseTitle, courseImg } = req.body;
+  const username = req.session.user.username;
+  const refundRequest = new RefundRequest({
+    courseTitle,
+    username,
+    courseImg,
+  });
+  await refundRequest.save();
+  res.send("Refund Request Sent");
+});
 
 router.post("/checkPurchasedCourse", async (req, res) => {
   const { courseTitle } = req.body;
@@ -46,6 +238,10 @@ router.get("/getInstructors", async (req, res) => {
 router.get("/getAdmins", async (req, res) => {
   const Admins = await Admin.find({}).exec();
   res.send(Admins);
+});
+router.get("/getIndividualTrainees", async (req, res) => {
+  const trainee = await IndividualTrainee.find({}).exec();
+  res.send(trainee);
 });
 
 router.get("/getCourses", async (req, res) => {
@@ -172,6 +368,98 @@ async function getCourseProgress(username, type, courseTitle) {
 
   return "0";
 }
+
+async function sendEmail(email, courseName, username) {
+  // Step 1
+  let transporter = nodemailer.createTransport({
+    service: "gmail",
+    user: "smtp.gmail.com",
+    port: 465,
+    secure: true,
+    auth: {
+      type: "login",
+      user: "alienlearning8@gmail.com",
+      pass: "gzwqfqhlcodrldze",
+    },
+    tls: {
+      // do not fail on invalid certs
+      rejectUnauthorized: false,
+    },
+  });
+  // Step 2
+  let mailOptions = {
+    from: "alienlearning8@gmail.com",
+    to: email,
+    subject: "Course Completion",
+    //text: 'Click the following link to reset your password',
+    html:
+      "Congratulations " +
+      username +
+      "! You have completed the course " +
+      courseName +
+      " and your certificate is attached to this email.",
+  };
+
+  // Step 3
+  transporter.sendMail(mailOptions, function (err, data) {
+    if (err) {
+      console.log("ErrorOccurs: ", err);
+    } else {
+      console.log("Email sent!!!!");
+    }
+  });
+}
+
+router.post("/sendMail", async (req, res) => {
+  const { courseName } = req.body;
+  const username = req.session.user?.username;
+  const type = req.session.user?.type;
+  let course;
+  if (type == "individualTrainee") {
+    course = await IndividualTrainee.findOne(
+      { username, "courses.courseTitle": courseName },
+      { _id: 0, "courses.certificateSent": 1, "courses.courseTitle": 1 }
+    );
+  } else if (type == "corporateTrainee") {
+    course = await CorporateTrainee.findOne(
+      { username, "courses.courseTitle": courseName },
+      { _id: 0, "courses.certificateSent": 1, "courses.courseTitle": 1 }
+    );
+  }
+  console.log(
+    course.courses.find((course) => course.courseTitle == courseName)
+      .certificateSent
+  );
+  if (
+    !course.courses.find((course) => course.courseTitle == courseName)
+      .certificateSent
+  ) {
+    if (type == "individualTrainee") {
+      sendEmail(req.session.user.email, courseName, username);
+      await IndividualTrainee.updateOne(
+        { username, "courses.courseTitle": courseName },
+        {
+          $set: {
+            "courses.$.certificateSent": true,
+          },
+        }
+      );
+    } else if (type == "corporateTrainee") {
+      sendEmail(req.session.user.email, courseName, username);
+      await IndividualTrainee.updateOne(
+        { username, "courses.courseTitle": courseName },
+        {
+          $set: {
+            "courses.$.certificateSent": true,
+          },
+        }
+      );
+    } else {
+      res.send("already sent");
+    }
+  }
+  console.log(course);
+});
 
 router.post("/getProgress", async (req, res) => {
   const { courseName } = req.body;
@@ -593,13 +881,13 @@ router.post("/add-user", async (req, res) => {
 });
 
 router.post("/addAdmin", async (req, res) => {
-  adminController.addAdmin(req.body);
+  await adminController.addAdmin(req.body);
 });
 router.post("/addInstructor", async (req, res) => {
-  adminController.addInstructor(req.body);
+  await adminController.addInstructor(req.body);
 });
 router.post("/addCopTrainee", async (req, res) => {
-  adminController.addCorporate(req.body);
+  await adminController.addCorporate(req.body);
 });
 
 router.put("/addCourseToCopTrainee", async (req, res) => {
@@ -659,6 +947,22 @@ router.put("/purchase-course", async (req, res) => {
   courseChapters.forEach((chapter) => {
     chapters.push({ sectionName: chapter.description, done: false });
   });
+  const instructor = req.body.courseInstructor;
+  const coursePrice = req.body.coursePrice;
+
+  const userInstructor = await Instructor.findOne(
+    { instructor },
+    { _id: 0, wallet: 1 }
+  ).exec();
+
+  let wallet = 0;
+  if (userInstructor.wallet) wallet = userInstructor.wallet;
+
+  await Instructor.updateOne(
+    { instructor },
+    { wallet: wallet + +coursePrice.slice(1, coursePrice.length - 1) }
+  ).exec();
+
   return await individualTrainee.addPurchasedCourse(user, title, chapters);
 });
 

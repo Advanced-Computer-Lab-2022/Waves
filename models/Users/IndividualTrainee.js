@@ -37,6 +37,7 @@ const IndividualTraineeSchema = new mongoose.Schema({
       courseTitle: String,
       chapters: [{ done: Boolean, sectionName: String }],
       progress: Number,
+      certificateSent: {type: Boolean, default: false},
     },
   ],
   token: {
@@ -48,6 +49,10 @@ const IndividualTraineeSchema = new mongoose.Schema({
   bio: {
     type: String,
   },
+  wallet: {
+    type: Number,
+    default: 0,
+  }
 });
 const IndividualTrainee = mongoose.model(
   "Individual Trainees",

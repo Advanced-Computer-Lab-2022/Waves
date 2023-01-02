@@ -4,16 +4,10 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import {
   Avatar,
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  Stack,
+  Button
 } from "@mui/material";
-import { useNavigate } from "react-router-dom";
-import CoursesAutocomplete from "./CoursesAutocomplete";
+
+import ViewRefundRequests from "./ViewRefundRequests";
 
 interface props {
   profilePic?: string;
@@ -22,6 +16,7 @@ interface props {
   firstName?: string;
   lastName?: string;
   courses?: Array<string>;
+  type?: string;
 }
 
 const User: React.FC<props> = ({
@@ -31,6 +26,7 @@ const User: React.FC<props> = ({
   lastName,
   profilePic,
   courses,
+  type
 }) => {
   const user = {
     username: username,
@@ -41,8 +37,14 @@ const User: React.FC<props> = ({
     courses: courses,
   };
 
+  const [open, setOpen] = React.useState(false);
+
+  function handleRefundRequestsClick(): void {
+    setOpen(true);
+  }
+
   return (
-    <Card sx={{ marginLeft: "5px", width: "22rem", height: "15rem" }}>
+    <Card sx={{ marginLeft: "5px", width: "22rem", height: "20rem" }}>
       <div>
         <Avatar
           sx={{
@@ -68,7 +70,9 @@ const User: React.FC<props> = ({
           <Typography variant="body2" color="grey">
             {user.email}
           </Typography>
+          {type === "individualTrainee" ? <Button onClick={handleRefundRequestsClick} variant='contained'>View Refund Requests</Button> : <></>}
         </CardContent>
+        <ViewRefundRequests open={open} setOpen={setOpen} user={user} />
       </div>
     </Card>
   );
