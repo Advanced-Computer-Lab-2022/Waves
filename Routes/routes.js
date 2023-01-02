@@ -94,6 +94,7 @@ router.post("/getAccessRequests", async (req, res) => {
 });
 
 router.post("/requestAccess", async (req, res) => {
+  console.log(req.body);
   const { courseTitle, courseImg } = req.body;
   const username = req.session.user?.username;
   const accessRequest = new AccessRequest({
@@ -177,8 +178,9 @@ router.get("/getRefundRequests", async (req, res) => {
 });
 
 router.post("/requestRefund", async (req, res) => {
+  console.log(req.body);
   const { courseTitle, courseImg } = req.body;
-  const username = req.session.user.username;
+  const username = req.session.user?.username;
   const refundRequest = new RefundRequest({
     courseTitle,
     username,
@@ -455,6 +457,8 @@ router.post("/getProgress", async (req, res) => {
   const progress = await getCourseProgress(username, type, courseName);
   if (progress) {
     res.send(progress + "");
+  } else {
+    res.send("0");
   }
 });
 
