@@ -205,8 +205,8 @@ router.post("/checkPurchasedCourse", async (req, res) => {
         username: req.session.user.username,
       });
 
-    if (req.session.user?.type == "instructor")
-      return Instructor.findOne({ username: req.session.user.username });
+    // if (req.session.user?.type == "instructor")
+    //   return Instructor.findOne({ username: req.session.user.username });
   })();
   if (user)
     res.send(user.courses.some((course) => course.courseTitle === courseTitle));
@@ -255,6 +255,10 @@ router.get("/getType", async (req, res) => {
   else {
     res.send("/");
   }
+});
+
+router.get("/getMyRating", async (req, res) => {
+  instructorController.getMyRating(req.session.user.username);
 });
 
 router.get("/getProfilePic", async (req, res) => {
@@ -897,6 +901,12 @@ router.put("/rateCourse", async (req, res) => {
   const courseName = req.body.courseName;
   const courseRating = req.body.courseRating;
   individualTrainee.adjustRating(courseName, courseRating);
+  res.send("success!");
+});
+router.put("/rateInstructor", async (req, res) => {
+  const name = req.body.name;
+  const rating = req.body.rating;
+  individualTrainee.adjustRating2(name, rating);
   res.send("success!");
 });
 

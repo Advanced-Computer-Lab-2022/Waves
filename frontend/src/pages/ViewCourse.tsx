@@ -136,6 +136,20 @@ const ViewCourse = (props: any) => {
         setCourseProgress(response.data);
       });
   }
+  function adjust2(newValue: any){
+    axios
+      .put(
+        "http://localhost:3001/rateInstructor",
+        { name: course.courseInstructor,
+          rating: newValue
+        },
+        { withCredentials: true }
+      )
+      .then((response) => {
+        console.log(newValue + " nr");
+        setCourseProgress(response.data);
+      });
+  }
   
   console.log(courseRating + " *****");
   React.useEffect(() => {
@@ -296,7 +310,7 @@ const ViewCourse = (props: any) => {
           name="simple-controlled"
           value={instructorRating}
           onChange={(event, newValue) => {
-            setInstructorRating(newValue ? newValue : 0);
+            setInstructorRating(newValue ? newValue : 0);adjust2(newValue)
           }}
         />
         <Typography marginTop={4} marginBottom={1} fontSize={35}>

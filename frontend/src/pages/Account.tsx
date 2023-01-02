@@ -36,8 +36,16 @@ const Info = (props: any) => {
   const [newEmail, setNewEmail] = React.useState<string>();
   const [newPassword, setNewPassword] = React.useState<string>();
   const [newBio, setNewBio] = React.useState<string>();
+  const [type, setType] = React.useState<string>();
+  const [avg, setAvg] = React.useState(0);
+  const [ratings, setRatings] = React.useState([]);
 
   useEffect(() => {
+    axios
+      .get("http://localhost:3001/getType", { withCredentials: true })
+      .then((response) => {
+        setType(response.data);
+      });
     axios
       .get("http://localhost:3001/getUsername", { withCredentials: true })
       .then((response) => {
@@ -63,6 +71,16 @@ const Info = (props: any) => {
       });
   }, []);
 
+  React.useEffect(() => {
+    if (type == 'instructor') {
+      axios
+      .get("http://localhost:3001/getMyRating", { withCredentials: true })
+      .then((response) => {
+        setRatings(response.data);
+      });
+    }
+  }, []);
+console.log(ratings[1]+"++---+"+type);
   const handleUpload = (e: any) => {
     inputRef.current?.click();
   };
@@ -271,6 +289,9 @@ const Info = (props: any) => {
                 >
                   Username
                 </Typography>
+                {type == 'instructor' ? <Button>hy</Button> : <></>
+
+                }
               </Stack>
               <Stack direction="row" marginTop={2}>
                 <Typography variant="h5" component="div">
