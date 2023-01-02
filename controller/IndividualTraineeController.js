@@ -3,7 +3,8 @@ var Questions=require("../models/Question");
 var Exams=require("../models/Exam"); 
 var ExamSolution=require("../models/ExamSolution");
 const IndividualTrainee = require("../models/users/IndividualTrainee");
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcrypt');
+const Instructor = require("../models/users/Instructor");
 
 async function getCourses (){
     const docs=await Courses.find({},'title totalHours courseRating').exec();
@@ -96,5 +97,13 @@ async function adjustRating (title, userRating){
     })
 }
 
-module.exports= {getCourses,getCoursesByPrice,takeExam,getMyCourses, getExams, getSpecificExam, CalculateExamResult, addPurchasedCourse, updateEmail, updatePassword, updateBio, adjustRating};
+async function adjustRating2 (name, userRating){
+    await Instructor.findOneAndUpdate({username: name}, {
+        $addToSet:{
+            rating: userRating
+        }
+    })
+}
+
+module.exports= {getCourses,getCoursesByPrice,takeExam,getMyCourses, getExams, getSpecificExam, CalculateExamResult, addPurchasedCourse, updateEmail, updatePassword, updateBio, adjustRating,adjustRating2};
     //res.render("guest");
