@@ -72,7 +72,7 @@ const ViewCourseUnpurchased = (props: any) => {
         courseImg: course.courseImg,
       }, {withCredentials: true})
       .then((res) => {
-        console.log(res.data);
+        alert('Request sent successfully!')
       });
   }
 
