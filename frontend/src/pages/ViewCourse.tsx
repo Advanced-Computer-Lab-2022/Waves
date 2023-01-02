@@ -136,6 +136,7 @@ const ViewCourse = (props: any) => {
         setCourseProgress(response.data);
       });
   }
+  
   console.log(courseRating + " *****");
   React.useEffect(() => {
     if (courseProgress === 100) {
