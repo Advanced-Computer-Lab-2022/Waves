@@ -70,7 +70,7 @@ const ViewCourseUnpurchased = (props: any) => {
       .post("http://localhost:3001/requestAccess", {
         courseTitle: course.courseName,
         courseImg: course.courseImg,
-      })
+      }, {withCredentials: true})
       .then((res) => {
         console.log(res.data);
       });

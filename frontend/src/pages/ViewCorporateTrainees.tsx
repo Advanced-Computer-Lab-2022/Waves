@@ -4,11 +4,8 @@ import React, { useEffect } from "react";
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Stack, TextField } from "@mui/material";
 import ResponsiveNavBar from "../components/ResponsiveNavBar";
 import Footer from "../components/Footer";
-import Courses from "../components/Courses";
-import FilterBar from "../components/FilterBar";
 import Search from "../components/Search";
 import Users from "../components/Users";
-import DialogContentText from '@mui/material/DialogContentText';
 
 const ViewCorporateTrainees = (props: any) => {
   const [users, setUsers] = React.useState<any[]>([]);

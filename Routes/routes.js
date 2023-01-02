@@ -38,57 +38,38 @@ router.get("/getWallet", async (req, res) => {
   res.send(user?.wallet + "");
 });
 
-router.post("/grantRefundRequest", async (req, res) => {
-  const { refundRequest } = req.body;
-  const courseTitle = refundRequest.courseTitle;
-  const username = refundRequest.username;
-  const course = await Courses.findOne(
-    { title: courseTitle },
-    { price: 1, _id: 0 }
-  ).exec();
-  console.log(course);
-  const price = course.price;
-  const user = await IndividualTrainee.findOne({ username }).exec();
+router.post("/grantAccessRequest", async (req, res) => {
+  const { accessRequest } = req.body;
+  const courseTitle = accessRequest.courseTitle;
+  const username = accessRequest.username;
+
+  const user = await CorporateTrainee.findOne({ username }).exec();
+  let done;
   if (user) {
-    if (user.wallet) {
-      const newWallet = user.wallet + price;
-      await IndividualTrainee.updateOne(
-        { username },
-        { wallet: newWallet }
-      ).exec();
-    } else {
-      await IndividualTrainee.updateOne({ username }, { wallet: price }).exec();
-    }
-    await IndividualTrainee.updateOne(
-      { username },
-      { $pull: { courses: { courseTitle: courseTitle } } }
+    const course = await Courses.findOne(
+      { title: courseTitle },
+      { _id: 0, chapters: 1 }
+    ).exec();
+
+    const courseChapters = course.chapters;
+    const chapters = [];
+    courseChapters.forEach((chapter) => {
+      chapters.push({ sectionName: chapter.description, done: false });
+    });
+    await adminController.addCourseToCopTrainee(
+      username,
+      courseTitle,
+      chapters
     );
+
+    await AccessRequest.deleteOne({
+      username: username,
+      courseTitle: courseTitle,
+    });
+    res.send("Access Granted!");
   } else {
-    const user = await CorporateTrainee.findOne({ username }).exec();
-    if (user) {
-      if (user.wallet) {
-        const newWallet = user.wallet + price;
-        await CorporateTrainee.updateOne(
-          { username },
-          { wallet: newWallet }
-        ).exec();
-      } else {
-        await CorporateTrainee.updateOne(
-          { username },
-          { wallet: price }
-        ).exec();
-      }
-      await CorporateTrainee.updateOne(
-        { username },
-        { $pull: { courses: { courseTitle: courseTitle } } }
-      );
-    }
+    res.send("Access Not Granted!");
   }
-  await AccessRequest.deleteOne({
-    username: username,
-    courseTitle: courseTitle,
-  });
-  res.send("Access Granted!");
 });
 
 router.post("/denyAccessRequest", async (req, res) => {
@@ -104,11 +85,13 @@ router.post("/denyAccessRequest", async (req, res) => {
   res.send("Access Denied!");
 });
 
-router.get("/getAccessRequest", async (req, res) => {
-  const accessRequest = await AccessRequest.find({}).exec();
-  res.send(accessRequest);
+router.post("/getAccessRequests", async (req, res) => {
+  const { username } = req.body;
+  const accessRequests = await AccessRequest.find({
+    username: username,
+  }).exec();
+  res.send(accessRequests);
 });
-
 
 router.post("/requestAccess", async (req, res) => {
   const { courseTitle, courseImg } = req.body;
@@ -116,7 +99,7 @@ router.post("/requestAccess", async (req, res) => {
   const accessRequest = new AccessRequest({
     username,
     courseTitle,
-    courseImg
+    courseImg,
   });
   await accessRequest.save();
   res.send("Access Request Sent");
@@ -893,9 +876,14 @@ router.post("/addCopTrainee", async (req, res) => {
 router.put("/addCourseToCopTrainee", async (req, res) => {
   const user = req.body.username;
   const title = req.body.title;
-  const courseSubtitles = req.body.courseSubtitles;
+  const course = await Courses.findOne(
+    { title: title },
+    { _id: 0, chapters: 1 }
+  ).exec();
+
+  const courseChapters = course.chapters;
   const chapters = [];
-  courseSubtitles.forEach((chapter) => {
+  courseChapters.forEach((chapter) => {
     chapters.push({ sectionName: chapter.description, done: false });
   });
   return await adminController.addCourseToCopTrainee(user, title, chapters);
@@ -907,7 +895,7 @@ router.put("/addCourseToCopTrainee", async (req, res) => {
 // });
 
 router.post("/addCourse", async (req, res) => {
-  instructorController.addCourse(req.body, req.session.user.username);
+  instructorController.addCourse(req.body, req.session.user?.username);
   res.send("/instructor");
 });
 

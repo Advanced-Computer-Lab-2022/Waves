@@ -12,8 +12,8 @@ import axios from "axios";
 import React from "react";
 
 const ViewAccessRequests = (props: any) => {
-  const { open, setOpen } = props;
-  const [requestAccess, setRequestAccess] = React.useState([]);
+  const { username, open, setOpen } = props;
+  const [accessRequests, setAccessRequests] = React.useState([]);
 
   function handleClickOpen() {
     setOpen(true);
@@ -23,35 +23,45 @@ const ViewAccessRequests = (props: any) => {
   }
 
   React.useEffect(() => {
-    axios.get("http://localhost:3001/getAccessRequests").then((response) => {
-      setRequestAccess(response.data);
-    });
-  }, []);
+    console.log(username);
+    if (open) {
+      axios
+        .post("http://localhost:3001/getAccessRequests", { username: username })
+        .then((response) => {
+          setAccessRequests(response.data);
+        });
+    }
+  }, [open]);
 
-  function grantHandle(requestAccess: any): void {
+  function grantHandle(accessRequest: any): void {
     axios
       .post("http://localhost:3001/grantAccessRequest", {
-        requestAccess: requestAccess,
+        accessRequest: accessRequest,
+        username: username,
       })
       .then((response) => {
         axios
-          .get("http://localhost:3001/getAccessRequests")
+          .post("http://localhost:3001/getAccessRequests", {
+            username: username,
+          })
           .then((response) => {
-            setRequestAccess(response.data);
+            setAccessRequests(response.data);
           });
       });
   }
 
-  function denyHandle(refundRequest: any): void {
+  function denyHandle(accessRequest: any): void {
     axios
       .post("http://localhost:3001/denyAccessRequest", {
-        requestAccess: requestAccess,
+        accessRequest: accessRequest,
       })
       .then((response) => {
         axios
-          .get("http://localhost:3001/getAccessRequests")
+          .post("http://localhost:3001/getAccessRequests", {
+            username: username,
+          })
           .then((response) => {
-            setRequestAccess(response.data);
+            setAccessRequests(response.data);
           });
       });
   }
@@ -69,7 +79,7 @@ const ViewAccessRequests = (props: any) => {
         }}
       >
         <DialogTitle fontSize={30} id="responsive-dialog-title">
-          {"View Refund Requests"}
+          {"View Access Requests"}
         </DialogTitle>
         <DialogContent>
           <Stack spacing={2}>
@@ -78,8 +88,8 @@ const ViewAccessRequests = (props: any) => {
               <Typography variant="h5">Course</Typography>
             </Stack>
 
-            {requestAccess &&
-              requestAccess.map((request: any) => (
+            {accessRequests &&
+              accessRequests.map((request: any) => (
                 <>
                   <span className="horizontal-line-thin"></span>
                   <Stack

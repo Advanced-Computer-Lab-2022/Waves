@@ -2,16 +2,7 @@ import React from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import {
-  Avatar,
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  Stack,
-} from "@mui/material";
+import { Avatar, Button, Stack } from "@mui/material";
 import CoursesAutocomplete from "./CoursesAutocomplete";
 import axios from "axios";
 import ViewAccessRequests from "./ViewAccessRequests";
@@ -144,7 +135,11 @@ const User: React.FC<props> = ({
         </CardContent>
       </div>
       <div>
-        <ViewAccessRequests open={open} setOpen={setOpen} />
+        <ViewAccessRequests
+          username={user.username}
+          open={open}
+          setOpen={setOpen}
+        />
       </div>
     </Card>
   );
