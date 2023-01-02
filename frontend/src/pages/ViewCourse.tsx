@@ -98,6 +98,21 @@ const ViewCourse = (props: any) => {
       });
   }, []);
 
+  function adjust(newValue: any){
+    axios
+      .put(
+        "http://localhost:3001/rateCourse",
+        { courseName: course.courseName,
+          courseRating: newValue
+        },
+        { withCredentials: true }
+      )
+      .then((response) => {
+        console.log(newValue + " hiii");
+        setCourseProgress(response.data);
+      });
+  }
+  console.log(courseRating + " *****");
   return (
     <div className="grad" style={background}>
       <ResponsiveNavBar />
@@ -239,7 +254,7 @@ const ViewCourse = (props: any) => {
           name="simple-controlled"
           value={courseRating}
           onChange={(event, newValue) => {
-            setCourseRating(newValue ? newValue : 0);
+            setCourseRating(newValue ? newValue : 0);adjust(newValue)
           }}
         />
         <Stack flexDirection={"row"}>

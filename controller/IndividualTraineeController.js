@@ -88,6 +88,13 @@ async function updateBio (user, bio){
     })
 }
 
+async function adjustRating (title, userRating){
+    await Courses.findOneAndUpdate({title: title}, {
+        $addToSet:{
+            rating: userRating
+        }
+    })
+}
 
-module.exports= {getCourses,getCoursesByPrice,takeExam,getMyCourses, getExams, getSpecificExam, CalculateExamResult, addPurchasedCourse, updateEmail, updatePassword, updateBio};
+module.exports= {getCourses,getCoursesByPrice,takeExam,getMyCourses, getExams, getSpecificExam, CalculateExamResult, addPurchasedCourse, updateEmail, updatePassword, updateBio, adjustRating};
     //res.render("guest");

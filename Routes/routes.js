@@ -613,6 +613,13 @@ router.put("/addCourseToCopTrainee", async (req, res) => {
   return await adminController.addCourseToCopTrainee(user, title, chapters);
 });
 
+router.put("/rateCourse", async (req, res) => {
+  const courseName = req.body.courseName;
+  const courseRating = req.body.courseRating;
+  individualTrainee.adjustRating(courseName, courseRating);
+  res.send("success!");
+});
+
 // router.post("/add-course", async (req, res) => {
 //   instructorController.addCourse(req.body);
 //   res.send("/instructor");
