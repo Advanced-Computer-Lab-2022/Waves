@@ -289,9 +289,6 @@ console.log(ratings[1]+"++---+"+type);
                 >
                   Username
                 </Typography>
-                {type == 'instructor' ? <Button>hy</Button> : <></>
-
-                }
               </Stack>
               <Stack direction="row" marginTop={2}>
                 <Typography variant="h5" component="div">
