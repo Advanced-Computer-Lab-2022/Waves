@@ -91,6 +91,15 @@ const Course: React.FC<props> = ({
   const [isMyCourse, setIsMyCourse] = React.useState(false);
 
   const [progress, setProgress] = React.useState(0);
+  const [avg, setAvg] = React.useState(0);
+
+  React.useEffect(() => {
+    let sum=0;
+    courseRating.forEach((rating) =>{
+      sum+=rating;
+    });
+    setAvg(sum/courseRating.length)
+  }, []);
 
   if (courseDiscount == 0) {
     var priceStyle = {
@@ -255,12 +264,12 @@ const Course: React.FC<props> = ({
                   marginTop={0.25}
                   component="legend"
                 >
-                  {courseRating[0]}
+                  {avg.toFixed(1)}
                 </Typography>
                 <Rating
                   style={{ color: "rgb(200,150,0)" }}
                   name="read-only"
-                  value={courseRating[0]}
+                  value={parseInt(avg.toFixed(1))}
                   readOnly
                   precision={0.1}
                 />
@@ -271,7 +280,7 @@ const Course: React.FC<props> = ({
                   variant="body2"
                   component="legend"
                 >
-                  {"(" + courseRating[1] + ")"}
+                  {"(" + avg.toFixed(1) + ")"}
                 </Typography>
                 <Stack direction="column">
                   {isMyCourse ? (
