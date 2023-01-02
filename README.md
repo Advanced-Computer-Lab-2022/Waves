@@ -77,18 +77,18 @@ People responsible for the project: Adam Samy --> Email:(adam.abouelmagd@student
 
 [HomePage]:
 
-![image]("https://i.ibb.co/4VMQ5PB/homepage.png")
+![homepage](https://user-images.githubusercontent.com/108385626/210191112-7ae69402-8ea8-4b10-bb8f-5295b96aa337.png)
 
 [Login]:
 
-![image]("C:\Users\Zeyad\Desktop\login.png")
+![login](https://user-images.githubusercontent.com/108385626/210191204-b6dcd5eb-b876-47b3-a704-bfb2276b6495.png)
 
 [SignUp]:
 
-![image]("C:\Users\Zeyad\Desktop\signup.png")
+![signup](https://user-images.githubusercontent.com/108385626/210191208-4fcbed55-fda8-4ad4-93cd-174438e1ad4d.png)
 
 [ViewCourse]:
 
-![image]("C:\Users\Zeyad\Desktop\c1.png")
-![image]("C:\Users\Zeyad\Desktop\c2.png")
-![image]("C:\Users\Zeyad\Desktop\c3.png")
+![c1](https://user-images.githubusercontent.com/108385626/210191231-0fe691bb-cee2-43a0-96e9-cbe9128ef05f.png)
+![c2](https://user-images.githubusercontent.com/108385626/210191251-788b4126-4466-4a56-8d3c-229a3f200365.png)
+![c3](https://user-images.githubusercontent.com/108385626/210191245-b57d1728-80cb-4bc0-a8d1-71b496e7e0c9.png)
