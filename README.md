@@ -438,23 +438,23 @@ function addExam(body) {
 }
 ```
 
-## Tests
+Tests
 
 We used to run the backend API endpoints on Postman to test 
 
-## Contribution
+Contribution
 
 You can contribute to the website using the following link : 
 
 https://github.com/Advanced-Computer-Lab-2022/Waves
 
-## License
+License
 
 The software is open source under the ISC License.
 
 https://opensource.org/licenses/ISC
 
-## Credits
+Credits
 
 https://mui.com/ 
 
@@ -462,7 +462,7 @@ https://stackoverflow.com
 
 https://www.geeksforgeeks.org
 
-## Contact
+Contact
 
 People responsible for the project: 
 
