@@ -1,0 +1,51 @@
+.grow {
+    transition: all .2s ease-in-out;
+}
+
+.grow:hover {
+    transform: scale(1.1);
+}
+
+
+.pointer-link {
+    cursor: pointer;
+}
+
+.grad {
+    background-image: linear-gradient(to bottom right, rgb(50, 50, 50), rgb(190, 190, 190));
+}
+
+.listGrad {
+    background-image: linear-gradient(to left, rgb(120, 120, 120), rgb(200, 200, 200));
+}
+
+.ratingGrad {
+    background-image: linear-gradient(to right, rgb(120, 120, 120), rgb(180, 180, 180));
+}
+
+.filterClass {
+    background-image: linear-gradient(to top right, rgb(221, 221, 221), rgb(87, 87, 87));
+}
+
+.vertical-line {
+    display: inline-block;
+    border-left: 3px solid rgb(125, 125, 125);
+    margin-right: 20px;
+}
+
+.horizontal-line-report {
+    display: block;
+    border-top: 3px solid rgb(131, 131, 131);
+}
+
+.horizontal-line {
+    display: block;
+    border-top: 3px solid rgb(131, 131, 131);
+    margin-bottom: 25px;
+}
+
+.horizontal-line-thin {
+    display: block;
+    border-top: 1px solid rgb(131, 131, 131);
+    margin-bottom: 20px;
+}

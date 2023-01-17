@@ -283,6 +283,8 @@ Contains form to add a new course with exercises
 
 ## API Reference
 
+Using the REST API
+
 ```javascript
 router.get("/getWallet", async (req, res)) 
 router.post("/grantAccessRequest", async (req, res))
